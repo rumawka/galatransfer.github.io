@@ -22,33 +22,55 @@ function setLang(l) {
 }
 
 // ── CALCULATOR ──
+// Логика цен:
+// Попутчики (shared): цена фиксирована = base * 0.55 за МЕСТО → умножаем на кол-во пасс.
+// Индивидуальный:     цена за машину   = base * classM → умножаем на кол-во пасс.
 function recalc() {
   const routeSel = document.getElementById('f-route');
   const typeSel  = document.getElementById('f-type');
   const classSel = document.getElementById('f-class');
+  const paxSel   = document.getElementById('f-pax');
 
-  const base  = parseFloat(routeSel.value);
-  const typeM = parseFloat(typeSel.value);
-  const classM= parseFloat(classSel.value);
+  const base    = parseFloat(routeSel.value);
+  const typeVal = typeSel.value;          // '1' = private, '0.55' = shared
+  const classM  = parseFloat(classSel.value);
+  const pax     = parseInt(paxSel.value) || 1;
 
   const routeOpt = routeSel.options[routeSel.selectedIndex];
-  const typeOpt  = typeSel.options[typeSel.selectedIndex];
   const classOpt = classSel.options[classSel.selectedIndex];
 
   const routeName = routeOpt.dataset[lang] || routeOpt.text;
   const className = classOpt.dataset[lang] || classOpt.text;
   const model     = classOpt.dataset.model || '';
 
+  // Показываем/скрываем класс машины — для попутчиков он не влияет
+  const classRow = document.getElementById('class-row');
+  if (classRow) {
+    classRow.style.opacity = typeVal === '0.55' ? '0.4' : '1';
+    classRow.title = typeVal === '0.55'
+      ? { ru:'При поездке с попутчиками класс автомобиля не выбирается', en:'Vehicle class is not applicable for shared rides', bg:'Класът не се избира при споделено пътуване' }[lang] || ''
+      : '';
+  }
+
   if (base === 0) {
     document.getElementById('p-total').textContent = '?';
     document.getElementById('p-route').textContent = routeName;
     document.getElementById('p-class').textContent = className + ' · ' + model;
-  } else {
-    const total = Math.round(base * typeM * classM);
-    document.getElementById('p-total').textContent = total;
-    document.getElementById('p-route').textContent = routeName;
-    document.getElementById('p-class').textContent = className + ' · ' + model;
+    return;
   }
+
+  let total;
+  if (typeVal === '0.55') {
+    // Попутчики: фиксированная цена за место × кол-во пасс.
+    total = Math.round(base * 0.55 * pax);
+  } else {
+    // Индивидуальный: цена за машину × класс × кол-во пасс.
+    total = Math.round(base * classM * pax);
+  }
+
+  document.getElementById('p-total').textContent = total;
+  document.getElementById('p-route').textContent = routeName;
+  document.getElementById('p-class').textContent = className + ' · ' + model;
 }
 
 // ── MESSENGER SELECTOR ──
@@ -60,10 +82,10 @@ function selectMsg(btn) {
   const ph = document.getElementById('f-phone');
   const placeholders = {
     phone:    '+7 / +359 / +90 ...',
-    telegram: '@username',
+    telegram: '@username или +номер',
     whatsapp: '+359 885 055 578',
     viber:    '+359 885 055 578',
-    imo:      '+7 / +359 / +90 ...',
+    imo:      '+номер телефона',
     max:      '+7 9xx xxx xx xx',
     email:    'your@email.com'
   };
