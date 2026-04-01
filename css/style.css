@@ -144,7 +144,8 @@ body{font-family:'Outfit',sans-serif;background:var(--dark);color:var(--text);ov
   position:relative;
   font-family:'Playfair Display',serif;
   font-weight:700;
-  font-size:clamp(3rem,9vw,7.5rem);
+  /* font-size:clamp(3rem,9vw,7.5rem); */
+  font-size: 80px;
   line-height:.95;letter-spacing:-2px;
   color:var(--white);margin-bottom:16px;
 }
