@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gala Transfer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+/* ═══════ RESET & VARIABLES ═══════ */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bk:#0A0A0A;
+  --gr1:#1C1C1C;
+  --gr2:#555;
+  --gr3:#999;
+  --gr4:#D0D0D0;
+  --gr5:#F2F2F2;
+  --wh:#FAFAFA;
+  --red:#D4181A;
+  --border:1px solid #D0D0D0;
+}
+body{font-family:'Barlow',Helvetica,sans-serif;background:var(--wh);color:var(--bk);overflow-x:hidden}
+
+/* ═══════ HEADER ═══════ */
+.hdr{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:var(--wh);border-bottom:2px solid var(--bk);
+  height:56px;display:flex;align-items:center;
+}
+.hdr-inner{
+  width:100%;max-width:1320px;margin:0 auto;
+  display:flex;align-items:center;height:100%;
+  padding:0 32px;gap:0;
+}
+.logo{
+  font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--bk);text-decoration:none;flex-shrink:0;padding-right:32px;
+  border-right:var(--border);
+}
+.logo span{color:var(--red)}
+nav{flex:1;display:flex;height:100%}
+nav a{
+  display:flex;align-items:center;
+  padding:0 16px;height:100%;
+  font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  color:var(--gr2);text-decoration:none;border-right:var(--border);
+  transition:color .15s,background .15s;white-space:nowrap;
+}
+nav a:hover{color:var(--bk);background:var(--gr5)}
+.hdr-right{display:flex;align-items:center;height:100%;gap:0;border-left:var(--border)}
+.soc-strip{display:flex;height:100%}
+.soc-ico{
+  width:42px;height:100%;border-right:var(--border);
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;transition:background .15s;
+}
+.soc-ico:hover{background:var(--gr5)}
+.soc-ico svg{width:14px;height:14px;fill:var(--gr2);transition:fill .15s}
+.soc-ico:hover svg{fill:var(--bk)}
+.langs{display:flex;height:100%}
+.lb{
+  height:100%;padding:0 12px;border:none;border-right:var(--border);
+  background:none;cursor:pointer;
+  font-family:'Barlow',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  color:var(--gr3);transition:all .15s;
+}
+.lb.on{color:var(--bk);background:var(--gr5)}
+.lb:hover{color:var(--bk)}
+.burger{
+  display:none;width:56px;height:100%;
+  border:none;background:none;cursor:pointer;
+  flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  flex-shrink:0;
+}
+.burger span{display:block;width:20px;height:2px;background:var(--bk);transition:all .25s}
+.burger.on span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.on span:nth-child(2){opacity:0}
+.burger.on span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ═══════ MOBILE DRAWER ═══════ */
+.drawer{
+  display:none;
+  position:fixed;top:56px;left:0;right:0;z-index:99;
+  background:var(--wh);border-bottom:2px solid var(--bk);
+  transform:translateY(-105%);transition:transform .3s ease;pointer-events:none;
+}
+.drawer.on{transform:translateY(0);pointer-events:auto}
+.drawer-nav a{
+  display:block;padding:14px 24px;
+  font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  color:var(--bk);text-decoration:none;border-bottom:var(--border);
+  transition:background .15s;
+}
+.drawer-nav a:hover{background:var(--gr5)}
+.drawer-bottom{display:flex;border-top:2px solid var(--bk)}
+.drawer-langs{display:flex;flex:1}
+.drawer-langs .lb{flex:1;border-right:var(--border);border-bottom:none;padding:14px;height:auto}
+.drawer-soc{display:flex;border-left:var(--border)}
+.drawer-soc .soc-ico{width:48px;height:48px;border-right:none;border-left:var(--border)}
+
+/* ═══════ HERO ═══════ */
+.hero{
+  margin-top:56px;
+  display:grid;grid-template-columns:1fr 1fr;
+  min-height:calc(100vh - 56px);
+  border-bottom:2px solid var(--bk);
+}
+.hero-l{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:72px 64px;border-right:2px solid var(--bk);
+  position:relative;
+}
+.hero-l::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--red)}
+.hero-eyebrow{
+  font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gr2);margin-bottom:32px;
+  display:flex;align-items:center;gap:10px;
+}
+.hero-dot{width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{
+  font-size:clamp(3.5rem,7vw,6.5rem);font-weight:900;letter-spacing:-3px;
+  line-height:.9;text-transform:uppercase;margin-bottom:28px;
+}
+.hero h1 em{display:block;font-style:italic;font-weight:300;letter-spacing:0;font-size:.65em;text-transform:none;color:var(--red)}
+.hero-sub{font-size:14px;font-weight:300;color:var(--gr2);line-height:1.7;max-width:400px;margin-bottom:48px}
+.hero-btns{display:flex}
+.btn{
+  padding:16px 36px;font-family:'Barlow',sans-serif;
+  font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;border:2px solid var(--bk);
+}
+.btn-dark{background:var(--bk);color:var(--wh)}
+.btn-dark:hover{background:var(--red);border-color:var(--red)}
+.btn-light{background:transparent;color:var(--bk);margin-left:-2px}
+.btn-light:hover{background:var(--gr5)}
+
+.hero-r{display:grid;grid-template-rows:1fr 1fr 1fr}
+.price-cell{
+  padding:48px 52px;border-bottom:1px solid var(--gr4);
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;transition:background .2s;
+}
+.price-cell:last-child{border-bottom:none}
+.price-cell:hover{background:var(--gr5)}
+.price-idx{
+  position:absolute;top:20px;right:24px;
+  font-size:9px;font-weight:700;letter-spacing:2px;color:var(--gr4);text-transform:uppercase;
+}
+.price-num{
+  font-size:clamp(2.2rem,4vw,3.5rem);font-weight:900;letter-spacing:-2px;
+  color:var(--bk);line-height:1;margin-bottom:8px;
+}
+.price-cell:first-child .price-num{color:var(--red)}
+.price-lbl{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gr2)}
+
+/* ═══════ SECTIONS ═══════ */
+.sec{padding:80px 0;border-bottom:2px solid var(--bk)}
+.inner{max-width:1320px;margin:0 auto;padding:0 32px}
+.sec-hd{
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;
+  padding-bottom:40px;border-bottom:var(--border);margin-bottom:40px;
+}
+.sec-tag{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+.sec-title{font-size:clamp(1.8rem,3vw,2.8rem);font-weight:900;text-transform:uppercase;letter-spacing:-1px;line-height:.95}
+.sec-intro{font-size:13px;font-weight:300;color:var(--gr2);line-height:1.75;align-self:end}
+
+/* fade in */
+.fi{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
+.fi.vis{opacity:1;transform:translateY(0)}
+
+/* ═══════ SERVICES ═══════ */
+.svc-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border:1px solid var(--gr4);
+}
+.svc-card{
+  padding:40px 32px;border-right:1px solid var(--gr4);border-bottom:1px solid var(--gr4);
+  position:relative;transition:background .2s;overflow:hidden;
+}
+.svc-card:nth-child(3n){border-right:none}
+.svc-card:nth-child(n+4){border-bottom:none}
+.svc-card:hover{background:var(--gr5)}
+.svc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.svc-card:hover::before{transform:scaleX(1)}
+.svc-n{display:block;font-size:9px;font-weight:700;letter-spacing:3px;color:var(--gr4);margin-bottom:24px;text-transform:uppercase}
+.svc-ico{width:44px;height:44px;border:1.5px solid var(--bk);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.svc-ico svg{width:22px;height:22px}
+.svc-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.svc-desc{font-size:12px;font-weight:300;color:var(--gr2);line-height:1.7}
+
+/* border crossing */
+.border-box{
+  border:1px solid var(--gr4);border-left:4px solid var(--red);
+  background:var(--bk);
+  display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center;
+  padding:36px 40px;margin-top:24px;
+}
+.border-box svg{flex-shrink:0}
+.brd-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--wh);margin-bottom:8px}
+.brd-desc{font-size:12px;font-weight:300;color:var(--gr3);line-height:1.7}
+@media(max-width:640px){.border-box{grid-template-columns:1fr}.border-box svg{display:none}}
+
+/* ═══════ ROUTES ═══════ */
+.routes-grid{
+  display:grid;grid-template-columns:repeat(6,1fr);
+  border-top:1px solid var(--gr4);border-left:1px solid var(--gr4);
+}
+.route-card{
+  padding:28px 22px;border-right:1px solid var(--gr4);border-bottom:1px solid var(--gr4);
+  transition:background .2s;
+}
+.route-card:hover{background:var(--gr5)}
+.route-flag{font-size:1rem;margin-bottom:10px}
+.route-cities{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:14px;line-height:1.3}
+.route-price{font-size:1.5rem;font-weight:900;letter-spacing:-1px;color:var(--bk);transition:color .2s}
+.route-card:hover .route-price{color:var(--red)}
+.route-price sup{font-size:.8rem;font-weight:400;letter-spacing:0}
+.route-sub{font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gr3);margin-top:5px}
+
+/* ═══════ FLEET ═══════ */
+.fleet-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border:1px solid var(--gr4);
+}
+.fleet-card{padding:36px 32px;border-right:1px solid var(--gr4);transition:background .2s;position:relative}
+.fleet-card:last-child{border-right:none}
+.fleet-card:hover{background:var(--gr5)}
+.fleet-card:nth-child(2){border-top:3px solid var(--bk)}
+.fleet-badge{display:inline-block;border:1.5px solid var(--bk);font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:3px 10px;margin-bottom:20px}
+.fleet-card:nth-child(2) .fleet-badge{background:var(--bk);color:var(--wh);border-color:var(--bk)}
+.fleet-name{font-size:1.2rem;font-weight:700;text-transform:uppercase;letter-spacing:-.5px;margin-bottom:4px}
+.fleet-model{font-size:11px;font-weight:300;color:var(--gr2);margin-bottom:20px}
+.fleet-list{list-style:none}
+.fleet-list li{font-size:11px;font-weight:300;color:var(--gr2);padding:5px 0;border-bottom:1px solid var(--gr4);display:flex;align-items:center;gap:8px}
+.fleet-list li:last-child{border-bottom:none}
+.fleet-list li::before{content:'—';color:var(--gr4);font-size:10px;flex-shrink:0}
+
+/* ═══════ REVIEWS ═══════ */
+.reviews-sec{background:var(--wh)}
+.slider{overflow:hidden;border:1px solid var(--gr4)}
+.slider-track{display:flex;transition:transform .45s cubic-bezier(.4,0,.2,1)}
+.slide{min-width:100%}
+.review-card{padding:56px 64px;position:relative}
+.review-card::before{
+  content:'"';font-size:8rem;font-weight:900;line-height:.7;
+  color:var(--gr5);position:absolute;top:24px;left:48px;pointer-events:none;
+}
+.review-stars{color:var(--red);font-size:12px;letter-spacing:3px;margin-bottom:16px;position:relative;z-index:1}
+.review-txt{
+  font-size:clamp(1.1rem,2vw,1.4rem);font-weight:300;font-style:italic;
+  color:var(--bk);line-height:1.65;margin-bottom:28px;
+  position:relative;z-index:1;max-width:700px;
+}
+.review-auth{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gr3)}
+.slider-bar{
+  display:flex;border-top:var(--border);
+}
+.slide-btn{
+  width:56px;height:48px;border:none;border-right:var(--border);
+  background:none;cursor:pointer;font-size:14px;color:var(--bk);
+  transition:background .15s;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.slide-btn:hover{background:var(--bk);color:var(--wh)}
+.slide-btn:last-child{border-right:none;border-left:var(--border);margin-left:auto}
+.dots{display:flex;align-items:center;gap:8px;padding:0 24px;flex:1}
+.dot{width:24px;height:2px;background:var(--gr4);border:none;cursor:pointer;transition:all .2s;padding:0}
+.dot.on{background:var(--bk);width:36px}
+@media(max-width:640px){.review-card{padding:36px 28px}.review-card::before{left:20px}}
+
+/* ═══════ BOOKING ═══════ */
+.booking-sec{background:var(--gr5)}
+.booking-grid{display:grid;grid-template-columns:1fr 360px;gap:0;align-items:start;border:1px solid var(--gr4)}
+.form-col{padding:40px;border-right:var(--border)}
+.price-col{padding:40px;position:sticky;top:72px}
+.fg{margin-bottom:18px}
+.fg label{display:block;font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gr2);margin-bottom:7px}
+.fc{
+  width:100%;padding:12px 14px;background:var(--wh);
+  border:1.5px solid var(--gr4);border-radius:0;
+  font-family:'Barlow',sans-serif;font-size:13px;font-weight:300;color:var(--bk);
+  transition:border-color .2s;appearance:none;
+}
+.fc:focus{outline:none;border-color:var(--bk)}
+.fc::placeholder{color:var(--gr3)}
+select.fc{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23555'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;cursor:pointer;
+}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* messenger pills */
+.msg-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.mp{
+  display:flex;align-items:center;gap:5px;
+  padding:6px 12px;border:1.5px solid var(--gr4);background:var(--wh);
+  font-family:'Barlow',sans-serif;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+  color:var(--gr2);cursor:pointer;transition:all .15s;border-radius:2px;
+}
+.mp:hover{border-color:var(--bk);color:var(--bk)}
+.mp.on{background:var(--bk);border-color:var(--bk);color:var(--wh)}
+.mp.on svg{fill:var(--wh) !important;stroke:var(--wh) !important}
+.mp svg{width:12px;height:12px;fill:var(--gr2);transition:all .15s;flex-shrink:0}
+
+/* price panel */
+.p-label{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gr2);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.p-label::after{content:'';flex:1;height:1px;background:var(--gr4)}
+.p-route{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px}
+.p-class{font-size:11px;font-weight:300;color:var(--gr2);margin-bottom:24px}
+.p-num{font-size:4.5rem;font-weight:900;letter-spacing:-3px;line-height:1;display:flex;align-items:flex-start;gap:2px;color:var(--bk)}
+.p-cur{font-size:1.8rem;margin-top:10px;font-weight:400;letter-spacing:0}
+.p-note{font-size:10px;font-weight:300;color:var(--gr2);margin-top:12px;line-height:1.65}
+.p-div{height:1px;background:var(--gr4);margin:20px 0}
+.p-list{list-style:none}
+.p-list li{font-size:11px;font-weight:300;color:var(--gr2);padding:6px 0;border-bottom:1px solid var(--gr5);display:flex;align-items:center;gap:8px}
+.p-list li:last-child{border-bottom:none}
+.p-list li::before{content:'—';color:var(--gr4);font-size:9px;flex-shrink:0}
+.btn-send{
+  display:block;width:100%;padding:16px;margin-top:20px;
+  background:var(--bk);color:var(--wh);border:2px solid var(--bk);
+  font-family:'Barlow',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  cursor:pointer;transition:all .2s;
+}
+.btn-send:hover{background:var(--red);border-color:var(--red)}
+.btn-send:disabled{opacity:.4;cursor:not-allowed}
+
+/* ═══════ CONTACTS ═══════ */
+.contacts-sec{background:var(--wh)}
+.cnt-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--gr4);
+}
+.cnt-card{padding:28px 24px;border-right:1px solid var(--gr4);border-bottom:1px solid var(--gr4);transition:background .2s}
+.cnt-card:nth-child(4n){border-right:none}
+.cnt-card:nth-last-child(-n+4){border-bottom:none}
+.cnt-card:hover{background:var(--gr5)}
+.cnt-ico-wrap{
+  width:40px;height:40px;border:1.5px solid var(--gr4);
+  display:flex;align-items:center;justify-content:center;margin-bottom:14px;
+}
+.cnt-ico-wrap svg{width:18px;height:18px}
+.cnt-lbl{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);margin-bottom:8px}
+.cnt-val{font-size:12px;color:var(--bk);text-decoration:none;display:flex;align-items:center;gap:6px;line-height:1.5;flex-wrap:wrap;transition:color .15s}
+.cnt-val:hover{color:var(--red)}
+.cnt-badge{font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;background:var(--gr5);border:1px solid var(--gr4);padding:1px 6px;flex-shrink:0}
+.cnt-person{font-size:10px;font-weight:300;color:var(--gr3);margin-top:4px}
+
+/* ═══════ FOOTER ═══════ */
+footer{background:var(--bk);border-top:2px solid var(--bk)}
+.footer-inner{
+  max-width:1320px;margin:0 auto;
+  display:flex;align-items:stretch;border-bottom:1px solid var(--gr1);
+}
+.f-logo{padding:28px 32px;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--wh);border-right:1px solid var(--gr1);flex-shrink:0}
+.f-logo span{color:var(--red)}
+.f-cities{padding:28px 32px;font-size:9px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:#555;display:flex;align-items:center;flex:1}
+.f-soc{display:flex;border-left:1px solid var(--gr1)}
+.f-soc a{
+  padding:0 20px;border-right:1px solid var(--gr1);
+  font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  color:#555;text-decoration:none;display:flex;align-items:center;gap:6px;
+  transition:color .15s,background .15s;
+}
+.f-soc a:hover{color:var(--wh);background:var(--gr1)}
+.f-soc a:last-child{border-right:none}
+.f-soc svg{fill:currentColor;width:12px;height:12px;flex-shrink:0}
+.f-note{max-width:1320px;margin:0 auto;padding:16px 32px;font-size:9px;font-weight:300;color:#333;letter-spacing:.5px}
+
+/* ═══════ TOAST ═══════ */
+.toast{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);
+  background:var(--bk);color:var(--wh);border-top:2px solid var(--red);
+  padding:14px 32px;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1);z-index:9999;white-space:nowrap;
+}
+.toast.on{transform:translateX(-50%) translateY(0)}
+
+/* ═══════ FADE IN ═══════ */
+@keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero-l>*{animation:up .7s ease forwards;opacity:0}
+.hero-eyebrow{animation-delay:.1s}
+.hero h1{animation-delay:.22s}
+.hero-sub{animation-delay:.34s}
+.hero-btns{animation-delay:.46s}
+.price-cell{animation:up .7s ease forwards;opacity:0}
+.price-cell:nth-child(1){animation-delay:.3s}
+.price-cell:nth-child(2){animation-delay:.42s}
+.price-cell:nth-child(3){animation-delay:.54s}
+
+/* ═══════ RESPONSIVE ═══════ */
+@media(max-width:1100px){
+  .cnt-grid{grid-template-columns:repeat(2,1fr)}
+  .cnt-card:nth-child(2n){border-right:none}
+  .cnt-card:nth-last-child(-n+2){border-bottom:none}
+  .cnt-card:nth-last-child(-n+4){border-bottom:1px solid var(--gr4)}
+  .routes-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:960px){
+  .booking-grid{grid-template-columns:1fr}
+  .form-col{border-right:none;border-bottom:var(--border)}
+  .price-col{position:static}
+  .svc-grid{grid-template-columns:1fr 1fr}
+  .svc-card:nth-child(3n){border-right:1px solid var(--gr4)}
+  .svc-card:nth-child(2n){border-right:none}
+  .fleet-grid{grid-template-columns:1fr}
+  .fleet-card{border-right:none;border-bottom:1px solid var(--gr4)}
+  .fleet-card:last-child{border-bottom:none}
+}
+@media(max-width:860px){
+  nav{display:none}
+  .soc-strip{display:none}
+  .burger{display:flex}
+  .drawer{display:block}
+  .hdr-inner{padding:0 0 0 20px}
+  .logo{border-right:none;padding-right:0;flex:1}
+  .langs{border-left:none}
+  .lb{border-right:none}
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-l{padding:60px 24px 48px;border-right:none;border-bottom:2px solid var(--bk)}
+  .hero-r{grid-template-rows:auto;grid-template-columns:repeat(3,1fr)}
+  .price-cell{border-right:1px solid var(--gr4);border-bottom:none;padding:32px 20px}
+  .price-cell:last-child{border-right:none}
+  .sec-hd{grid-template-columns:1fr}
+  .inner{padding:0 20px}
+  .routes-grid{grid-template-columns:repeat(2,1fr)}
+  .svc-grid{grid-template-columns:1fr}
+  .svc-card:nth-child(2n){border-right:1px solid var(--gr4)}
+  .svc-card{border-right:1px solid var(--gr4)}
+  .f-soc{display:none}
+  .footer-inner{flex-direction:column}
+  .f-logo{border-right:none}
+  .f-cities{padding:16px 32px}
+  .cnt-grid{grid-template-columns:1fr 1fr}
+  .f-note{padding:16px 20px}
+}
+@media(max-width:520px){
+  .hero-r{grid-template-columns:1fr}
+  .price-cell{border-right:none;border-bottom:1px solid var(--gr4)}
+  .price-cell:last-child{border-bottom:none}
+  .cnt-grid{grid-template-columns:1fr}
+  .cnt-card{border-right:none}
+  .routes-grid{grid-template-columns:repeat(2,1fr)}
+  .fr{grid-template-columns:1fr}
+  .msg-pills .mp{font-size:9px;padding:5px 10px}
+}
+
+/* lang */
+.en,.bg{display:none}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-inner">
+    <a href="#" class="logo">Gala <span>Transfer</span></a>
+    <nav>
+      <a href="#services" class="ru">Услуги</a><a href="#services" class="en">Services</a><a href="#services" class="bg">Услуги</a>
+      <a href="#routes"   class="ru">Маршруты</a><a href="#routes" class="en">Routes</a><a href="#routes" class="bg">Маршрути</a>
+      <a href="#fleet"    class="ru">Автопарк</a><a href="#fleet" class="en">Fleet</a><a href="#fleet" class="bg">Автопарк</a>
+      <a href="#reviews"  class="ru">Отзывы</a><a href="#reviews" class="en">Reviews</a><a href="#reviews" class="bg">Отзиви</a>
+      <a href="#booking"  class="ru">Бронирование</a><a href="#booking" class="en">Book</a><a href="#booking" class="bg">Резервация</a>
+      <a href="#contacts" class="ru">Контакты</a><a href="#contacts" class="en">Contacts</a><a href="#contacts" class="bg">Контакти</a>
+    </nav>
+    <div class="hdr-right">
+      <div class="soc-strip">
+        <a href="https://t.me/VipTaxiGala24" target="_blank" class="soc-ico" title="Telegram"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.93 6.77-1.68 7.92c-.12.56-.45.7-.91.43l-2.52-1.85-1.22 1.17c-.13.14-.25.25-.51.25l.18-2.56 4.65-4.2c.2-.18-.04-.28-.31-.1L7.67 14.5l-2.47-.77c-.54-.17-.55-.54.11-.8l9.64-3.72c.45-.16.84.11.68.56z"/></svg></a>
+        <a href="https://wa.me/359885055578" target="_blank" class="soc-ico" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.21.59-1.23 1.12-1.69 1.18-.43.06-.98.08-1.58-.1a14.6 14.6 0 0 1-1.42-.51c-2.5-1.08-4.13-3.6-4.26-3.77-.12-.17-.99-1.32-.99-2.52 0-1.2.63-1.79.85-2.03.22-.24.48-.3.64-.3l.46.01c.15 0 .35-.06.54.41l.7 1.73c.06.14.1.3.02.48l-.24.44-.36.44c-.12.12-.24.25-.1.49.14.24.62.96 1.33 1.55.91.77 1.68 1.01 1.92 1.12.24.11.38.09.52-.05.14-.14.6-.7.76-.94.16-.24.32-.2.54-.12l1.7.8c.2.1.33.14.38.22.05.27-.06.88-.27 1.47zM12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.07-1.33A9.97 9.97 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg></a>
+        <a href="https://www.instagram.com/taxibulgariastambul" target="_blank" class="soc-ico" title="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.2 0 3.58.012 4.85.07 3.25.148 4.77 1.69 4.92 4.919.057 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.15 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
+        <a href="https://www.facebook.com/share/1E1BdqshFE/" target="_blank" class="soc-ico" title="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg></a>
+        <a href="mailto:galinanaymov@gmail.com" class="soc-ico" title="Email"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+      </div>
+      <div class="langs">
+        <button class="lb on" id="lb-ru" onclick="setL('ru')">RU</button>
+        <button class="lb"    id="lb-en" onclick="setL('en')">EN</button>
+        <button class="lb"    id="lb-bg" onclick="setL('bg')">BG</button>
+      </div>
+      <button class="burger" id="burger" onclick="toggleDrawer()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE DRAWER -->
+<div class="drawer" id="drawer">
+  <nav class="drawer-nav">
+    <a href="#services" onclick="closeDrawer()" class="ru">Услуги</a><a href="#services" onclick="closeDrawer()" class="en">Services</a><a href="#services" onclick="closeDrawer()" class="bg">Услуги</a>
+    <a href="#routes"   onclick="closeDrawer()" class="ru">Маршруты</a><a href="#routes" onclick="closeDrawer()" class="en">Routes</a><a href="#routes" onclick="closeDrawer()" class="bg">Маршрути</a>
+    <a href="#fleet"    onclick="closeDrawer()" class="ru">Автопарк</a><a href="#fleet" onclick="closeDrawer()" class="en">Fleet</a><a href="#fleet" onclick="closeDrawer()" class="bg">Автопарк</a>
+    <a href="#reviews"  onclick="closeDrawer()" class="ru">Отзывы</a><a href="#reviews" onclick="closeDrawer()" class="en">Reviews</a><a href="#reviews" onclick="closeDrawer()" class="bg">Отзиви</a>
+    <a href="#booking"  onclick="closeDrawer()" class="ru">Бронирование</a><a href="#booking" onclick="closeDrawer()" class="en">Book</a><a href="#booking" onclick="closeDrawer()" class="bg">Резервация</a>
+    <a href="#contacts" onclick="closeDrawer()" class="ru">Контакты</a><a href="#contacts" onclick="closeDrawer()" class="en">Contacts</a><a href="#contacts" onclick="closeDrawer()" class="bg">Контакти</a>
+  </nav>
+  <div class="drawer-bottom">
+    <div class="drawer-langs">
+      <button class="lb on" id="dlb-ru" onclick="setL('ru')">RU</button>
+      <button class="lb"    id="dlb-en" onclick="setL('en')">EN</button>
+      <button class="lb"    id="dlb-bg" onclick="setL('bg')">BG</button>
+    </div>
+    <div class="drawer-soc">
+      <a href="https://t.me/VipTaxiGala24" target="_blank" class="soc-ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="#555"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.93 6.77-1.68 7.92c-.12.56-.45.7-.91.43l-2.52-1.85-1.22 1.17c-.13.14-.25.25-.51.25l.18-2.56 4.65-4.2c.2-.18-.04-.28-.31-.1L7.67 14.5l-2.47-.77c-.54-.17-.55-.54.11-.8l9.64-3.72c.45-.16.84.11.68.56z"/></svg></a>
+      <a href="https://wa.me/359885055578" target="_blank" class="soc-ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="#555"><path d="M17.47 14.38c-.21.59-1.23 1.12-1.69 1.18-.43.06-.98.08-1.58-.1a14.6 14.6 0 0 1-1.42-.51c-2.5-1.08-4.13-3.6-4.26-3.77-.12-.17-.99-1.32-.99-2.52 0-1.2.63-1.79.85-2.03.22-.24.48-.3.64-.3l.46.01c.15 0 .35-.06.54.41l.7 1.73c.06.14.1.3.02.48l-.24.44-.36.44c-.12.12-.24.25-.1.49.14.24.62.96 1.33 1.55.91.77 1.68 1.01 1.92 1.12.24.11.38.09.52-.05.14-.14.6-.7.76-.94.16-.24.32-.2.54-.12l1.7.8c.2.1.33.14.38.22.05.27-.06.88-.27 1.47zM12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.07-1.33A9.97 9.97 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg></a>
+      <a href="https://www.instagram.com/taxibulgariastambul" target="_blank" class="soc-ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="#555"><path d="M12 2.163c3.2 0 3.58.012 4.85.07 3.25.148 4.77 1.69 4.92 4.919.057 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.15 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-l">
+    <div class="hero-eyebrow"><div class="hero-dot"></div><span class="ru">Работаем 24/7 · Русскоговорящие водители</span><span class="en">Operating 24/7 · Russian-speaking drivers</span><span class="bg">Работим 24/7 · Руско говорящи шофьори</span></div>
+    <h1>Gala<em>Transfer</em></h1>
+    <p class="hero-sub"><span class="ru">Премиальный трансфер между Болгарией, Стамбулом и Грецией. Надёжно, комфортно, вовремя.</span><span class="en">Premium transfer between Bulgaria, Istanbul and Greece. Reliable, comfortable, on time.</span><span class="bg">Премиум трансфер между България, Истанбул и Гърция. Надеждно, комфортно, навреме.</span></p>
+    <div class="hero-btns">
+      <a href="#booking" class="btn btn-dark"><span class="ru">Рассчитать</span><span class="en">Get a price</span><span class="bg">Изчисли</span></a>
+      <a href="#contacts" class="btn btn-light"><span class="ru">Контакты</span><span class="en">Contact</span><span class="bg">Контакти</span></a>
+    </div>
+  </div>
+  <div class="hero-r">
+    <div class="price-cell" data-idx="01"><div class="price-idx">01</div><div class="price-num">от 70€</div><div class="price-lbl"><span class="ru">С попутчиками</span><span class="en">Shared ride</span><span class="bg">Споделено</span></div></div>
+    <div class="price-cell" data-idx="02"><div class="price-idx">02</div><div class="price-num">от 200€</div><div class="price-lbl"><span class="ru">Индивидуальный</span><span class="en">Private transfer</span><span class="bg">Индивидуален</span></div></div>
+    <div class="price-cell" data-idx="03"><div class="price-idx">03</div><div class="price-num">24 / 7</div><div class="price-lbl"><span class="ru">Всегда на связи</span><span class="en">Always available</span><span class="bg">Винаги на линия</span></div></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="sec" id="services">
+  <div class="inner">
+    <div class="sec-hd fi">
+      <div><div class="sec-tag"><span class="ru">Услуги</span><span class="en">Services</span><span class="bg">Услуги</span></div><div class="sec-title"><span class="ru">Что мы предлагаем</span><span class="en">What we offer</span><span class="bg">Какво предлагаме</span></div></div>
+      <div class="sec-intro"><span class="ru">Ежедневные выезды и индивидуальные трансферы. Болгария, Стамбул, Греция — в любое время.</span><span class="en">Daily shared rides and private transfers. Bulgaria, Istanbul, Greece — any time.</span><span class="bg">Ежедневни и индивидуални трансфери по всяко време.</span></div>
+    </div>
+    <div class="svc-grid fi">
+      <div class="svc-card"><span class="svc-n">01</span><div class="svc-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 11L6.5 6.5H17.5L19 11M17.5 16a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM6.5 16a1.5 1.5 0 110-3 1.5 1.5 0 010 3zM19 11H5L3 12v5h2v1a1 1 0 002 0v-1h10v1a1 1 0 002 0v-1h2v-5l-2-1z" stroke="#0A0A0A" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div class="svc-title"><span class="ru">С попутчиками</span><span class="en">Shared transfer</span><span class="bg">Споделено</span></div><div class="svc-desc"><span class="ru">Ежедневные выезды Болгария ↔ Стамбул от 70€.</span><span class="en">Daily departures Bulgaria ↔ Istanbul from €70.</span><span class="bg">Ежедневни тръгвания от 70€.</span></div></div>
+      <div class="svc-card"><span class="svc-n">02</span><div class="svc-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l2.09 6.26L21 9.27l-5 4.87 1.18 6.88L12 17.77l-5.18 3.25L8 14.14 3 9.27l6.91-1.01L12 2z" stroke="#0A0A0A" stroke-width="1.4" stroke-linejoin="round"/></svg></div><div class="svc-title"><span class="ru">Индивидуальный</span><span class="en">Private transfer</span><span class="bg">Индивидуален</span></div><div class="svc-desc"><span class="ru">Персональный автомобиль 24/7 — от 200€. Выезд в любое время.</span><span class="en">Personal vehicle 24/7 from €200. Depart any time.</span><span class="bg">Личен автомобил 24/7 от 200€.</span></div></div>
+      <div class="svc-card"><span class="svc-n">03</span><div class="svc-ico"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#0A0A0A" stroke-width="1.4"/><path d="M12 3c0 0-4 4-4 9s4 9 4 9M12 3c0 0 4 4 4 9s-4 9-4 9M3 12h18" stroke="#0A0A0A" stroke-width="1.4" stroke-linecap="round"/></svg></div><div class="svc-title"><span class="ru">Трансфер в Грецию</span><span class="en">Greece transfers</span><span class="bg">До Гърция</span></div><div class="svc-desc"><span class="ru">Любые города Греции. До двери отеля.</span><span class="en">Any city in Greece. Door to door.</span><span class="bg">Всеки град в Гърция.</span></div></div>
+      <div class="svc-card"><span class="svc-n">04</span><div class="svc-ico"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3L19 8V16L12 21L5 16V8L12 3Z" stroke="#0A0A0A" stroke-width="1.4" stroke-linejoin="round"/><circle cx="12" cy="12" r="2" fill="#0A0A0A"/></svg></div><div class="svc-title"><span class="ru">По Болгарии</span><span class="en">Within Bulgaria</span><span class="bg">Из България</span></div><div class="svc-desc"><span class="ru">Курорты, города, аэропорты — любые направления.</span><span class="en">Resorts, cities, airports — any direction.</span><span class="bg">Курорти, градове, летища.</span></div></div>
+      <div class="svc-card"><span class="svc-n">05</span><div class="svc-ico"><svg viewBox="0 0 24 24" fill="none"><ellipse cx="9" cy="7.5" rx="2" ry="2.8" fill="#0A0A0A" opacity=".8"/><ellipse cx="15" cy="7.5" rx="2" ry="2.8" fill="#0A0A0A" opacity=".8"/><path d="M5 13.5C5 10.5 7.5 9 12 9s7 1.5 7 4.5C19 17 16 20 12 20S5 17 5 13.5z" fill="#0A0A0A" opacity=".8"/><circle cx="10" cy="14" r=".8" fill="rgba(255,255,255,.6)"/><circle cx="14" cy="14" r=".8" fill="rgba(255,255,255,.6)"/></svg></div><div class="svc-title"><span class="ru">Питомцы — OK</span><span class="en">Pets welcome</span><span class="bg">Домашни любимци</span></div><div class="svc-desc"><span class="ru">Берём животных. Просто предупредите заранее.</span><span class="en">We welcome pets — let us know in advance.</span><span class="bg">Приемаме домашни любимци.</span></div></div>
+      <div class="svc-card"><span class="svc-n">06</span><div class="svc-ico"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="6" r="3" stroke="#0A0A0A" stroke-width="1.4"/><path d="M7 21v-4c0-2.2 2.2-4 5-4s5 1.8 5 4v4" stroke="#0A0A0A" stroke-width="1.4" stroke-linecap="round"/><rect x="6" y="10" width="3" height="2" rx="1" fill="#0A0A0A" opacity=".35"/><rect x="15" y="10" width="3" height="2" rx="1" fill="#0A0A0A" opacity=".35"/></svg></div><div class="svc-title"><span class="ru">Семейные поездки</span><span class="en">Family trips</span><span class="bg">Семейни пътувания</span></div><div class="svc-desc"><span class="ru">Детские кресла, Wi-Fi, вода — в каждой машине.</span><span class="en">Child seats, Wi-Fi, water in every car.</span><span class="bg">Детски столчета, Wi-Fi, вода.</span></div></div>
+    </div>
+    <div class="border-box fi">
+      <svg viewBox="0 0 200 80" width="200" height="80" style="flex-shrink:0">
+        <rect x="2" y="46" width="44" height="20" rx="3" fill="#2E2E2E" stroke="#555" stroke-width="1"/>
+        <rect x="8" y="38" width="30" height="14" rx="2" fill="#1C1C1C" stroke="#555" stroke-width=".8"/>
+        <circle cx="11" cy="67" r="4.5" fill="#141414" stroke="#999" stroke-width="1"/>
+        <circle cx="37" cy="67" r="4.5" fill="#141414" stroke="#999" stroke-width="1"/>
+        <rect x="3" y="50" width="6" height="4" rx="1" fill="#D4181A" opacity=".9"/>
+        <path d="M48 57 L64 57" stroke="#555" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <rect x="66" y="26" width="2.5" height="42" rx="1" fill="#999" opacity=".6"/>
+        <rect x="66" y="26" width="22" height="3" rx="1" fill="#D4181A" opacity=".6"/>
+        <circle cx="100" cy="32" r="4.5" fill="#FAFAFA"/>
+        <path d="M100 37 L100 50 M100 44 L95 50 M100 44 L105 50" stroke="#FAFAFA" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M100 50 L96 60 M100 50 L104 60" stroke="#FAFAFA" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M107 57 L122 57" stroke="#555" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <rect x="131" y="26" width="2.5" height="42" rx="1" fill="#999" opacity=".6"/>
+        <rect x="109" y="26" width="22" height="3" rx="1" fill="#D4181A" opacity=".6"/>
+        <rect x="136" y="46" width="44" height="20" rx="3" fill="#2E2E2E" stroke="#555" stroke-width="1"/>
+        <rect x="142" y="38" width="30" height="14" rx="2" fill="#1C1C1C" stroke="#555" stroke-width=".8"/>
+        <circle cx="146" cy="67" r="4.5" fill="#141414" stroke="#999" stroke-width="1"/>
+        <circle cx="172" cy="67" r="4.5" fill="#141414" stroke="#999" stroke-width="1"/>
+        <rect x="172" y="50" width="6" height="4" rx="1" fill="#4CAF7D" opacity=".9"/>
+        <text x="24" y="22" font-size="7" fill="#999" text-anchor="middle" font-family="Barlow,sans-serif" font-weight="700" letter-spacing="1">TR</text>
+        <text x="158" y="22" font-size="7" fill="#999" text-anchor="middle" font-family="Barlow,sans-serif" font-weight="700" letter-spacing="1">BG</text>
+        <circle cx="100" cy="14" r="7" fill="none" stroke="#D4181A" stroke-width="1.5"/>
+        <path d="M96.5 14 L99.5 17 L104 11" stroke="#D4181A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <div>
+        <div class="brd-title"><span class="ru">Быстрое прохождение границы — с пешим переходом и без</span><span class="en">Fast border crossing — on foot or by car</span><span class="bg">Бързо преминаване на границата</span></div>
+        <div class="brd-desc"><span class="ru">При больших очередях наши машины стоят с обеих сторон. Вы переходите пешком и сразу садитесь — без ожидания.</span><span class="en">When queues are long, our cars wait on both sides. Cross on foot and get in immediately.</span><span class="bg">При дълги опашки колите ни чакат от двете страни.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROUTES -->
+<section class="sec" id="routes">
+  <div class="inner">
+    <div class="sec-hd fi">
+      <div><div class="sec-tag"><span class="ru">Маршруты</span><span class="en">Routes</span><span class="bg">Маршрути</span></div><div class="sec-title"><span class="ru">Направления</span><span class="en">Destinations</span><span class="bg">Дестинации</span></div></div>
+      <div class="sec-intro"><span class="ru">Обратные маршруты и нестандартные направления — по запросу.</span><span class="en">Return trips and custom routes on request.</span><span class="bg">Обратни маршрути при запитване.</span></div>
+    </div>
+    <div class="routes-grid fi">
+      <div class="route-card"><div class="route-flag">🇹🇷→🇧🇬</div><div class="route-cities">Istanbul<br>→ Burgas</div><div class="route-price"><sup>от </sup>180€</div><div class="route-sub">~370 km · ~4.5 h</div></div>
+      <div class="route-card"><div class="route-flag">🇹🇷→🇧🇬</div><div class="route-cities">Istanbul<br>→ Varna</div><div class="route-price"><sup>от </sup>230€</div><div class="route-sub">~480 km · ~5.5 h</div></div>
+      <div class="route-card"><div class="route-flag">🇹🇷→🇧🇬</div><div class="route-cities">Istanbul<br>→ Sofia</div><div class="route-price"><sup>от </sup>350€</div><div class="route-sub">~550 km · ~6 h</div></div>
+      <div class="route-card"><div class="route-flag">🇧🇬→🇧🇬</div><div class="route-cities">Burgas<br>→ Varna</div><div class="route-price"><sup>от </sup>70€</div><div class="route-sub">~130 km · ~1.5 h</div></div>
+      <div class="route-card"><div class="route-flag">🇧🇬→🇬🇷</div><div class="route-cities">Bulgaria<br>→ Greece</div><div class="route-price" style="font-size:1rem;letter-spacing:0;font-weight:700"><span class="ru">По запросу</span><span class="en">On request</span><span class="bg">При запитване</span></div><div class="route-sub"><span class="ru">Любые города</span><span class="en">Any city</span><span class="bg">Всякакви градове</span></div></div>
+      <div class="route-card"><div class="route-flag">🇧🇬</div><div class="route-cities"><span class="ru">По Болгарии</span><span class="en">Within Bulgaria</span><span class="bg">Из България</span></div><div class="route-price" style="font-size:1rem;letter-spacing:0;font-weight:700"><span class="ru">По запросу</span><span class="en">On request</span><span class="bg">При запитване</span></div><div class="route-sub"><span class="ru">Любые направления</span><span class="en">Any direction</span><span class="bg">Всички посоки</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FLEET -->
+<section class="sec" id="fleet">
+  <div class="inner">
+    <div class="sec-hd fi">
+      <div><div class="sec-tag"><span class="ru">Автопарк</span><span class="en">Fleet</span><span class="bg">Автопарк</span></div><div class="sec-title"><span class="ru">Классы автомобилей</span><span class="en">Vehicle classes</span><span class="bg">Класове</span></div></div>
+      <div class="sec-intro"><span class="ru">Wi-Fi и вода в каждом автомобиле. Детское кресло по запросу.</span><span class="en">Wi-Fi and water in every vehicle. Child seat on request.</span><span class="bg">Wi-Fi и вода в целия автопарк.</span></div>
+    </div>
+    <div class="fleet-grid fi">
+      <div class="fleet-card"><div class="fleet-badge">Comfort</div><div class="fleet-name">Skoda Octavia</div><div class="fleet-model">VW Passat · <span class="ru">до 4 пасс.</span><span class="en">up to 4 pax</span><span class="bg">до 4 пас.</span></div><ul class="fleet-list"><li><span class="ru">Кондиционер</span><span class="en">Air conditioning</span><span class="bg">Климатик</span></li><li>Wi-Fi</li><li><span class="ru">Вода в дорогу</span><span class="en">Water included</span><span class="bg">Вода</span></li><li><span class="ru">Детское кресло по запросу</span><span class="en">Child seat on request</span><span class="bg">Детско столче</span></li></ul></div>
+      <div class="fleet-card"><div class="fleet-badge">Premium</div><div class="fleet-name">Mercedes S-Class</div><div class="fleet-model"><span class="ru">Представительский · до 3 пасс.</span><span class="en">Executive · up to 3 pax</span><span class="bg">Представителски · до 3 пас.</span></div><ul class="fleet-list"><li><span class="ru">Кожаный салон</span><span class="en">Leather interior</span><span class="bg">Кожен интериор</span></li><li><span class="ru">Максимальный комфорт</span><span class="en">Maximum comfort</span><span class="bg">Максимален комфорт</span></li><li>Wi-Fi · <span class="ru">Вода</span><span class="en">Water</span><span class="bg">Вода</span></li><li><span class="ru">Бизнес-класс</span><span class="en">Business class</span><span class="bg">Бизнес клас</span></li></ul></div>
+      <div class="fleet-card"><div class="fleet-badge">Minivan XL</div><div class="fleet-name">Mercedes V-Class</div><div class="fleet-model">Extra Long · <span class="ru">до 7 пасс.</span><span class="en">up to 7 pax</span><span class="bg">до 7 пас.</span></div><ul class="fleet-list"><li><span class="ru">Просторный салон</span><span class="en">Spacious cabin</span><span class="bg">Просторен салон</span></li><li><span class="ru">Много места для багажа</span><span class="en">Plenty of luggage space</span><span class="bg">Багажно пространство</span></li><li>Wi-Fi · <span class="ru">Вода</span><span class="en">Water</span><span class="bg">Вода</span></li><li><span class="ru">Для групп</span><span class="en">For groups</span><span class="bg">За групи</span></li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="sec reviews-sec" id="reviews">
+  <div class="inner">
+    <div class="sec-hd fi">
+      <div><div class="sec-tag"><span class="ru">Отзывы</span><span class="en">Reviews</span><span class="bg">Отзиви</span></div><div class="sec-title"><span class="ru">Говорят клиенты</span><span class="en">What clients say</span><span class="bg">Казват клиентите</span></div></div>
+      <div class="sec-intro"><span class="ru">Сотни успешных трансферов. Говорим за себя.</span><span class="en">Hundreds of completed transfers. We let our clients speak.</span><span class="bg">Стотици успешни трансфера.</span></div>
+    </div>
+    <div class="slider fi">
+      <div class="slider-track" id="strack">
+        <div class="slide"><div class="review-card"><div class="review-stars">★★★★★</div><div class="review-txt">Галина, только сегодня нам подключили интернет. Спасибо вам, как всегда всё хорошо!</div><div class="review-auth">— Клиент Gala Transfer</div></div></div>
+        <div class="slide"><div class="review-card"><div class="review-stars">★★★★★</div><div class="review-txt">Галя, доброе утро. Спасибо, что довезли — хороший водитель и хороший человек. За всё огромное спасибо, до сентября ❤️</div><div class="review-auth">— Постоянный клиент</div></div></div>
+        <div class="slide"><div class="review-card"><div class="review-stars">★★★★★</div><div class="review-txt">Спасибо вам большое, Галина — вы очень чётко работаете, я давно не встречала таких обязательных людей. Спасибо ещё раз 🙏</div><div class="review-auth">— Клиент Gala Transfer</div></div></div>
+        <div class="slide"><div class="review-card"><div class="review-stars">★★★★★</div><div class="review-txt">Спасибо за доставку. Поужинали тем, что купили в Киркларели. Очень довольны.</div><div class="review-auth">— Семья из Болгарии</div></div></div>
+      </div>
+      <div class="slider-bar">
+        <button class="slide-btn" onclick="slide(-1)">←</button>
+        <div class="dots" id="dots"></div>
+        <button class="slide-btn" onclick="slide(1)">→</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="sec" id="booking">
+  <div class="inner">
+    <div class="sec-hd fi">
+      <div><div class="sec-tag"><span class="ru">Бронирование</span><span class="en">Booking</span><span class="bg">Резервация</span></div><div class="sec-title"><span class="ru">Рассчитайте стоимость</span><span class="en">Calculate your price</span><span class="bg">Изчислете цена</span></div></div>
+      <div class="sec-intro"><span class="ru">Заполните форму — ответим за 15 минут.</span><span class="en">Fill in the form — we reply in 15 minutes.</span><span class="bg">Попълнете формата — ще отговорим до 15 мин.</span></div>
+    </div>
+    <div class="booking-grid fi">
+      <div class="form-col">
+        <div class="fg"><label class="ru">Маршрут</label><label class="en">Route</label><label class="bg">Маршрут</label>
+          <select class="fc" id="f-route" onchange="recalc()">
+            <option value="180" data-ru="Стамбул → Бургас" data-en="Istanbul → Burgas" data-bg="Истанбул → Бургас">Istanbul → Burgas / Стамбул → Бургас</option>
+            <option value="230" data-ru="Стамбул → Варна" data-en="Istanbul → Varna" data-bg="Истанбул → Варна">Istanbul → Varna / Стамбул → Варна</option>
+            <option value="350" data-ru="Стамбул → София" data-en="Istanbul → Sofia" data-bg="Истанбул → София">Istanbul → Sofia / Стамбул → София</option>
+            <option value="70"  data-ru="Бургас → Варна" data-en="Burgas → Varna" data-bg="Бургас → Варна">Burgas → Varna / Бургас → Варна</option>
+            <option value="0"   data-ru="Другой маршрут" data-en="Other route" data-bg="Друг маршрут">Другой / Other / Друг</option>
+          </select>
+        </div>
+        <div class="fr">
+          <div class="fg"><label class="ru">Тип поездки</label><label class="en">Type</label><label class="bg">Тип</label>
+            <select class="fc" id="f-type" onchange="recalc()">
+              <option value="1"    data-ru="Индивидуальный" data-en="Private" data-bg="Индивидуален">Индивидуальный / Private</option>
+              <option value="0.55" data-ru="С попутчиками"  data-en="Shared"  data-bg="Споделено">С попутчиками / Shared</option>
+            </select>
+          </div>
+          <div class="fg"><label class="ru">Класс</label><label class="en">Vehicle class</label><label class="bg">Клас</label>
+            <select class="fc" id="f-class" onchange="recalc()">
+              <option value="1"   data-model="Skoda Octavia / VW Passat"   data-ru="Комфорт"    data-en="Comfort"    data-bg="Комфорт">Comfort — Skoda Octavia</option>
+              <option value="2"   data-model="Mercedes S-Class"            data-ru="Премиум"    data-en="Premium"    data-bg="Премиум">Premium — Mercedes S</option>
+              <option value="1.8" data-model="Mercedes V-Class Extra Long" data-ru="Минивэн XL" data-en="Minivan XL" data-bg="Миниван XL">Minivan XL — Mercedes V</option>
+            </select>
+          </div>
+        </div>
+        <div class="fr">
+          <div class="fg"><label class="ru">Дата и время</label><label class="en">Date & time</label><label class="bg">Дата</label><input type="datetime-local" class="fc" id="f-datetime"></div>
+          <div class="fg"><label class="ru">Пассажиров</label><label class="en">Passengers</label><label class="bg">Пасажери</label><select class="fc" id="f-pax"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select></div>
+        </div>
+        <div class="fg">
+          <label class="ru">Как связаться?</label><label class="en">How to contact you?</label><label class="bg">Как да се свържем?</label>
+          <div class="msg-pills">
+            <button type="button" class="mp on" data-m="phone" onclick="selMsg(this)"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg><span class="ru">Тел.</span><span class="en">Phone</span><span class="bg">Тел.</span></button>
+            <button type="button" class="mp" data-m="telegram" onclick="selMsg(this)"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.93 6.77-1.68 7.92c-.12.56-.45.7-.91.43l-2.52-1.85-1.22 1.17c-.13.14-.25.25-.51.25l.18-2.56 4.65-4.2c.2-.18-.04-.28-.31-.1L7.67 14.5l-2.47-.77c-.54-.17-.55-.54.11-.8l9.64-3.72c.45-.16.84.11.68.56z"/></svg>Telegram</button>
+            <button type="button" class="mp" data-m="whatsapp" onclick="selMsg(this)"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M17.47 14.38c-.21.59-1.23 1.12-1.69 1.18-.43.06-.98.08-1.58-.1a14.6 14.6 0 0 1-1.42-.51c-2.5-1.08-4.13-3.6-4.26-3.77-.12-.17-.99-1.32-.99-2.52 0-1.2.63-1.79.85-2.03.22-.24.48-.3.64-.3l.46.01c.15 0 .35-.06.54.41l.7 1.73c.06.14.1.3.02.48l-.24.44-.36.44c-.12.12-.24.25-.1.49.14.24.62.96 1.33 1.55.91.77 1.68 1.01 1.92 1.12.24.11.38.09.52-.05.14-.14.6-.7.76-.94.16-.24.32-.2.54-.12l1.7.8c.2.1.33.14.38.22.05.27-.06.88-.27 1.47zM12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.07-1.33A9.97 9.97 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>WhatsApp</button>
+            <button type="button" class="mp" data-m="viber" onclick="selMsg(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="12" height="12"><path d="M20 10.5C20 15.2 16.4 19 12 19c-1.1 0-2.2-.2-3.2-.7L4 20l1.2-4.5C4.4 14.3 4 12.9 4 11.5 4 6.8 7.6 3 12 3s8 3.8 8 7.5z"/><path d="M9 10.5c.5 1 1.3 2 2.5 2.5l.6-.7c.3-.3.7-.3 1 0 .5.3.9.7 1.2 1 .2.2.2.5 0 .8-.3.4-.7.8-1.2.9-1 .2-2.5-.2-4.3-1.9C6.6 11.3 6.2 9.8 6.4 8.8c.1-.5.5-.9.9-1.2.3-.2.6-.2.8 0 .3.3.7.7 1 1.2.2.3.2.7-.1 1L9 10.5z" stroke-linecap="round"/></svg>Viber</button>
+            <button type="button" class="mp" data-m="imo" onclick="selMsg(this)">IMO</button>
+            <button type="button" class="mp" data-m="max" onclick="selMsg(this)">MAX</button>
+            <button type="button" class="mp" data-m="email" onclick="selMsg(this)"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>Email</button>
+          </div>
+          <input type="text" class="fc" id="f-phone" placeholder="+7 / +359 / +90 ...">
+        </div>
+        <div class="fr">
+          <div class="fg"><label class="ru">Имя</label><label class="en">Name</label><label class="bg">Име</label><input type="text" class="fc" id="f-name"></div>
+          <div class="fg"><label class="ru">Комментарий</label><label class="en">Comment</label><label class="bg">Коментар</label><input type="text" class="fc" id="f-comment"></div>
+        </div>
+      </div>
+      <div class="price-col">
+        <div class="p-label"><span class="ru">Стоимость</span><span class="en">Estimated price</span><span class="bg">Цена</span></div>
+        <div class="p-route" id="p-route">Istanbul → Burgas</div>
+        <div class="p-class" id="p-class">Comfort · Skoda Octavia / VW Passat</div>
+        <div class="p-num"><span style="font-size:1.8rem;margin-top:10px;font-weight:400">€</span><span id="p-total">180</span></div>
+        <div class="p-note"><span class="ru">Включены: налоги, платные дороги, ожидание до 60 мин</span><span class="en">Includes taxes, tolls, waiting up to 60 min</span><span class="bg">Включва данъци, такси, чакане до 60 мин</span></div>
+        <div class="p-div"></div>
+        <ul class="p-list">
+          <li><span class="ru">Русскоговорящий водитель</span><span class="en">Russian-speaking driver</span><span class="bg">Руско говорящ шофьор</span></li>
+          <li>Wi-Fi</li>
+          <li><span class="ru">Вода в машине</span><span class="en">Water in the car</span><span class="bg">Вода в колата</span></li>
+          <li><span class="ru">Детское кресло по запросу</span><span class="en">Child seat on request</span><span class="bg">Детско столче</span></li>
+          <li><span class="ru">Питомцы приветствуются</span><span class="en">Pets welcome</span><span class="bg">Домашни любимци</span></li>
+          <li><span class="ru">Ответ за 15 минут</span><span class="en">Reply in 15 min</span><span class="bg">Отговор до 15 мин</span></li>
+        </ul>
+        <button class="btn-send" id="btn-book" onclick="sendBooking()"><span class="ru">Отправить заявку</span><span class="en">Send request</span><span class="bg">Изпрати</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTS -->
+<section class="sec contacts-sec" id="contacts">
+  <div class="inner">
+    <div class="sec-hd fi">
+      <div><div class="sec-tag"><span class="ru">Контакты</span><span class="en">Contacts</span><span class="bg">Контакти</span></div><div class="sec-title"><span class="ru">Свяжитесь с нами</span><span class="en">Get in touch</span><span class="bg">Свържете се</span></div></div>
+      <div class="sec-intro"><span class="ru">Отвечаем быстро. Выберите удобный канал.</span><span class="en">We respond fast. Choose your preferred channel.</span><span class="bg">Отговаряме бързо.</span></div>
+    </div>
+    <div class="cnt-grid fi">
+      <div class="cnt-card"><div class="cnt-ico-wrap" style="background:rgba(41,182,246,.08);border-color:rgba(41,182,246,.25)"><svg viewBox="0 0 24 24" width="18" height="18" fill="#29B6D9"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.93 6.77-1.68 7.92c-.12.56-.45.7-.91.43l-2.52-1.85-1.22 1.17c-.13.14-.25.25-.51.25l.18-2.56 4.65-4.2c.2-.18-.04-.28-.31-.1L7.67 14.5l-2.47-.77c-.54-.17-.55-.54.11-.8l9.64-3.72c.45-.16.84.11.68.56z"/></svg></div><div class="cnt-lbl">Telegram</div><a href="https://t.me/VipTaxiGala24" target="_blank" class="cnt-val">@VipTaxiGala24 <span class="cnt-badge ru">канал</span><span class="cnt-badge en">channel</span><span class="cnt-badge bg">канал</span></a><a href="https://t.me/transferGala" target="_blank" class="cnt-val" style="margin-top:6px">@transferGala <span class="cnt-badge">Galina</span></a></div>
+      <div class="cnt-card"><div class="cnt-ico-wrap" style="background:rgba(37,211,102,.08);border-color:rgba(37,211,102,.25)"><svg viewBox="0 0 24 24" width="18" height="18" fill="#25D366"><path d="M17.47 14.38c-.21.59-1.23 1.12-1.69 1.18-.43.06-.98.08-1.58-.1a14.6 14.6 0 0 1-1.42-.51c-2.5-1.08-4.13-3.6-4.26-3.77-.12-.17-.99-1.32-.99-2.52 0-1.2.63-1.79.85-2.03.22-.24.48-.3.64-.3l.46.01c.15 0 .35-.06.54.41l.7 1.73c.06.14.1.3.02.48l-.24.44-.36.44c-.12.12-.24.25-.1.49.14.24.62.96 1.33 1.55.91.77 1.68 1.01 1.92 1.12.24.11.38.09.52-.05.14-.14.6-.7.76-.94.16-.24.32-.2.54-.12l1.7.8c.2.1.33.14.38.22.05.27-.06.88-.27 1.47zM12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.07-1.33A9.97 9.97 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg></div><div class="cnt-lbl">WhatsApp</div><a href="https://wa.me/359885055578" target="_blank" class="cnt-val">+359 885 055 578</a><div class="cnt-person">Galina</div></div>
+      <div class="cnt-card"><div class="cnt-ico-wrap" style="background:rgba(127,84,179,.08);border-color:rgba(127,84,179,.25)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#7F54B3" stroke-width="1.4"><path d="M20 10.5C20 15.2 16.4 19 12 19c-1.1 0-2.2-.2-3.2-.7L4 20l1.2-4.5C4.4 14.3 4 12.9 4 11.5 4 6.8 7.6 3 12 3s8 3.8 8 7.5z"/><path d="M9 10.5c.5 1 1.3 2 2.5 2.5l.6-.7c.3-.3.7-.3 1 0 .5.3.9.7 1.2 1 .2.2.2.5 0 .8-.3.4-.7.8-1.2.9-1 .2-2.5-.2-4.3-1.9C6.6 11.3 6.2 9.8 6.4 8.8c.1-.5.5-.9.9-1.2.3-.2.6-.2.8 0 .3.3.7.7 1 1.2.2.3.2.7-.1 1L9 10.5z" stroke-linecap="round"/></svg></div><div class="cnt-lbl">Viber</div><a href="viber://chat?number=%2B359885055578" class="cnt-val">+359 885 055 578</a><div class="cnt-person">Galina</div></div>
+      <div class="cnt-card"><div class="cnt-ico-wrap" style="background:rgba(0,168,255,.08);border-color:rgba(0,168,255,.25)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none"><circle cx="12" cy="12" r="8" stroke="#00A8FF" stroke-width="1.4"/><text x="12" y="16" text-anchor="middle" font-size="7" fill="#00A8FF" font-family="Barlow,sans-serif" font-weight="700">imo</text></svg></div><div class="cnt-lbl">IMO</div><a href="tel:+359885055578" class="cnt-val">+359 885 055 578</a><div class="cnt-person">Galina</div></div>
+      <div class="cnt-card"><div class="cnt-ico-wrap" style="background:rgba(212,24,26,.08);border-color:rgba(212,24,26,.25)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none"><rect x="3" y="4" width="18" height="16" rx="3" stroke="#D4181A" stroke-width="1.4"/><text x="12" y="15" text-anchor="middle" font-size="6" fill="#D4181A" font-family="Barlow,sans-serif" font-weight="900">MAX</text></svg></div><div class="cnt-lbl">MAX</div><a href="tel:+79131439210" class="cnt-val">+7 913 143 92 10</a><div class="cnt-person">Max</div></div>
+      <div class="cnt-card"><div class="cnt-ico-wrap" style="background:rgba(228,64,95,.08);border-color:rgba(228,64,95,.25)"><svg viewBox="0 0 24 24" width="18" height="18"><defs><linearGradient id="ig3" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F58529"/><stop offset="50%" stop-color="#DD2A7B"/><stop offset="100%" stop-color="#8134AF"/></linearGradient></defs><path d="M12 2.163c3.2 0 3.58.012 4.85.07 3.25.148 4.77 1.69 4.92 4.919.057 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.15 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" fill="url(#ig3)"/></svg></div><div class="cnt-lbl">Instagram</div><a href="https://www.instagram.com/taxibulgariastambul" target="_blank" class="cnt-val">@taxibulgariastambul</a></div>
+      <div class="cnt-card"><div class="cnt-ico-wrap" style="background:rgba(24,119,242,.08);border-color:rgba(24,119,242,.25)"><svg viewBox="0 0 24 24" width="18" height="18" fill="#1877F2"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg></div><div class="cnt-lbl">Facebook</div><a href="https://www.facebook.com/share/1E1BdqshFE/" target="_blank" class="cnt-val"><span class="ru">Наша страница</span><span class="en">Our page</span><span class="bg">Нашата страница</span></a></div>
+      <div class="cnt-card"><div class="cnt-ico-wrap" style="border-color:var(--gr4)"><svg viewBox="0 0 24 24" width="18" height="18" fill="#555"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg></div><div class="cnt-lbl">Email</div><a href="mailto:galinanaymov@gmail.com" class="cnt-val">galinanaymov@gmail.com</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="f-logo">Gala <span>Transfer</span></div>
+    <div class="f-cities">Istanbul · Burgas · Varna · Sofia · Greece</div>
+    <div class="f-soc">
+      <a href="https://t.me/VipTaxiGala24" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.93 6.77-1.68 7.92c-.12.56-.45.7-.91.43l-2.52-1.85-1.22 1.17c-.13.14-.25.25-.51.25l.18-2.56 4.65-4.2c.2-.18-.04-.28-.31-.1L7.67 14.5l-2.47-.77c-.54-.17-.55-.54.11-.8l9.64-3.72c.45-.16.84.11.68.56z"/></svg>Telegram</a>
+      <a href="https://wa.me/359885055578" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.21.59-1.23 1.12-1.69 1.18-.43.06-.98.08-1.58-.1a14.6 14.6 0 0 1-1.42-.51c-2.5-1.08-4.13-3.6-4.26-3.77-.12-.17-.99-1.32-.99-2.52 0-1.2.63-1.79.85-2.03.22-.24.48-.3.64-.3l.46.01c.15 0 .35-.06.54.41l.7 1.73c.06.14.1.3.02.48l-.24.44-.36.44c-.12.12-.24.25-.1.49.14.24.62.96 1.33 1.55.91.77 1.68 1.01 1.92 1.12.24.11.38.09.52-.05.14-.14.6-.7.76-.94.16-.24.32-.2.54-.12l1.7.8c.2.1.33.14.38.22.05.27-.06.88-.27 1.47zM12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.07-1.33A9.97 9.97 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>WhatsApp</a>
+      <a href="https://www.instagram.com/taxibulgariastambul" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.2 0 3.58.012 4.85.07 3.25.148 4.77 1.69 4.92 4.919.057 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.15 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>Instagram</a>
+      <a href="mailto:galinanaymov@gmail.com"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>Email</a>
+    </div>
+  </div>
+  <div class="f-note">© 2025 Gala Transfer. <span class="ru">Все права защищены.</span><span class="en">All rights reserved.</span><span class="bg">Всички права запазени.</span></div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const TG_TOKEN='8772133903:AAHPXEKuXFrzSBQWt8L60Nk1uO6Iqe4IEbw';
+const TG_CHAT_ID='699505010';
+let lang='ru', selM='phone', slideIdx=0;
+
+/* ── LANG ── */
+function setL(l){
+  lang=l;
+  document.querySelectorAll('.ru,.en,.bg').forEach(el=>{
+    el.style.display = el.classList.contains(l) ? (el.tagName==='LABEL'?'block':'inline') : 'none';
+  });
+  ['lb-ru','lb-en','lb-bg','dlb-ru','dlb-en','dlb-bg'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.classList.toggle('on', id.endsWith(l));
+  });
+  recalc();
+}
+
+/* ── DRAWER ── */
+function toggleDrawer(){
+  document.getElementById('burger').classList.toggle('on');
+  document.getElementById('drawer').classList.toggle('on');
+}
+function closeDrawer(){
+  document.getElementById('burger').classList.remove('on');
+  document.getElementById('drawer').classList.remove('on');
+}
+
+/* ── MESSENGER ── */
+function selMsg(btn){
+  document.querySelectorAll('.mp').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  selM=btn.dataset.m;
+  const phs={phone:'+7 / +359 / +90 ...',telegram:'@username или +номер',whatsapp:'+359 885 055 578',viber:'+359 885 055 578',imo:'+номер телефона',max:'+7 9xx xxx xx xx',email:'your@email.com'};
+  const ph=document.getElementById('f-phone');
+  ph.placeholder=phs[selM]||'+7 / +359 / +90 ...';
+  ph.type=selM==='email'?'email':'text';
+}
+
+/* ── CALC ── */
+function recalc(){
+  const rs=document.getElementById('f-route');
+  const ts=document.getElementById('f-type');
+  const cs=document.getElementById('f-class');
+  const base=parseFloat(rs.value), typeM=parseFloat(ts.value), classM=parseFloat(cs.value);
+  const rn=rs.options[rs.selectedIndex].dataset[lang]||rs.options[rs.selectedIndex].text;
+  const cn=cs.options[cs.selectedIndex].dataset[lang]||cs.options[cs.selectedIndex].text;
+  const m=cs.options[cs.selectedIndex].dataset.model||'';
+  document.getElementById('p-total').textContent = base===0?'?':Math.round(base*typeM*classM);
+  document.getElementById('p-route').textContent = rn;
+  document.getElementById('p-class').textContent = cn+' · '+m;
+}
+
+/* ── SEND ── */
+async function sendBooking(){
+  const phone=document.getElementById('f-phone').value.trim();
+  const name=document.getElementById('f-name').value.trim();
+  const dt=document.getElementById('f-datetime').value;
+  const pax=document.getElementById('f-pax').value;
+  const comment=document.getElementById('f-comment').value.trim();
+  if(phone.length<3){showToast({ru:'Укажите контакт',en:'Please enter your contact',bg:'Въведете контакт'}[lang]);return;}
+  const rs=document.getElementById('f-route');
+  const ts=document.getElementById('f-type');
+  const cs=document.getElementById('f-class');
+  const total=document.getElementById('p-total').textContent;
+  const msgrL={phone:'📞 Телефон',telegram:'✈️ Telegram',whatsapp:'💬 WhatsApp',viber:'📲 Viber',imo:'📱 IMO',max:'🟡 MAX',email:'📧 Email'};
+  const msg=`🌟 *НОВЫЙ ЗАКАЗ — Gala Transfer*\n━━━━━━━━━━━━━━━━━━\n📍 *Маршрут:* ${rs.options[rs.selectedIndex].dataset.ru||''} / ${rs.options[rs.selectedIndex].dataset.en||''}\n🚗 *Тип:* ${ts.options[ts.selectedIndex].dataset.ru||''}\n🚙 *Класс:* ${cs.options[cs.selectedIndex].dataset.ru||''}\n👥 *Пассажиров:* ${pax}\n📅 *Когда:* ${dt?dt.replace('T',' '):'—'}\n💰 *Стоимость:* ${total}€\n━━━━━━━━━━━━━━━━━━\n👤 *Имя:* ${name||'—'}\n${msgrL[selM]||'📱'}: ${phone}\n💬 *Комментарий:* ${comment||'—'}`;
+  const btn=document.getElementById('btn-book');
+  btn.disabled=true;
+  try{
+    const r=await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TG_CHAT_ID,text:msg,parse_mode:'Markdown'})});
+    showToast(r.ok?{ru:'✓ Заявка отправлена! Ответим за 15 мин',en:"✓ Sent! We'll reply in 15 min",bg:'✓ Изпратено! Ще отговорим до 15 мин'}[lang]:{ru:'Ошибка. Попробуйте снова.',en:'Error. Please try again.',bg:'Грешка. Опитайте отново.'}[lang]);
+    if(r.ok){['f-phone','f-name','f-comment'].forEach(id=>document.getElementById(id).value='')}
+  }catch(e){showToast({ru:'Ошибка сети.',en:'Network error.',bg:'Мрежова грешка.'}[lang])}
+  btn.disabled=false;
+}
+
+/* ── TOAST ── */
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),4000)}
+
+/* ── SLIDER ── */
+const track=document.getElementById('strack');
+const slides=track.querySelectorAll('.slide');
+const dotsEl=document.getElementById('dots');
+slides.forEach((_,i)=>{const d=document.createElement('button');d.className='dot'+(i===0?' on':'');d.onclick=()=>goSlide(i);dotsEl.appendChild(d)});
+function goSlide(n){slideIdx=(n+slides.length)%slides.length;track.style.transform=`translateX(-${slideIdx*100}%)`;document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i===slideIdx))}
+function slide(d){goSlide(slideIdx+d)}
+setInterval(()=>slide(1),6000);
+
+/* ── SCROLL FADE ── */
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')}),{threshold:.1});
+document.querySelectorAll('.fi').forEach(el=>obs.observe(el));
+
+/* ── INIT ── */
+setL('ru');
+recalc();
+</script>
+</body>
+</html>
