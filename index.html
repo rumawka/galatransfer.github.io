@@ -904,7 +904,6 @@
 
 <!-- ══════════════════════════════ JS ══════════════════════════════ -->
 
-  <!-- ══════════════════════════════ JS ══════════════════════════════ -->
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const TG_TOKEN   = '8772133903:AAHPXEKuXFrzSBQWt8L60Nk1uO6Iqe4IEbw';
 const TG_CHAT_ID = '699505010';
@@ -933,33 +932,55 @@ function setLang(l) {
 }
 
 // ── CALCULATOR ──
+// Логика цен:
+// Попутчики (shared): цена фиксирована = base * 0.55 за МЕСТО → умножаем на кол-во пасс.
+// Индивидуальный:     цена за машину   = base * classM → умножаем на кол-во пасс.
 function recalc() {
   const routeSel = document.getElementById('f-route');
   const typeSel  = document.getElementById('f-type');
   const classSel = document.getElementById('f-class');
+  const paxSel   = document.getElementById('f-pax');
 
-  const base  = parseFloat(routeSel.value);
-  const typeM = parseFloat(typeSel.value);
-  const classM= parseFloat(classSel.value);
+  const base    = parseFloat(routeSel.value);
+  const typeVal = typeSel.value;          // '1' = private, '0.55' = shared
+  const classM  = parseFloat(classSel.value);
+  const pax     = parseInt(paxSel.value) || 1;
 
   const routeOpt = routeSel.options[routeSel.selectedIndex];
-  const typeOpt  = typeSel.options[typeSel.selectedIndex];
   const classOpt = classSel.options[classSel.selectedIndex];
 
   const routeName = routeOpt.dataset[lang] || routeOpt.text;
   const className = classOpt.dataset[lang] || classOpt.text;
   const model     = classOpt.dataset.model || '';
 
+  // Показываем/скрываем класс машины — для попутчиков он не влияет
+  const classRow = document.getElementById('class-row');
+  if (classRow) {
+    classRow.style.opacity = typeVal === '0.55' ? '0.4' : '1';
+    classRow.title = typeVal === '0.55'
+      ? { ru:'При поездке с попутчиками класс автомобиля не выбирается', en:'Vehicle class is not applicable for shared rides', bg:'Класът не се избира при споделено пътуване' }[lang] || ''
+      : '';
+  }
+
   if (base === 0) {
     document.getElementById('p-total').textContent = '?';
     document.getElementById('p-route').textContent = routeName;
     document.getElementById('p-class').textContent = className + ' · ' + model;
-  } else {
-    const total = Math.round(base * typeM * classM);
-    document.getElementById('p-total').textContent = total;
-    document.getElementById('p-route').textContent = routeName;
-    document.getElementById('p-class').textContent = className + ' · ' + model;
+    return;
   }
+
+  let total;
+  if (typeVal === '0.55') {
+    // Попутчики: фиксированная цена за место × кол-во пасс.
+    total = Math.round(base * 0.55 * pax);
+  } else {
+    // Индивидуальный: цена за машину × класс × кол-во пасс.
+    total = Math.round(base * classM * pax);
+  }
+
+  document.getElementById('p-total').textContent = total;
+  document.getElementById('p-route').textContent = routeName;
+  document.getElementById('p-class').textContent = className + ' · ' + model;
 }
 
 // ── MESSENGER SELECTOR ──
@@ -971,10 +992,10 @@ function selectMsg(btn) {
   const ph = document.getElementById('f-phone');
   const placeholders = {
     phone:    '+7 / +359 / +90 ...',
-    telegram: '@username или +номер',
-    whatsapp: '+359 885 055 578',
-    viber:    '+359 885 055 578',
-    imo:      '+номер телефона',
+    telegram: '@username или +7 / +359 / +90 ...',
+    whatsapp: '+7 / +359 / +90 ...',
+    viber:    '+7 / +359 / +90 ...',
+    imo:      '+7 / +359 / +90 ...',
     max:      '+7 9xx xxx xx xx',
     email:    'your@email.com'
   };
@@ -1023,10 +1044,10 @@ ${msgrLabel}: ${phone}
   btn.disabled = true;
 
   try {
-    const res = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+    const res = await fetch('api/send.php', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({chat_id: TG_CHAT_ID, text: msg, parse_mode:'Markdown'})
+      body: JSON.stringify({message: msg})
     });
     const ok = {ru:'✓ Заявка отправлена! Ответим за 15 минут',en:'✓ Request sent! We\'ll reply in 15 min',bg:'✓ Запитването е изпратено! Ще отговорим до 15 мин'};
     const fail = {ru:'Ошибка. Попробуйте ещё раз.',en:'Error. Please try again.',bg:'Грешка. Опитайте отново.'};
