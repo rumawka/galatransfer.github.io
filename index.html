@@ -903,9 +903,12 @@
 
 <!-- ══════════════════════════════ JS ══════════════════════════════ -->
 
-  <script src="js/main.js"></script>
-  <script>
-    let lang = 'ru';
+  <!-- ══════════════════════════════ JS ══════════════════════════════ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const TG_TOKEN   = '8772133903:AAHPXEKuXFrzSBQWt8L60Nk1uO6Iqe4IEbw';
+const TG_CHAT_ID = '699505010';
+
+let lang = 'ru';
 
 // ── LANG ──
 function setLang(l) {
@@ -967,10 +970,10 @@ function selectMsg(btn) {
   const ph = document.getElementById('f-phone');
   const placeholders = {
     phone:    '+7 / +359 / +90 ...',
-    telegram: '@username',
+    telegram: '@username или +номер',
     whatsapp: '+359 885 055 578',
     viber:    '+359 885 055 578',
-    imo:      '+7 / +359 / +90 ...',
+    imo:      '+номер телефона',
     max:      '+7 9xx xxx xx xx',
     email:    'your@email.com'
   };
@@ -1019,10 +1022,10 @@ ${msgrLabel}: ${phone}
   btn.disabled = true;
 
   try {
-    const res = await fetch('api/send.php', {
+    const res = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({message: msg})
+      body: JSON.stringify({chat_id: TG_CHAT_ID, text: msg, parse_mode:'Markdown'})
     });
     const ok = {ru:'✓ Заявка отправлена! Ответим за 15 минут',en:'✓ Request sent! We\'ll reply in 15 min',bg:'✓ Запитването е изпратено! Ще отговорим до 15 мин'};
     const fail = {ru:'Ошибка. Попробуйте ещё раз.',en:'Error. Please try again.',bg:'Грешка. Опитайте отново.'};
@@ -1085,6 +1088,6 @@ function closeMenu() {
 
 // ── INIT ──
 setLang('ru');
-  </script>
+</script>
 </body>
 </html>
