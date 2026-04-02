@@ -43,7 +43,7 @@ body {
 ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
 
 /* ── LANGUAGE SYSTEM ── */
-.t-ru, .t-en, .t-bg { display: none; }
+.t-ru, .t-en, .t-bg { display: none !important; }
 body.lang-ru .t-ru { display: inline; }
 body.lang-ru .t-ru.block-el { display: block; }
 body.lang-en .t-en { display: inline; }
