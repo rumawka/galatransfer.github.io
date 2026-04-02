@@ -774,7 +774,7 @@ h1 .accent { color: var(--gold); font-style: italic; font-weight: 700; }
 .contact-val { display: block; font-size: 14px; color: var(--text); text-decoration: none; font-weight: 600; transition: var(--transition); }
 .contact-val:hover { color: var(--gold); }
 .contact-badge {
-  display: inline-block; padding: 1px 8px; border-radius: 10px;
+  padding: 1px 8px; border-radius: 10px;
   font-size: 10px; font-weight: 700;
   background: var(--gold-dim); color: var(--gold);
   border: 1px solid var(--gold-border); margin-left: 4px;
