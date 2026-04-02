@@ -1494,6 +1494,11 @@ function closeMenu() {
         }
     });
 }
+	function changeLanguage(lang) {
+    document.body.className = 'lang-' + lang; // это ваш старый код
+    
+    updateSelectLanguage(lang); // А это добавляем для селекта
+}
 	
 // ── INIT ──
 setLang('ru');
