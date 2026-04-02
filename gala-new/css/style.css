@@ -330,10 +330,9 @@ h1 .accent {
 .widget-input option { background: #14141F; }
 
 .widget-input#w-datetime {
-    
+    max-width: 180px;
     padding-left: 8px;
     padding-right: 4px;
-   
     font-size: 13px;
     box-sizing: border-box;
 }
