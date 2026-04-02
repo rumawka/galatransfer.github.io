@@ -1481,24 +1481,6 @@ function closeMenu() {
       }
     });
   })();
-
-	function updateSelectLanguage(lang) {
-    const select = document.getElementById('w-route');
-    const options = select.querySelectorAll('option');
-
-    options.forEach(option => {
-        // Берем перевод из соответствующего data-атрибута
-        const translation = option.getAttribute(`data-${lang}`);
-        if (translation) {
-            option.textContent = translation;
-        }
-    });
-}
-	function changeLanguage(lang) {
-    document.body.className = 'lang-' + lang; // это ваш старый код
-    
-    updateSelectLanguage(lang); // А это добавляем для селекта
-}
 	
 // ── INIT ──
 setLang('ru');
