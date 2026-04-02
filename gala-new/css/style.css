@@ -385,7 +385,7 @@ h1 .accent {
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   /* margin-top: 60px; */
-  flex-wrap: wrap;
+  flex-wrap: wrap; 
 }
 .trust-item {
   display: flex; align-items: center; gap: 10px;
@@ -650,7 +650,7 @@ h1 .accent {
 .review-text {
   font-size: 17px; color: var(--text);
   line-height: 1.75; font-weight: 300;
-  font-family: 'Cormorant Garamond', serif;
+ /* font-family: 'Cormorant Garamond', serif; */
   margin-bottom: 24px; max-width: 680px;
   font-style: italic;
 }
