@@ -106,18 +106,119 @@
 
   <!-- Quick booking widget -->
   <div class="hero-widget">
+    <!-- Row 1: transfer type tabs -->
     <div class="widget-tabs">
       <button class="widget-tab active" onclick="setWidgetTab('shared', this)">
+        <svg viewBox="0 0 20 20" width="14" height="14" fill="none" style="margin-right:5px;vertical-align:middle"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM6 8a2 2 0 11-4 0 2 2 0 014 0zM15.992 17c.013-.164.008-.33-.008-.5C15.667 14.57 13.5 13 10 13s-5.667 1.57-5.984 3.5c-.016.17-.02.336-.008.5h11.984z" fill="currentColor"/></svg>
         <span class="t-ru">С попутчиками · от 70€</span>
         <span class="t-en">Shared · from 70€</span>
         <span class="t-bg">Споделено · от 70€</span>
       </button>
       <button class="widget-tab" onclick="setWidgetTab('private', this)">
+        <svg viewBox="0 0 20 20" width="14" height="14" fill="none" style="margin-right:5px;vertical-align:middle"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" fill="currentColor"/></svg>
         <span class="t-ru">Индивидуальный · от 230€</span>
         <span class="t-en">Private · from 230€</span>
         <span class="t-bg">Индивидуален · от 230€</span>
       </button>
     </div>
+
+    <!-- Row 2: car class cards -->
+    <div class="wcar-label">
+      <span class="t-ru">Класс автомобиля</span>
+      <span class="t-en">Vehicle class</span>
+      <span class="t-bg">Клас автомобил</span>
+    </div>
+    <div class="wcar-grid" id="wcarGrid">
+
+      <!-- COMFORT -->
+      <button class="wcar-card active" data-multiplier="1" data-maxpax="4" onclick="selectCar(this)">
+        <div class="wcar-icon">
+          <!-- Sedan SVG -->
+          <svg viewBox="0 0 80 36" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="20" width="72" height="13" rx="4" fill="currentColor" opacity=".15" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M14 20 C16 12 22 9 30 9 L50 9 C58 9 64 12 66 20Z" fill="currentColor" opacity=".25" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+            <rect x="17" y="10" width="13" height="9" rx="2" fill="currentColor" opacity=".18"/>
+            <rect x="32" y="10" width="16" height="9" rx="2" fill="currentColor" opacity=".18"/>
+            <circle cx="18" cy="33" r="5" fill="currentColor" opacity=".9"/>
+            <circle cx="18" cy="33" r="2.5" fill="#0A0A0F"/>
+            <circle cx="62" cy="33" r="5" fill="currentColor" opacity=".9"/>
+            <circle cx="62" cy="33" r="2.5" fill="#0A0A0F"/>
+            <rect x="5" y="22" width="7" height="4" rx="1.5" fill="#FFD770" opacity=".7"/>
+            <rect x="68" y="22" width="7" height="4" rx="1.5" fill="#FF6B6B" opacity=".5"/>
+          </svg>
+        </div>
+        <div class="wcar-name">Comfort</div>
+        <div class="wcar-model">Skoda · VW</div>
+        <div class="wcar-pax">
+          <svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" opacity=".6"><path d="M8 8a3 3 0 100-6 3 3 0 000 6zm-5 7a5 5 0 0110 0H3z"/></svg>
+          1–4
+        </div>
+      </button>
+
+      <!-- PREMIUM -->
+      <button class="wcar-card" data-multiplier="2" data-maxpax="3" onclick="selectCar(this)">
+        <div class="wcar-icon">
+          <!-- Luxury sedan SVG — longer, lower -->
+          <svg viewBox="0 0 80 36" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="21" width="76" height="12" rx="4" fill="currentColor" opacity=".15" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M12 21 C15 13 22 10 32 10 L52 10 C62 10 66 14 68 21Z" fill="currentColor" opacity=".25" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+            <rect x="19" y="11" width="13" height="9" rx="2" fill="currentColor" opacity=".18"/>
+            <rect x="34" y="11" width="17" height="9" rx="2" fill="currentColor" opacity=".18"/>
+            <!-- hood line -->
+            <path d="M68 21 L73 21" stroke="currentColor" stroke-width="1" opacity=".4"/>
+            <circle cx="16" cy="33" r="5" fill="currentColor" opacity=".9"/>
+            <circle cx="16" cy="33" r="2.5" fill="#0A0A0F"/>
+            <circle cx="64" cy="33" r="5" fill="currentColor" opacity=".9"/>
+            <circle cx="64" cy="33" r="2.5" fill="#0A0A0F"/>
+            <rect x="3" y="23" width="6" height="4" rx="1.5" fill="#FFD770" opacity=".8"/>
+            <rect x="71" y="23" width="6" height="4" rx="1.5" fill="#FF6B6B" opacity=".5"/>
+            <!-- star badge -->
+            <circle cx="40" cy="21" r="3" fill="currentColor" opacity=".3" stroke="currentColor" stroke-width=".8"/>
+            <text x="40" y="23.5" text-anchor="middle" font-size="4" fill="currentColor" font-family="sans-serif">★</text>
+          </svg>
+        </div>
+        <div class="wcar-name">Premium</div>
+        <div class="wcar-model">Mercedes S</div>
+        <div class="wcar-pax">
+          <svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" opacity=".6"><path d="M8 8a3 3 0 100-6 3 3 0 000 6zm-5 7a5 5 0 0110 0H3z"/></svg>
+          1–3
+        </div>
+      </button>
+
+      <!-- MINIVAN -->
+      <button class="wcar-card" data-multiplier="1.8" data-maxpax="7" onclick="selectCar(this)">
+        <div class="wcar-icon">
+          <!-- Minivan / V-Class SVG — taller, boxy -->
+          <svg viewBox="0 0 80 36" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="14" width="74" height="19" rx="4" fill="currentColor" opacity=".15" stroke="currentColor" stroke-width="1.2"/>
+            <!-- roof section -->
+            <path d="M10 14 L10 7 L60 7 L68 14Z" fill="currentColor" opacity=".22" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+            <!-- windows row -->
+            <rect x="12" y="8" width="11" height="7" rx="1.5" fill="currentColor" opacity=".2"/>
+            <rect x="25" y="8" width="11" height="7" rx="1.5" fill="currentColor" opacity=".2"/>
+            <rect x="38" y="8" width="11" height="7" rx="1.5" fill="currentColor" opacity=".2"/>
+            <rect x="51" y="8" width="9" height="7" rx="1.5" fill="currentColor" opacity=".2"/>
+            <!-- wheels -->
+            <circle cx="18" cy="33" r="5" fill="currentColor" opacity=".9"/>
+            <circle cx="18" cy="33" r="2.5" fill="#0A0A0F"/>
+            <circle cx="62" cy="33" r="5" fill="currentColor" opacity=".9"/>
+            <circle cx="62" cy="33" r="2.5" fill="#0A0A0F"/>
+            <!-- lights -->
+            <rect x="4" y="18" width="6" height="4" rx="1.5" fill="#FFD770" opacity=".75"/>
+            <rect x="70" y="18" width="6" height="4" rx="1.5" fill="#FF6B6B" opacity=".5"/>
+          </svg>
+        </div>
+        <div class="wcar-name">Minivan XL</div>
+        <div class="wcar-model">Mercedes V</div>
+        <div class="wcar-pax">
+          <svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" opacity=".6"><path d="M8 8a3 3 0 100-6 3 3 0 000 6zm-5 7a5 5 0 0110 0H3z"/></svg>
+          1–7
+        </div>
+      </button>
+
+    </div>
+
+    <!-- Row 3: route / datetime / pax / price / book -->
     <div class="widget-row">
       <div class="widget-field">
         <label>
@@ -159,7 +260,7 @@
           <span class="t-en">Price</span>
           <span class="t-bg">Цена</span>
         </label>
-        <div class="widget-input" id="w-price" style="color:var(--gold);font-weight:700;font-size:18px;">€180</div>
+        <div class="widget-input" id="w-price" style="color:var(--gold);font-weight:700;font-size:18px;">€230</div>
       </div>
       <div class="widget-field">
         <label style="opacity:0">-</label>
@@ -1013,7 +1114,7 @@
           <svg viewBox="0 0 24 24" class="contact-svg" style="fill:#C9A84C"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
         </div>
         <div class="contact-label">Email</div>
-        <a href="mailto:galinanaymov@gmail.com" class="contact-val">galinanaymov@gmail.com</a>
+        <a href="/cdn-cgi/l/email-protection#d0b7b1bcb9beb1beb1a9bdbfa690b7bdb1b9bcfeb3bfbd" class="contact-val"><span class="__cf_email__" data-cfemail="9ef9fff2f7f0fff0ffe7f3f1e8def9f3fff7f2b0fdf1f3">[email&#160;protected]</span></a>
       </div>
 
     </div>
@@ -1037,7 +1138,7 @@
     </a>
     <a href="https://www.instagram.com/taxibulgariastambul" target="_blank" class="footer-social">Instagram</a>
     <a href="https://www.facebook.com/share/1E1BdqshFE/" target="_blank" class="footer-social">Facebook</a>
-    <a href="mailto:galinanaymov@gmail.com" class="footer-social">Email</a>
+    <a href="/cdn-cgi/l/email-protection#94f3f5f8fdfaf5faf5edf9fbe2d4f3f9f5fdf8baf7fbf9" class="footer-social">Email</a>
   </div>
   <div class="footer-note">© 2026 Gala Transfer.
     <span class="t-ru">Все права защищены.</span>
@@ -1052,7 +1153,7 @@
 <!-- ════════════════════════════════════════
      JAVASCRIPT
 ════════════════════════════════════════ -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── LANGUAGE ──
 let lang = 'ru';
 function setLang(l) {
@@ -1074,25 +1175,42 @@ window.addEventListener('scroll', () => {
 });
 
 // ── WIDGET (HERO) ──
-let widgetType = 'shared'; // shared | private
+let widgetType = 'shared';
+let widgetCarMultiplier = 1;
+
 function setWidgetTab(type, btn) {
   widgetType = type;
   document.querySelectorAll('.widget-tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+  // show/hide car selector: shared doesn't need class
+  const grid = document.getElementById('wcarGrid');
+  if (grid) grid.style.opacity = type === 'shared' ? '0.4' : '1';
   recalcWidget();
 }
+
+function selectCar(btn) {
+  document.querySelectorAll('.wcar-card').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  widgetCarMultiplier = parseFloat(btn.dataset.multiplier) || 1;
+  // cap pax select to maxpax
+  const maxPax = parseInt(btn.dataset.maxpax) || 7;
+  const paxSel = document.getElementById('w-pax');
+  Array.from(paxSel.options).forEach(opt => {
+    opt.disabled = parseInt(opt.value) > maxPax;
+  });
+  if (parseInt(paxSel.value) > maxPax) paxSel.value = maxPax;
+  recalcWidget();
+}
+
 function recalcWidget() {
   const routeSel = document.getElementById('w-route');
   const pax      = parseInt(document.getElementById('w-pax').value) || 1;
   const base     = parseFloat(routeSel.value);
   const priceEl  = document.getElementById('w-price');
-  if (!base) {
-    priceEl.textContent = '?';
-    return;
-  }
+  if (!base) { priceEl.textContent = '?'; return; }
   let total = widgetType === 'shared'
     ? Math.round(base * 0.55 * pax)
-    : Math.round(base * pax);
+    : Math.round(base * widgetCarMultiplier * pax);
   priceEl.textContent = '€' + total;
 }
 
@@ -1255,16 +1373,4 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 // ── MOBILE MENU ──
 function toggleMenu() {
   document.getElementById('burger').classList.toggle('open');
-  document.getElementById('mobileDrawer').classList.toggle('open');
-}
-function closeMenu() {
-  document.getElementById('burger').classList.remove('open');
-  document.getElementById('mobileDrawer').classList.remove('open');
-}
-
-// ── INIT ──
-setLang('ru');
-recalcWidget();
-</script>
-</body>
-</html>
+  document.
