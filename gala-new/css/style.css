@@ -328,6 +328,30 @@ h1 .accent {
   background: rgba(201,168,76,.05);
 }
 .widget-input option { background: #14141F; }
+
+.widget-input#w-datetime {
+    /* Ограничиваем ширину, чтобы он стал как "Пассажиры" */
+    max-width: 160px; 
+    
+    /* Уменьшаем боковые отступы внутри, чтобы текст влез */
+    padding-left: 8px;
+    padding-right: 4px;
+    
+    /* Делаем шрифт чуть меньше, если дата начнет обрезаться */
+    font-size: 13px;
+    
+    /* Убираем лишние отступы браузера */
+    box-sizing: border-box;
+}
+.widget-input#w-datetime::-webkit-calendar-picker-indicator {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    /* Можно даже немного уменьшить саму иконку */
+    width: 14px;
+    height: 14px;
+}
+
 .widget-arrow {
   display: flex; align-items: center; justify-content: center;
   color: var(--gold); font-size: 18px;
