@@ -1482,38 +1482,36 @@ function closeMenu() {
     });
   })();
 
-	function updateSelects(lang) {
-    // Находим наш выпадающий список
+	// 1. Функция самого перевода
+function translateRouteSelect() {
     const select = document.getElementById('w-route');
     if (!select) return;
 
+    // Определяем текущий язык из класса body
+    let lang = 'ru'; 
+    if (document.body.classList.contains('lang-en')) lang = 'en';
+    if (document.body.classList.contains('lang-bg')) lang = 'bg';
+
     const options = select.querySelectorAll('option');
-    options.forEach(option => {
-        // Достаем перевод из атрибута data-ru, data-en или data-bg
-        const translation = option.getAttribute('data-' + lang);
-        if (translation) {
-            option.textContent = translation;
-        }
+    options.forEach(opt => {
+        const text = opt.getAttribute('data-' + lang);
+        if (text) opt.textContent = text;
     });
 }
 
-// Функция, которую вы должны вызывать при клике на кнопки смены языка
-function setLanguage(lang) {
-    // 1. Меняем класс у body для ваших CSS-правил
-    document.body.className = 'lang-' + lang;
-    
-    // 2. Принудительно обновляем текст в селекте
-    updateSelects(lang);
-    
-    // 3. Сохраняем выбор (опционально), чтобы при обновлении не слетало
-    localStorage.setItem('selectedLanguage', lang);
-}
+// 2. Настройка "слежки" за сменой языка
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+            translateRouteSelect();
+        }
+    });
+});
 
-// ЗАПУСК ПРИ ЗАГРУЗКЕ:
+// 3. Запуск слежки и первичный перевод
 document.addEventListener('DOMContentLoaded', () => {
-    // Проверяем, какой язык был сохранен или какой стоит у body
-    const savedLang = localStorage.getItem('selectedLanguage') || 'ru'; 
-    setLanguage(savedLang);
+    observer.observe(document.body, { attributes: true });
+    translateRouteSelect(); // Переводим сразу при загрузке
 });
 	
 // ── INIT ──
