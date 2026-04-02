@@ -1481,6 +1481,36 @@ function closeMenu() {
       }
     });
   })();
+
+	function applyLanguage(lang) {
+    // 1. Меняем класс у body для CSS (твои старые стили)
+    document.body.className = 'lang-' + lang;
+
+    // 2. Находим наш селект и переводим каждую опцию
+    const routeSelect = document.getElementById('w-route');
+    if (routeSelect) {
+        const options = routeSelect.querySelectorAll('option');
+        options.forEach(opt => {
+            const translation = opt.getAttribute('data-' + lang);
+            if (translation) {
+                opt.textContent = translation;
+            }
+        });
+    }
+    
+    // 3. Вызываем твой пересчет цены, чтобы обновилось всё сразу
+    if (typeof recalcWidget === "function") {
+        recalcWidget();
+    }
+}
+
+// Выполнить при загрузке страницы (автодетекция)
+document.addEventListener('DOMContentLoaded', () => {
+    // Проверяем, какой язык стоит в body по умолчанию, и применяем его к селекту
+    if (document.body.classList.contains('lang-ru')) applyLanguage('ru');
+    else if (document.body.classList.contains('lang-bg')) applyLanguage('bg');
+    else applyLanguage('en');
+});
 	
 // ── INIT ──
 setLang('ru');
