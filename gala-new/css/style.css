@@ -897,7 +897,71 @@ footer {
 }
 .btn-outline:hover { background: var(--gold-dim); border-color: var(--gold); transform: translateY(-2px); }
 
-/* ═══════════════════════ RESPONSIVE ═══════════════════════ */
+/* ── WIDGET CAR CLASS SELECTOR ── */
+.wcar-label {
+  font-size: 11px; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--muted);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.wcar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+  transition: opacity .3s;
+}
+.wcar-card {
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 14px 12px 12px;
+  cursor: pointer;
+  text-align: center;
+  transition: var(--transition);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--muted);
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+}
+.wcar-card:hover {
+  border-color: rgba(201,168,76,.35);
+  color: var(--text);
+  background: rgba(201,168,76,.05);
+}
+.wcar-card.active {
+  border-color: var(--gold);
+  background: rgba(201,168,76,.1);
+  color: var(--gold-light);
+}
+.wcar-icon {
+  width: 80px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 4px;
+}
+.wcar-icon svg { width: 80px; height: 36px; }
+.wcar-card .wcar-icon { color: var(--muted); transition: var(--transition); }
+.wcar-card.active .wcar-icon { color: var(--gold); }
+.wcar-card:hover .wcar-icon { color: var(--gold-light); }
+.wcar-name {
+  font-size: 13px; font-weight: 600;
+  letter-spacing: .02em;
+}
+.wcar-model {
+  font-size: 11px; opacity: .65;
+}
+.wcar-pax {
+  font-size: 11px; display: flex; align-items: center; gap: 3px;
+  margin-top: 2px; opacity: .7;
+}
+
+@media (max-width: 640px) {
+  .wcar-grid { grid-template-columns: repeat(3, 1fr); gap: 7px; }
+  .wcar-card { padding: 10px 6px; }
+  .wcar-icon { width: 56px; height: 26px; }
+  .wcar-icon svg { width: 56px; height: 26px; }
+  .wcar-name { font-size: 11px; }
+  .wcar-model { font-size: 10px; }
+}
 @media (max-width: 1100px) {
   .widget-row { grid-template-columns: 1fr 1fr 1fr; }
   .contacts-grid { grid-template-columns: repeat(3, 1fr); }
