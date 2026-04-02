@@ -613,7 +613,7 @@ function selectMsg(btn) {
   btn.classList.add('active');
   selectedMessenger = btn.dataset.messenger;
   const ph = document.getElementById('f-phone');
-  const p = { phone:'+7 / +359 / +90 ...', telegram:'@username или +7 ...', whatsapp:'+7 / +359 / +90 ...', viber:'+7 / +359 / +90 ...', imo:'+7 / +359 / +90 ...', max:'+7 9xx xxx xx xx', email:'your@email.com' };
+  const p = { phone:'+7 / +359 / +90 ...', telegram:'@username - +7 / +359 / +90 ...', whatsapp:'+7 / +359 / +90 ...', viber:'+7 / +359 / +90 ...', imo:'+7 / +359 / +90 ...', max:'+7 9xx xxx xx xx', email:'your@email.com' };
   ph.placeholder = p[selectedMessenger] || '+7 / +359 / +90 ...';
   ph.type = selectedMessenger === 'email' ? 'email' : 'text';
 }
