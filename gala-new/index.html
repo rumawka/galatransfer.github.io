@@ -1357,23 +1357,44 @@ async function sendBooking() {
 ${msgrLabel}: ${phone}
 💬 *Доп. инфо:* ${comment || '—'}`;
 
+	const TG_TOKEN   = '8772133903:AAHPXEKuXFrzSBQWt8L60Nk1uO6Iqe4IEbw';
+const TG_CHAT_ID = '699505010';
   const btn = document.getElementById('btn-book');
   btn.disabled = true;
 
-  try {
-    const res = await fetch('api/send.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: msg })
+//   try {
+//     const res = await fetch('api/send.php', {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({ message: msg })
+//     });
+//     const ok   = { ru:'✓ Заявка отправлена! Ответим за 15 минут', en:"✓ Request sent! We'll reply in 15 min", bg:'✓ Запитването е изпратено! Ще отговорим до 15 мин' };
+//     const fail = { ru:'Ошибка. Попробуйте ещё раз.', en:'Error. Please try again.', bg:'Грешка. Опитайте отново.' };
+//     showToast(res.ok ? ok[lang] : fail[lang]);
+//     if (res.ok) {
+//       ['f-phone','f-name','f-comment'].forEach(id => document.getElementById(id).value = '');
+//     }
+//   } catch(e) {
+//     showToast({ ru:'Ошибка сети.', en:'Network error.', bg:'Мрежова грешка.' }[lang]);
+//   }
+//   btn.disabled = false;
+// }
+
+	try {
+    const res = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({chat_id: TG_CHAT_ID, text: msg, parse_mode:'Markdown'})
     });
-    const ok   = { ru:'✓ Заявка отправлена! Ответим за 15 минут', en:"✓ Request sent! We'll reply in 15 min", bg:'✓ Запитването е изпратено! Ще отговорим до 15 мин' };
-    const fail = { ru:'Ошибка. Попробуйте ещё раз.', en:'Error. Please try again.', bg:'Грешка. Опитайте отново.' };
+    const ok = {ru:'✓ Заявка отправлена! Ответим за 15 минут',en:'✓ Request sent! We\'ll reply in 15 min',bg:'✓ Запитването е изпратено! Ще отговорим до 15 мин'};
+    const fail = {ru:'Ошибка. Попробуйте ещё раз.',en:'Error. Please try again.',bg:'Грешка. Опитайте отново.'};
     showToast(res.ok ? ok[lang] : fail[lang]);
     if (res.ok) {
       ['f-phone','f-name','f-comment'].forEach(id => document.getElementById(id).value = '');
     }
   } catch(e) {
-    showToast({ ru:'Ошибка сети.', en:'Network error.', bg:'Мрежова грешка.' }[lang]);
+    const net = {ru:'Ошибка сети.',en:'Network error.',bg:'Мрежова грешка.'};
+    showToast(net[lang]);
   }
   btn.disabled = false;
 }
