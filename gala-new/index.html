@@ -241,7 +241,7 @@
           <span class="t-en">Date & time</span>
           <span class="t-bg">Дата и час</span>
         </label>
-        <input type="datetime-local" class="widget-input" id="w-datetime" placeholder="mm/dd/yyyy --/--/--">
+        <input type="datetime-local" class="widget-input" id="w-datetime">
       </div>
       <div class="widget-field">
         <label>
@@ -1311,7 +1311,7 @@ function selectMsg(btn) {
   selectedMessenger = btn.dataset.messenger;
   const ph = document.getElementById('f-phone');
   const placeholders = {
-    phone: '+7 / +359 / +90 ...', telegram: '@username или +7 ...',
+    phone: '+7 / +359 / +90 ...', telegram: '@username - +7 / +359 / +90 ...',
     whatsapp: '+7 / +359 / +90 ...', viber: '+7 / +359 / +90 ...',
     imo: '+7 / +359 / +90 ...', email: 'your@email.com'
   };
@@ -1442,6 +1442,18 @@ function closeMenu() {
   document.getElementById('mobileDrawer').classList.remove('open');
 }
 
+	// Находим элемент по вашему ID
+  const dateInput = document.getElementById('w-datetime');
+  
+  // Создаем объект даты (сейчас)
+  const now = new Date();
+  
+  // Корректируем время с учетом часового пояса пользователя
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  
+  // Превращаем в строку формата YYYY-MM-DDTHH:mm и записываем в input
+  dateInput.value = now.toISOString().slice(0, 16);
+	
 // ── INIT ──
 setLang('ru');
 recalcWidget();
