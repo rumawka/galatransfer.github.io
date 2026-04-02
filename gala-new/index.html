@@ -1481,38 +1481,6 @@ function closeMenu() {
       }
     });
   })();
-
-	// 1. Функция самого перевода
-function translateRouteSelect() {
-    const select = document.getElementById('w-route');
-    if (!select) return;
-
-    // Определяем текущий язык из класса body
-    let lang = 'ru'; 
-    if (document.body.classList.contains('lang-en')) lang = 'en';
-    if (document.body.classList.contains('lang-bg')) lang = 'bg';
-
-    const options = select.querySelectorAll('option');
-    options.forEach(opt => {
-        const text = opt.getAttribute('data-' + lang);
-        if (text) opt.textContent = text;
-    });
-}
-
-// 2. Настройка "слежки" за сменой языка
-const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-        if (mutation.attributeName === "class") {
-            translateRouteSelect();
-        }
-    });
-});
-
-// 3. Запуск слежки и первичный перевод
-document.addEventListener('DOMContentLoaded', () => {
-    observer.observe(document.body, { attributes: true });
-    translateRouteSelect(); // Переводим сразу при загрузке
-});
 	
 // ── INIT ──
 setLang('ru');
