@@ -1114,7 +1114,7 @@
           <svg viewBox="0 0 24 24" class="contact-svg" style="fill:#C9A84C"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
         </div>
         <div class="contact-label">Email</div>
-        <a href="/cdn-cgi/l/email-protection#d0b7b1bcb9beb1beb1a9bdbfa690b7bdb1b9bcfeb3bfbd" class="contact-val"><span class="__cf_email__" data-cfemail="9ef9fff2f7f0fff0ffe7f3f1e8def9f3fff7f2b0fdf1f3">[email&#160;protected]</span></a>
+        <a href="mailto:galinanaymov@gmail.com" class="contact-val">galinanaymov@gmail.com</a>
       </div>
 
     </div>
@@ -1138,7 +1138,7 @@
     </a>
     <a href="https://www.instagram.com/taxibulgariastambul" target="_blank" class="footer-social">Instagram</a>
     <a href="https://www.facebook.com/share/1E1BdqshFE/" target="_blank" class="footer-social">Facebook</a>
-    <a href="/cdn-cgi/l/email-protection#94f3f5f8fdfaf5faf5edf9fbe2d4f3f9f5fdf8baf7fbf9" class="footer-social">Email</a>
+    <a href="mailto:galinanaymov@gmail.com" class="footer-social">Email</a>
   </div>
   <div class="footer-note">© 2026 Gala Transfer.
     <span class="t-ru">Все права защищены.</span>
@@ -1153,7 +1153,7 @@
 <!-- ════════════════════════════════════════
      JAVASCRIPT
 ════════════════════════════════════════ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ── LANGUAGE ──
 let lang = 'ru';
 function setLang(l) {
@@ -1373,4 +1373,16 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 // ── MOBILE MENU ──
 function toggleMenu() {
   document.getElementById('burger').classList.toggle('open');
-  document.
+  document.getElementById('mobileDrawer').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('burger').classList.remove('open');
+  document.getElementById('mobileDrawer').classList.remove('open');
+}
+
+// ── INIT ──
+setLang('ru');
+recalcWidget();
+</script>
+</body>
+</html>
