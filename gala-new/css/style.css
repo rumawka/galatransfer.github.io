@@ -830,7 +830,7 @@ h1 .accent {
 }
 .contact-val:hover { color: var(--gold); }
 .contact-badge {
-  display: inline-block;
+  /* display: inline-block; */
   padding: 1px 8px;
   border-radius: 10px;
   font-size: 10px; font-weight: 700;
