@@ -297,7 +297,7 @@ h1 .accent {
 .widget-tab.active {
   background: var(--gold);
   color: #080810;
-  font-weight: 600;
+  /* font-weight: 600; */
 }
 .widget-row {
   display: grid;
