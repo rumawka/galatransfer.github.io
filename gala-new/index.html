@@ -1217,18 +1217,50 @@
 ════════════════════════════════════════ -->
 <script>
 // ── LANGUAGE ──
-let lang = 'ru';
+// let lang = 'ru';
+// function setLang(l) {
+//   lang = l;
+//   document.body.className = 'lang-' + l;
+//   ['ru','en','bg'].forEach(code => {
+//     ['btn-','mob-btn-'].forEach(prefix => {
+//       const btn = document.getElementById(prefix + code);
+//       if (btn) btn.classList.toggle('active', code === l);
+//     });
+//   });
+//   recalc();
+//   recalcWidget();
+// }
+
+	let lang = 'ru';
+
 function setLang(l) {
   lang = l;
   document.body.className = 'lang-' + l;
+
+  // 1. Переключаем активные классы у кнопок (твой код)
   ['ru','en','bg'].forEach(code => {
     ['btn-','mob-btn-'].forEach(prefix => {
       const btn = document.getElementById(prefix + code);
       if (btn) btn.classList.toggle('active', code === l);
     });
   });
-  recalc();
-  recalcWidget();
+
+  // 2. ДОБАВЛЯЕМ: Перевод выпадающего списка (маршрутов)
+  const routeSelect = document.getElementById('w-route');
+  if (routeSelect) {
+    const options = routeSelect.querySelectorAll('option');
+    options.forEach(opt => {
+      // Берем перевод из data-ru, data-en или data-bg
+      const translation = opt.getAttribute('data-' + l);
+      if (translation) {
+        opt.textContent = translation;
+      }
+    });
+  }
+
+  // 3. Вызываем пересчеты (твой код)
+  if (typeof recalc === "function") recalc();
+  if (typeof recalcWidget === "function") recalcWidget();
 }
 
 // ── HEADER SCROLL ──
