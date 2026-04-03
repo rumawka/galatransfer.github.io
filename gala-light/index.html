@@ -521,6 +521,7 @@ window.addEventListener('scroll', () => {
   document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 60);
 });
 
+
 // ── WIDGET ──
 let widgetType = 'shared';
 let widgetCarMultiplier = 1.5; // default: Vito
@@ -602,6 +603,72 @@ function recalc() {
   document.getElementById('p-class').textContent = className + ' · ' + model;
 }
 
+function syncWidgetToForm() {
+  // 1. Route
+  const wRoute = document.getElementById('w-route');
+  const fRoute = document.getElementById('f-route');
+  const wRouteVal = wRoute.value;
+  // match by value
+  let matchIdx = 0;
+  Array.from(fRoute.options).forEach((opt, i) => {
+    if (opt.value === wRouteVal) matchIdx = i;
+  });
+  fRoute.selectedIndex = matchIdx;
+
+  // 2. Transfer type: shared → select "С попутчиками", private → "Индивидуальный"
+  const fType = document.getElementById('f-type');
+  fType.value = widgetType === 'shared' ? '0.55' : '1';
+
+  // 3. Date & time
+  const wDt = document.getElementById('w-datetime').value;
+  if (wDt) document.getElementById('f-datetime').value = wDt;
+
+  // 4. Passengers
+  const wPax = document.getElementById('w-pax').value;
+  const fPax = document.getElementById('f-pax');
+  fPax.value = wPax;
+
+  // 5. Car — find active wcar-card in widget grid and sync to form grid
+  const activeWidgetCar = document.querySelector('#wcarGrid .wcar-card.active');
+  if (activeWidgetCar) {
+    const targetModel = activeWidgetCar.dataset.model;
+    const fCarGrid = document.getElementById('fcarGrid');
+    if (fCarGrid) {
+      const formCards = fCarGrid.querySelectorAll('.wcar-card');
+      formCards.forEach(card => {
+        card.classList.remove('active');
+        if (card.dataset.model === targetModel) {
+          card.classList.add('active');
+          // update hidden inputs
+          document.getElementById('f-class-val').value     = card.dataset.classval || '1';
+          document.getElementById('f-class-model').value   = card.dataset.model    || '';
+          document.getElementById('f-class-name-ru').value = card.dataset.ru       || '';
+          document.getElementById('f-class-name-en').value = card.dataset.en       || '';
+          document.getElementById('f-class-name-bg').value = card.dataset.bg       || '';
+          // cap pax
+          const maxPax = parseInt(card.dataset.maxpax) || 8;
+          Array.from(fPax.options).forEach(o => { o.disabled = parseInt(o.value) > maxPax; });
+          if (parseInt(fPax.value) > maxPax) fPax.value = maxPax;
+        }
+      });
+      // fallback: if no match, just pick first
+      const anyActive = fCarGrid.querySelector('.wcar-card.active');
+      if (!anyActive && formCards.length > 0) formCards[0].classList.add('active');
+    }
+  }
+
+  recalc();
+  // visual feedback: briefly highlight the booking form
+  const bookingGrid = document.querySelector('.booking-grid');
+  if (bookingGrid) {
+    bookingGrid.style.transition = 'box-shadow .3s';
+    bookingGrid.style.boxShadow = '0 0 0 3px rgba(184,134,11,.4)';
+    setTimeout(() => { bookingGrid.style.boxShadow = ''; }, 800);
+  }
+  document.querySelector('#booking').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// called from route cards in routes section
 function fillForm(routeIndex) {
   document.getElementById('f-route').selectedIndex = routeIndex;
   recalc();
