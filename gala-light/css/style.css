@@ -295,7 +295,7 @@ nav { flex: 1; }
 
 h1 {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(7rem, 9vw, 112px);
+  font-size: clamp(60px, 9vw, 112px);
   font-weight: 300; line-height: .92;
   letter-spacing: -.025em;
   color: var(--text);
@@ -408,7 +408,7 @@ h1 .accent { color: var(--gold); font-style: italic; font-weight: 700; }
 
 .widget-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 150px 130px auto;
+  grid-template-columns: 1fr 1fr 150px auto;
   gap: 10px; align-items: end;
 }
 .widget-field { display: flex; flex-direction: column; gap: 5px; }
@@ -774,7 +774,7 @@ h1 .accent { color: var(--gold); font-style: italic; font-weight: 700; }
 .contact-val { display: block; font-size: 14px; color: var(--text); text-decoration: none; font-weight: 600; transition: var(--transition); }
 .contact-val:hover { color: var(--gold); }
 .contact-badge {
-  padding: 1px 8px; border-radius: 10px;
+  display: inline-block; padding: 1px 8px; border-radius: 10px;
   font-size: 10px; font-weight: 700;
   background: var(--gold-dim); color: var(--gold);
   border: 1px solid var(--gold-border); margin-left: 4px;
@@ -843,9 +843,8 @@ footer {
   .wcar-model { font-size: 9px; }
   .widget-row { grid-template-columns: 1fr 1fr; gap: 8px; }
   .widget-row .widget-field:nth-child(1) { grid-column: 1/-1; }
-  .widget-row .widget-field:nth-child(4),
-  .widget-row .widget-field:nth-child(5) { grid-column: span 1; }
-  .widget-row .widget-field:nth-child(5) label { display: none; }
+  .widget-row .widget-field:nth-child(4) label { display: none; }
+  .widget-row .widget-field:nth-child(4) { grid-column: 1/-1; }
   .btn-search { width: 100%; text-align: center; font-size: 13px; padding: 12px; }
   .services-grid, .fleet-grid { grid-template-columns: 1fr; }
   .steps-grid { grid-template-columns: 1fr; }
