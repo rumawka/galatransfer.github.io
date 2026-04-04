@@ -181,6 +181,7 @@
           <option value="80" data-ru="Бургас → Варна" data-en="Burgas → Varna" data-bg="Бургас → Варна">Burgas → Varna</option>
           <option value="80" data-ru="Болгария → Греция" data-en="Bulgaria → Greece" data-bg="България → Гърция">Bulgaria → Greece</option>
           <option value="0" data-ru="По Болгарии" data-en="Within Bulgaria" data-bg="Из България">Within Bulgaria</option>
+          <option value="0" data-ru="По Европе" data-en="Within Europe" data-bg="за Европа">Within Europe</option>
         </select>
       </div>
       <div class="widget-field">
@@ -233,6 +234,7 @@
       <div class="route-card" onclick="fillForm(3)"><span class="route-badge daily"><span class="t-ru">Ежедневно</span><span class="t-en">Daily</span><span class="t-bg">Ежедневно</span></span><div class="route-flag">🇧🇬 → 🇧🇬</div><div class="route-cities"><span class="t-ru">Бургас<br>→ Варна</span><span class="t-en">Burgas<br>→ Varna</span><span class="t-bg">Бургас<br>→ Варна</span></div><div class="route-price"><sup><span class="t-ru">от </span><span class="t-en">from </span><span class="t-bg">от </span></sup>80€</div><div class="route-meta"><span>⏱ ~1.5 h</span><span>📍 ~130 km</span></div></div>
       <div class="route-card" onclick="fillForm(4)"><span class="route-badge custom"><span class="t-ru">По запросу</span><span class="t-en">On request</span><span class="t-bg">При запитване</span></span><div class="route-flag">🇧🇬 → 🇬🇷</div><div class="route-cities"><span class="t-ru">Болгария<br>→ Греция</span><span class="t-en">Bulgaria<br>→ Greece</span><span class="t-bg">България<br>→ Гърция</span></div><div class="route-on-request"><span class="t-ru">По запросу</span><span class="t-en">On request</span><span class="t-bg">При запитване</span></div><div class="route-meta"><span><span class="t-ru">📍 Любые города</span><span class="t-en">📍 Any city</span><span class="t-bg">📍 Всякакви градове</span></span></div></div>
       <div class="route-card" onclick="fillForm(4)"><span class="route-badge custom"><span class="t-ru">По запросу</span><span class="t-en">On request</span><span class="t-bg">При запитване</span></span><div class="route-flag">🇧🇬</div><div class="route-cities"><span class="t-ru">По Болгарии</span><span class="t-en">Within Bulgaria</span><span class="t-bg">Из България</span></div><div class="route-on-request"><span class="t-ru">По запросу</span><span class="t-en">On request</span><span class="t-bg">При запитване</span></div><div class="route-meta"><span><span class="t-ru">📍 Любые направления</span><span class="t-en">📍 Any direction</span><span class="t-bg">📍 Всички посоки</span></span></div></div>
+        <div class="route-card" onclick="fillForm(5)"><span class="route-badge custom"><span class="t-ru">По запросу</span><span class="t-en">On request</span><span class="t-bg">При запитване</span></span><div class="route-flag">🇪🇺</div><div class="route-cities"><span class="t-ru">По Европе</span><span class="t-en">Within Europe</span><span class="t-bg">За Европа</span></div><div class="route-on-request"><span class="t-ru">По запросу</span><span class="t-en">On request</span><span class="t-bg">При запитване</span></div><div class="route-meta"><span><span class="t-ru">📍 Любые направления</span><span class="t-en">📍 Any direction</span><span class="t-bg">📍 Всички посоки</span></span></div></div>
     </div>
     <p style="font-size:12px;color:var(--muted);margin-top:16px"><span class="t-ru">* Обратные маршруты и нестандартные направления — уточняйте в чате.</span><span class="t-en">* Return trips and custom routes — ask us in chat.</span><span class="t-bg">* Обратни маршрути — питайте в чата.</span></p>
   </div>
@@ -324,11 +326,13 @@
         <div class="form-group">
           <label><span class="t-ru">Маршрут</span><span class="t-en">Route</span><span class="t-bg">Маршрут</span></label>
           <select class="form-control" id="f-route" onchange="recalc()">
-            <option value="250" data-ru="Стамбул → Бургас" data-en="Istanbul → Burgas" data-bg="Истанбул → Бургас">Istanbul → Burgas / Стамбул → Бургас</option>
-            <option value="250" data-ru="Стамбул → Варна" data-en="Istanbul → Varna" data-bg="Истанбул → Варна">Istanbul → Varna / Стамбул → Варна</option>
-            <option value="350" data-ru="Стамбул → София" data-en="Istanbul → Sofia" data-bg="Истанбул → София">Istanbul → Sofia / Стамбул → София</option>
-            <option value="80" data-ru="Бургас → Варна" data-en="Burgas → Varna" data-bg="Бургас → Варна">Burgas → Varna / Бургас → Варна</option>
-            <option value="0" data-ru="Другой маршрут" data-en="Other / Custom route" data-bg="Друг маршрут">Другой маршрут / Other route</option>
+            <option value="250" data-ru="Стамбул → Бургас" data-en="Istanbul → Burgas" data-bg="Стамбул → Бургас">Istanbul → Burgas</option>
+          <option value="250" data-ru="Стамбул → Варна" data-en="Istanbul → Varna" data-bg="Стамбул → Варна">Istanbul → Varna</option>
+          <option value="350" data-ru="Стамбул → София" data-en="Istanbul → Sofia" data-bg="Стамбул → София">Istanbul → Sofia</option>
+          <option value="80" data-ru="Бургас → Варна" data-en="Burgas → Varna" data-bg="Бургас → Варна">Burgas → Varna</option>
+          <option value="80" data-ru="Болгария → Греция" data-en="Bulgaria → Greece" data-bg="България → Гърция">Bulgaria → Greece</option>
+          <option value="0" data-ru="По Болгарии" data-en="Within Bulgaria" data-bg="Из България">Within Bulgaria</option>
+          <option value="0" data-ru="По Европе" data-en="Within Europe" data-bg="за Европа">Within Europe</option>
           </select>
         </div>
 
