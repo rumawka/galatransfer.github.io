@@ -723,7 +723,7 @@ async function sendBooking() {
   const errMsg  = { ru:'Укажите контакт для связи', en:'Please enter your contact', bg:'Въведете контакт' };
   if (phone.length < 3) { showToast(errMsg[lang]); return; }
   const routeSel = document.getElementById('f-route');
-  const typeSel  = document.getElementById('f-type');
+  // const typeSel  = document.getElementById('f-type');
   const total    = document.getElementById('p-total').textContent;
   const mLabels  = { phone:'📞 Телефон', telegram:'✈️ Telegram', whatsapp:'💬 WhatsApp', viber:'📲 Viber', imo:'📱 IMO', max:'🟡 MAX', email:'📧 Email' };
   const routeRu = routeSel.options[routeSel.selectedIndex].dataset.ru || routeSel.options[routeSel.selectedIndex].text;
