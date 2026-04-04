@@ -726,9 +726,11 @@ async function sendBooking() {
   // const typeSel  = document.getElementById('f-type');
   const total    = document.getElementById('p-total').textContent;
   const mLabels  = { phone:'📞 Телефон', telegram:'✈️ Telegram', whatsapp:'💬 WhatsApp', viber:'📲 Viber', imo:'📱 IMO', max:'🟡 MAX', email:'📧 Email' };
-  const routeRu = routeSel.options[routeSel.selectedIndex].dataset.ru || routeSel.options[routeSel.selectedIndex].text;
+    const routeRu = routeSel.options[routeSel.selectedIndex].dataset.ru || routeSel.options[routeSel.selectedIndex].text;
   const routeEn = routeSel.options[routeSel.selectedIndex].dataset.en || routeSel.options[routeSel.selectedIndex].text;
-  const typeRu  = typeSel.options[typeSel.selectedIndex].dataset.ru  || typeSel.options[typeSel.selectedIndex].text;
+  const typeRu  = formType === 'shared'
+    ? { ru:'С попутчиками', en:'Shared', bg:'Споделено' }[lang]
+    : { ru:'Индивидуальный', en:'Private', bg:'Индивидуален' }[lang];
   const classRu = document.getElementById('f-class-name-ru').value;
   const model   = document.getElementById('f-class-model').value;
   const msg = `🌟 *НОВЫЙ ЗАКАЗ — Gala Transfer*
