@@ -295,7 +295,7 @@ nav { flex: 1; }
 
 h1 {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(60px, 9vw, 112px);
+  font-size: clamp(5rem, 9vw, 112px);
   font-weight: 300; line-height: .92;
   letter-spacing: -.025em;
   color: var(--text);
