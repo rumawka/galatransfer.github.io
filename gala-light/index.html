@@ -118,7 +118,7 @@
     </p>
   </div>
 
-  <!-- WIDGET -->
+ <!-- WIDGET -->
   <div class="hero-widget">
     <div class="widget-tabs">
       <button class="widget-tab active" onclick="setWidgetTab('shared',this)">
@@ -192,10 +192,6 @@
         <select class="widget-input" id="w-pax" onchange="recalcWidget()">
           <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option>
         </select>
-      </div>
-      <div class="widget-field">
-        <label><span class="t-ru">Цена</span><span class="t-en">Price</span><span class="t-bg">Цена</span></label>
-        <div class="widget-input" id="w-price" style="color:var(--gold);font-weight:800;font-size:16px;line-height:1.3;">€250</div>
       </div>
       <div class="widget-field">
         <label style="opacity:0">-</label>
@@ -338,10 +334,18 @@
 
         <div class="form-group">
           <label><span class="t-ru">Тип поездки</span><span class="t-en">Transfer type</span><span class="t-bg">Тип трансфер</span></label>
-          <select class="form-control" id="f-type" onchange="recalc()">
-            <option value="1" data-ru="Индивидуальный" data-en="Private" data-bg="Индивидуален">Индивидуальный / Private / Индивидуален</option>
-            <option value="0.55" data-ru="С попутчиками" data-en="Shared" data-bg="Споделено">С попутчиками / Shared / Споделено</option>
-          </select>
+          <div class="widget-tabs" style="margin-bottom:0">
+            <button type="button" class="widget-tab active" id="f-tab-shared" onclick="setFormTab('shared',this)">
+              <svg viewBox="0 0 20 20" width="13" height="13" fill="none" style="margin-right:5px;vertical-align:middle"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM6 8a2 2 0 11-4 0 2 2 0 014 0zM15.992 17c.013-.164.008-.33-.008-.5C15.667 14.57 13.5 13 10 13s-5.667 1.57-5.984 3.5c-.016.17-.02.336-.008.5h11.984z" fill="currentColor"/></svg>
+              <span class="t-ru">С попутчиками</span><span class="t-en">Shared</span><span class="t-bg">Споделено</span>
+            </button>
+            <button type="button" class="widget-tab" id="f-tab-private" onclick="setFormTab('private',this)">
+              <svg viewBox="0 0 20 20" width="13" height="13" fill="none" style="margin-right:5px;vertical-align:middle"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" fill="currentColor"/></svg>
+              <span class="t-ru">Индивидуальный</span><span class="t-en">Private</span><span class="t-bg">Индивидуален</span>
+            </button>
+          </div>
+          <!-- hidden value used by recalc() -->
+          <input type="hidden" id="f-type" value="0.55">
         </div>
 
         <!-- CAR CARDS IN FORM -->
@@ -415,12 +419,13 @@
 
         <div class="form-group">
           <label><span class="t-ru">Имя</span><span class="t-en">Your name</span><span class="t-bg">Вашето име</span></label>
-          <input type="text" class="form-control" id="f-name" required>
+          <input type="text" class="form-control" id="f-name">
         </div>
         <div class="form-group">
           <label><span class="t-ru">Питомец / детское кресло / комментарий</span><span class="t-en">Pet / child seat / comment</span><span class="t-bg">Домашен любимец / столче / коментар</span></label>
           <input type="text" class="form-control" id="f-comment">
         </div>
+
       </div>
 
       <!-- PRICE PANEL -->
@@ -432,15 +437,22 @@
             <span class="t-en">Price is locked when you book</span>
             <span class="t-bg">Цената се фиксира при резервация</span>
           </div>
-          <div class="price-label-sm"><span class="t-ru">Предварительная стоимость</span><span class="t-en">Estimated price</span><span class="t-bg">Приблизителна цена</span></div>
           <div class="price-route" id="p-route">Istanbul → Burgas</div>
           <div class="price-class-name" id="p-class">Mercedes Vito · 8 мест</div>
+
+          <!-- ЦЕНА (закомментировать чтобы скрыть / раскомментировать чтобы вернуть)
+          <div class="price-label-sm"><span class="t-ru">Предварительная стоимость</span><span class="t-en">Estimated price</span><span class="t-bg">Приблизителна цена</span></div>
           <div class="price-number"><span class="price-currency">€</span><span id="p-total">375</span></div>
           <div class="price-note">
             <span class="t-ru">Включены: налоги, дороги, ожидание до 60 мин.<br><small style="opacity:.7">Индивидуальный — цена за машину · Попутчики — цена за место</small></span>
             <span class="t-en">Includes: taxes, tolls, waiting up to 60 min.<br><small style="opacity:.7">Private — per car · Shared — per seat</small></span>
             <span class="t-bg">Включва: данъци, пътни, чакане до 60 мин.</span>
           </div>
+          -->
+
+          <!-- скрытый элемент для JS — не удалять -->
+          <span id="p-total" style="display:none">0</span>
+
           <div class="divider"></div>
           <ul class="features-list">
             <li><span class="t-ru">Русскоговорящий водитель</span><span class="t-en">Russian-speaking driver</span><span class="t-bg">Руско говорящ шофьор</span></li>
@@ -455,6 +467,8 @@
           </button>
         </div>
       </div>
+
+
     </div>
   </div>
 </section>
@@ -494,7 +508,7 @@
 <div class="toast" id="toast"></div>
 
 <!-- ════════ JS ════════ -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const TG_TOKEN   = '8772133903:AAHPXEKuXFrzSBQWt8L60Nk1uO6Iqe4IEbw';
 const TG_CHAT_ID = '699505010';
 
@@ -521,7 +535,6 @@ window.addEventListener('scroll', () => {
   document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 60);
 });
 
-
 // ── WIDGET ──
 let widgetType = 'shared';
 let widgetCarMultiplier = 1.5; // default: Vito
@@ -531,7 +544,10 @@ function setWidgetTab(type, btn) {
   document.querySelectorAll('.widget-tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   const grid = document.getElementById('wcarGrid');
-  if (grid) grid.style.opacity = type === 'shared' ? '0.45' : '1';
+  if (grid) {
+    grid.style.opacity = type === 'shared' ? '0.4' : '1';
+    grid.style.pointerEvents = type === 'shared' ? 'none' : '';
+  }
   recalcWidget();
 }
 
@@ -563,32 +579,37 @@ function selectCar(btn, source) {
 }
 
 function recalcWidget() {
-  const routeSel = document.getElementById('w-route');
-  const pax      = parseInt(document.getElementById('w-pax').value) || 1;
-  const base     = parseFloat(routeSel.value);
-  const priceEl  = document.getElementById('w-price');
-  if (!base) { priceEl.textContent = '?'; return; }
-  const total = widgetType === 'shared'
-    ? Math.round(base * 0.44 * pax)   // ~80€/seat on 80€ base, ~70€ promo
-    : Math.round(base * widgetCarMultiplier * pax);
-  priceEl.textContent = '€' + total;
+  // w-price element removed, nothing to update in widget
+}
+
+// ── FORM TYPE TABS ──
+let formType = 'shared'; // tracks form tab state
+function setFormTab(type, btn) {
+  formType = type;
+  document.getElementById('f-tab-shared').classList.toggle('active', type === 'shared');
+  document.getElementById('f-tab-private').classList.toggle('active', type === 'private');
+  document.getElementById('f-type').value = type === 'shared' ? '0.55' : '1';
+  // lock/unlock form car grid
+  const fcarGrid = document.getElementById('fcarGrid');
+  if (fcarGrid) {
+    fcarGrid.style.opacity = type === 'shared' ? '0.4' : '1';
+    fcarGrid.style.pointerEvents = type === 'shared' ? 'none' : '';
+  }
+  recalc();
 }
 
 function recalc() {
   const routeSel = document.getElementById('f-route');
-  const typeSel  = document.getElementById('f-type');
   const paxSel   = document.getElementById('f-pax');
   if (!routeSel) return;
   const base    = parseFloat(routeSel.value);
-  const typeVal = typeSel.value;
+  const typeVal = document.getElementById('f-type').value;
   const classM  = parseFloat(document.getElementById('f-class-val').value) || 1;
   const pax     = parseInt(paxSel.value) || 1;
   const routeOpt  = routeSel.options[routeSel.selectedIndex];
   const routeName = routeOpt.dataset[lang] || routeOpt.text;
   const className = document.getElementById('f-class-name-' + lang).value || '';
   const model     = document.getElementById('f-class-model').value || '';
-  const classRow  = document.getElementById('class-row');
-  if (classRow) classRow.style.opacity = typeVal === '0.55' ? '0.5' : '1';
   if (!base) {
     document.getElementById('p-total').textContent = '?';
     document.getElementById('p-route').textContent = routeName;
@@ -615,9 +636,12 @@ function syncWidgetToForm() {
   });
   fRoute.selectedIndex = matchIdx;
 
-  // 2. Transfer type: shared → select "С попутчиками", private → "Индивидуальный"
-  const fType = document.getElementById('f-type');
-  fType.value = widgetType === 'shared' ? '0.55' : '1';
+  // 2. Transfer type: sync form tabs
+  const targetFormType = widgetType === 'shared' ? 'shared' : 'private';
+  const targetFormTabBtn = targetFormType === 'shared'
+    ? document.getElementById('f-tab-shared')
+    : document.getElementById('f-tab-private');
+  setFormTab(targetFormType, targetFormTabBtn);
 
   // 3. Date & time
   const wDt = document.getElementById('w-datetime').value;
@@ -783,6 +807,14 @@ function closeMenu() {
 
 setLang('ru');
 recalcWidget();
+
+// init: both car grids start locked (shared mode is default)
+(function() {
+  const fcarGrid = document.getElementById('fcarGrid');
+  if (fcarGrid) { fcarGrid.style.opacity = '0.4'; fcarGrid.style.pointerEvents = 'none'; }
+  const wcarGrid = document.getElementById('wcarGrid');
+  if (wcarGrid) { wcarGrid.style.opacity = '0.4'; wcarGrid.style.pointerEvents = 'none'; }
+})();
 </script>
 </body>
 </html>
