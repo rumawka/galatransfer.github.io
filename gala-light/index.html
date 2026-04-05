@@ -748,11 +748,10 @@ async function sendBooking() {
   const errMsg  = { ru:'Укажите контакт для связи', en:'Please enter your contact', bg:'Въведете контакт' };
   if (phone.length < 3) { showToast(errMsg[lang]); return; }
   const routeSel = document.getElementById('f-route');
-  const typeSel  = document.getElementById('f-type');
   const mLabels  = { phone:'📞 Телефон', telegram:'✈️ Telegram', whatsapp:'💬 WhatsApp', viber:'📲 Viber', imo:'📱 IMO', max:'🟡 MAX', email:'📧 Email' };
   const routeRu = routeSel.options[routeSel.selectedIndex].dataset.ru || routeSel.options[routeSel.selectedIndex].text;
   const routeEn = routeSel.options[routeSel.selectedIndex].dataset.en || routeSel.options[routeSel.selectedIndex].text;
-  const typeRu  = typeSel.options[typeSel.selectedIndex].dataset.ru  || typeSel.options[typeSel.selectedIndex].text;
+  const typeRu  = formType === 'shared' ? 'С попутчиками / Shared' : 'Индивидуальный / Private';
   const classRu = document.getElementById('f-class-name-ru').value;
   const model   = document.getElementById('f-class-model').value;
   const msg = `🌟 *НОВЫЙ ЗАКАЗ — Gala Transfer*
