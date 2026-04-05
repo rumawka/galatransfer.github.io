@@ -874,7 +874,7 @@ footer {
   width: 100%;
   object-fit: cover; display: block;
   border-radius: 10px;
-  border: 1.5px solid var(--border-light);
+  /* border: 1.5px solid var(--border-light); */
 }
 .fleet-photo-btn {
   display: inline-flex; align-items: center; gap: 6px;
