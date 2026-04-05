@@ -92,7 +92,7 @@
         <span class="pill-label"><span class="t-ru">индивидуальный</span><span class="t-en">private</span><span class="t-bg">индивидуален</span></span>
       </div>
     </div>
-    <a href="#booking" class="promo-cta">
+    <a href="#booking" class="promo-cta" onclick="syncWidgetToForm(); return false;">
       <span class="t-ru">Забронировать</span>
       <span class="t-en">Book now</span>
       <span class="t-bg">Резервирай</span>
@@ -118,7 +118,7 @@
     </p>
   </div>
 
- <!-- WIDGET -->
+  <!-- WIDGET -->
   <div class="hero-widget">
     <div class="widget-tabs">
       <button class="widget-tab active" onclick="setWidgetTab('shared',this)">
@@ -175,13 +175,23 @@
       <div class="widget-field">
         <label><span class="t-ru">Маршрут</span><span class="t-en">Route</span><span class="t-bg">Маршрут</span></label>
         <select class="widget-input" id="w-route" onchange="recalcWidget()">
-          <option value="250" data-ru="Стамбул → Бургас" data-en="Istanbul → Burgas" data-bg="Стамбул → Бургас">Istanbul → Burgas</option>
-          <option value="250" data-ru="Стамбул → Варна" data-en="Istanbul → Varna" data-bg="Стамбул → Варна">Istanbul → Varna</option>
-          <option value="350" data-ru="Стамбул → София" data-en="Istanbul → Sofia" data-bg="Стамбул → София">Istanbul → Sofia</option>
+          <optgroup label="─── Стамбул → Болгария ───" class="t-ru">
+          <option value="250" data-ru="Стамбул → Бургас" data-en="Istanbul → Burgas" data-bg="Истанбул → Бургас">Istanbul → Burgas</option>
+          <option value="250" data-ru="Стамбул → Варна" data-en="Istanbul → Varna" data-bg="Истанбул → Варна">Istanbul → Varna</option>
+          <option value="350" data-ru="Стамбул → София" data-en="Istanbul → Sofia" data-bg="Истанбул → София">Istanbul → Sofia</option>
+          </optgroup>
+          <optgroup label="─── Болгария → Стамбул ───">
+          <option value="250" data-ru="Бургас → Стамбул" data-en="Burgas → Istanbul" data-bg="Бургас → Истанбул">Burgas → Istanbul</option>
+          <option value="250" data-ru="Варна → Стамбул" data-en="Varna → Istanbul" data-bg="Варна → Истанбул">Varna → Istanbul</option>
+          <option value="350" data-ru="София → Стамбул" data-en="Sofia → Istanbul" data-bg="София → Истанбул">Sofia → Istanbul</option>
+          </optgroup>
+          <optgroup label="─── Другие маршруты ───">
           <option value="80" data-ru="Бургас → Варна" data-en="Burgas → Varna" data-bg="Бургас → Варна">Burgas → Varna</option>
+          <option value="80" data-ru="Варна → Бургас" data-en="Varna → Burgas" data-bg="Варна → Бургас">Varna → Burgas</option>
           <option value="80" data-ru="Болгария → Греция" data-en="Bulgaria → Greece" data-bg="България → Гърция">Bulgaria → Greece</option>
+          <option value="80" data-ru="Греция → Болгария" data-en="Greece → Bulgaria" data-bg="Гърция → България">Greece → Bulgaria</option>
           <option value="0" data-ru="По Болгарии" data-en="Within Bulgaria" data-bg="Из България">Within Bulgaria</option>
-          <option value="0" data-ru="По Европе" data-en="Within Europe" data-bg="за Европа">Within Europe</option>
+          </optgroup>
         </select>
       </div>
       <div class="widget-field">
@@ -219,6 +229,7 @@
   <div class="trust-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="t-ru">Ответ за 15 минут</span><span class="t-en">Reply in 15 min</span><span class="t-bg">Отговор до 15 мин</span></div>
   <div class="trust-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="t-ru">Цена фиксируется</span><span class="t-en">Price locked</span><span class="t-bg">Цената е фиксирана</span></div>
   <div class="trust-item"><svg viewBox="0 0 24 24" fill="none"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="t-ru">Ежедневные выезды</span><span class="t-en">Daily departures</span><span class="t-bg">Ежедневни тръгвания</span></div>
+  <div class="trust-item" style="color:var(--gold);font-weight:600"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="t-ru">🎁 VPN в подарок при заказе</span><span class="t-en">🎁 VPN gift with every booking</span><span class="t-bg">🎁 VPN подарък при резервация</span></div>
   <div class="trust-item"><svg viewBox="0 0 24 24" fill="none"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="t-ru">Питомцы и дети приветствуются</span><span class="t-en">Pets & children welcome</span><span class="t-bg">Домашни любимци и деца</span></div>
 </div>
 
@@ -228,13 +239,12 @@
     <p class="section-label fade-in"><span class="t-ru">Направления</span><span class="t-en">Destinations</span><span class="t-bg">Дестинации</span></p>
     <h2 class="section-title fade-in"><span class="t-ru">Популярные <em>маршруты</em></span><span class="t-en">Popular <em>routes</em></span><span class="t-bg">Популярни <em>маршрути</em></span></h2>
     <div class="routes-grid fade-in">
-      <div class="route-card" onclick="fillForm(0)"><span class="route-badge daily"><span class="t-ru">Ежедневно</span><span class="t-en">Daily</span><span class="t-bg">Ежедневно</span></span><div class="route-flag">🇹🇷 → 🇧🇬</div><div class="route-cities"><span class="t-ru">Стамбул<br>→ Бургас</span><span class="t-en">Istanbul<br>→ Burgas</span><span class="t-bg">Истанбул<br>→ Бургас</span></div><div class="route-price"><sup><span class="t-ru">от </span><span class="t-en">from </span><span class="t-bg">от </span></sup>80€</div><div class="route-meta"><span>⏱ ~4.5 h</span><span>📍 ~370 km</span></div></div>
-      <div class="route-card" onclick="fillForm(1)"><span class="route-badge daily"><span class="t-ru">Ежедневно</span><span class="t-en">Daily</span><span class="t-bg">Ежедневно</span></span><div class="route-flag">🇹🇷 → 🇧🇬</div><div class="route-cities"><span class="t-ru">Стамбул<br>→ Варна</span><span class="t-en">Istanbul<br>→ Varna</span><span class="t-bg">Истанбул<br>→ Варна</span></div><div class="route-price"><sup><span class="t-ru">от </span><span class="t-en">from </span><span class="t-bg">от </span></sup>140€</div><div class="route-meta"><span>⏱ ~5.5 h</span><span>📍 ~480 km</span></div></div>
-      <div class="route-card" onclick="fillForm(2)"><span class="route-badge daily"><span class="t-ru">Ежедневно</span><span class="t-en">Daily</span><span class="t-bg">Ежедневно</span></span><div class="route-flag">🇹🇷 → 🇧🇬</div><div class="route-cities"><span class="t-ru">Стамбул<br>→ София</span><span class="t-en">Istanbul<br>→ Sofia</span><span class="t-bg">Истанбул<br>→ София</span></div><div class="route-price"><sup><span class="t-ru">от </span><span class="t-en">from </span><span class="t-bg">от </span></sup>300€</div><div class="route-meta"><span>⏱ ~6 h</span><span>📍 ~550 km</span></div></div>
+      <div class="route-card" onclick="fillForm(0)"><span class="route-badge daily"><span class="t-ru">Ежедневно</span><span class="t-en">Daily</span><span class="t-bg">Ежедневно</span></span><div class="route-flag">🇹🇷 → 🇧🇬</div><div class="route-cities"><span class="t-ru">Истанбул<br>→ Бургас</span><span class="t-en">Istanbul<br>→ Burgas</span><span class="t-bg">Истанбул<br>→ Бургас</span></div><div class="route-price"><sup><span class="t-ru">от </span><span class="t-en">from </span><span class="t-bg">от </span></sup>250€</div><div class="route-meta"><span>⏱ ~4.5 h</span><span>📍 ~370 km</span></div></div>
+      <div class="route-card" onclick="fillForm(1)"><span class="route-badge daily"><span class="t-ru">Ежедневно</span><span class="t-en">Daily</span><span class="t-bg">Ежедневно</span></span><div class="route-flag">🇹🇷 → 🇧🇬</div><div class="route-cities"><span class="t-ru">Истанбул<br>→ Варна</span><span class="t-en">Istanbul<br>→ Varna</span><span class="t-bg">Истанбул<br>→ Варна</span></div><div class="route-price"><sup><span class="t-ru">от </span><span class="t-en">from </span><span class="t-bg">от </span></sup>250€</div><div class="route-meta"><span>⏱ ~5.5 h</span><span>📍 ~480 km</span></div></div>
+      <div class="route-card" onclick="fillForm(2)"><span class="route-badge daily"><span class="t-ru">Ежедневно</span><span class="t-en">Daily</span><span class="t-bg">Ежедневно</span></span><div class="route-flag">🇹🇷 → 🇧🇬</div><div class="route-cities"><span class="t-ru">Истанбул<br>→ София</span><span class="t-en">Istanbul<br>→ Sofia</span><span class="t-bg">Истанбул<br>→ София</span></div><div class="route-price"><sup><span class="t-ru">от </span><span class="t-en">from </span><span class="t-bg">от </span></sup>350€</div><div class="route-meta"><span>⏱ ~6 h</span><span>📍 ~550 km</span></div></div>
       <div class="route-card" onclick="fillForm(3)"><span class="route-badge daily"><span class="t-ru">Ежедневно</span><span class="t-en">Daily</span><span class="t-bg">Ежедневно</span></span><div class="route-flag">🇧🇬 → 🇧🇬</div><div class="route-cities"><span class="t-ru">Бургас<br>→ Варна</span><span class="t-en">Burgas<br>→ Varna</span><span class="t-bg">Бургас<br>→ Варна</span></div><div class="route-price"><sup><span class="t-ru">от </span><span class="t-en">from </span><span class="t-bg">от </span></sup>80€</div><div class="route-meta"><span>⏱ ~1.5 h</span><span>📍 ~130 km</span></div></div>
-      <div class="route-card" onclick="fillForm(4)"><span class="route-badge custom"><span class="t-ru">По запросу</span><span class="t-en">On request</span><span class="t-bg">При запитване</span></span><div class="route-flag">🇬🇷</div><div class="route-cities"><span class="t-ru">В Грецию<br></span><span class="t-en">Greece</span><span class="t-bg">за Гърция<br></span></div><div class="route-on-request"><span class="t-ru">По запросу</span><span class="t-en">On request</span><span class="t-bg">При запитване</span></div><div class="route-meta"><span><span class="t-ru">📍 Любые города</span><span class="t-en">📍 Any city</span><span class="t-bg">📍 Всякакви градове</span></span></div></div>
-      <div class="route-card" onclick="fillForm(5)"><span class="route-badge custom"><span class="t-ru">По запросу</span><span class="t-en">On request</span><span class="t-bg">При запитване</span></span><div class="route-flag">🇧🇬</div><div class="route-cities"><span class="t-ru">По Болгарии</span><span class="t-en">Within Bulgaria</span><span class="t-bg">Из България</span></div><div class="route-on-request"><span class="t-ru">По запросу</span><span class="t-en">On request</span><span class="t-bg">При запитване</span></div><div class="route-meta"><span><span class="t-ru">📍 Любые направления</span><span class="t-en">📍 Any direction</span><span class="t-bg">📍 Всички посоки</span></span></div></div>
-        <div class="route-card" onclick="fillForm(6)"><span class="route-badge custom"><span class="t-ru">По запросу</span><span class="t-en">On request</span><span class="t-bg">При запитване</span></span><div class="route-flag">🇪🇺</div><div class="route-cities"><span class="t-ru">По Европе</span><span class="t-en">Within Europe</span><span class="t-bg">За Европа</span></div><div class="route-on-request"><span class="t-ru">По запросу</span><span class="t-en">On request</span><span class="t-bg">При запитване</span></div><div class="route-meta"><span><span class="t-ru">📍 Любые направления</span><span class="t-en">📍 Any direction</span><span class="t-bg">📍 Всички посоки</span></span></div></div>
+      <div class="route-card" onclick="fillForm(4)"><span class="route-badge custom"><span class="t-ru">По запросу</span><span class="t-en">On request</span><span class="t-bg">При запитване</span></span><div class="route-flag">🇧🇬 → 🇬🇷</div><div class="route-cities"><span class="t-ru">Болгария<br>→ Греция</span><span class="t-en">Bulgaria<br>→ Greece</span><span class="t-bg">България<br>→ Гърция</span></div><div class="route-on-request"><span class="t-ru">По запросу</span><span class="t-en">On request</span><span class="t-bg">При запитване</span></div><div class="route-meta"><span><span class="t-ru">📍 Любые города</span><span class="t-en">📍 Any city</span><span class="t-bg">📍 Всякакви градове</span></span></div></div>
+      <div class="route-card" onclick="fillForm(4)"><span class="route-badge custom"><span class="t-ru">По запросу</span><span class="t-en">On request</span><span class="t-bg">При запитване</span></span><div class="route-flag">🇧🇬</div><div class="route-cities"><span class="t-ru">По Болгарии</span><span class="t-en">Within Bulgaria</span><span class="t-bg">Из България</span></div><div class="route-on-request"><span class="t-ru">По запросу</span><span class="t-en">On request</span><span class="t-bg">При запитване</span></div><div class="route-meta"><span><span class="t-ru">📍 Любые направления</span><span class="t-en">📍 Any direction</span><span class="t-bg">📍 Всички посоки</span></span></div></div>
     </div>
     <p style="font-size:12px;color:var(--muted);margin-top:16px"><span class="t-ru">* Обратные маршруты и нестандартные направления — уточняйте в чате.</span><span class="t-en">* Return trips and custom routes — ask us in chat.</span><span class="t-bg">* Обратни маршрути — питайте в чата.</span></p>
   </div>
@@ -260,7 +270,7 @@
     <p class="section-label fade-in"><span class="t-ru">Услуги</span><span class="t-en">Services</span><span class="t-bg">Услуги</span></p>
     <h2 class="section-title fade-in"><span class="t-ru">Всё для вашего <em>комфорта</em></span><span class="t-en">Everything for your <em>comfort</em></span><span class="t-bg">Всичко за вашия <em>комфорт</em></span></h2>
     <div class="services-grid fade-in">
-      <div class="service-card"><div class="svc-ico" style="background:rgba(184,134,11,.1);border-color:rgba(184,134,11,.2);color:var(--gold)"><svg viewBox="0 0 24 24" fill="none" width="26" height="26"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="service-title"><span class="t-ru">С попутчиками — от 80€</span><span class="t-en">Shared — from €80</span><span class="t-bg">Споделено — от 80€</span></div><div class="service-desc"><span class="t-ru">Ежедневные выезды Болгария – Стамбул. Удобно, экономично. Присоединяйтесь к попутчикам.</span><span class="t-en">Daily departures Bulgaria – Istanbul. Convenient and economical.</span><span class="t-bg">Ежедневни тръгвания България – Истанбул.</span></div></div>
+      <div class="service-card"><div class="svc-ico" style="background:rgba(184,134,11,.1);border-color:rgba(184,134,11,.2);color:var(--gold)"><svg viewBox="0 0 24 24" fill="none" width="26" height="26"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="service-title"><span class="t-ru">С попутчиками — от 80€</span><span class="t-en">Shared — from €80</span><span class="t-bg">Споделено — от 80€</span></div><div class="service-desc"><span class="t-ru">Ежедневные выезды Болгария ↔ Стамбул. Удобно, экономично. Присоединяйтесь к попутчикам.</span><span class="t-en">Daily departures Bulgaria ↔ Istanbul. Convenient and economical.</span><span class="t-bg">Ежедневни тръгвания България ↔ Истанбул.</span></div></div>
       <div class="service-card"><div class="svc-ico" style="background:rgba(184,134,11,.12);border-color:rgba(184,134,11,.3);color:var(--gold)"><svg viewBox="0 0 24 24" fill="none" width="26" height="26"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="service-title"><span class="t-ru">Индивидуальный — от 250€</span><span class="t-en">Private — from €250</span><span class="t-bg">Индивидуален — от 250€</span></div><div class="service-desc"><span class="t-ru">Персональный автомобиль в любое время 24/7. Выезд в удобное для вас время. Никаких ожиданий.</span><span class="t-en">Your personal vehicle any time, 24/7. No waiting.</span><span class="t-bg">Личен автомобил по всяко време 24/7. Без чакане.</span></div></div>
       <div class="service-card"><div class="svc-ico" style="background:rgba(139,0,0,.08);border-color:rgba(192,57,43,.2);color:var(--red-accent)"><svg viewBox="0 0 24 24" fill="none" width="26" height="26"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="service-title"><span class="t-ru">VIP трансфер — всегда в наличии</span><span class="t-en">VIP transfer — always available</span><span class="t-bg">VIP трансфер — винаги в наличност</span></div><div class="service-desc"><span class="t-ru">Встречаем в VIP-терминале Стамбула и Болгарии. По предварительной договорённости — эксклюзивный сервис.</span><span class="t-en">We meet you at the VIP terminal in Istanbul and Bulgaria. By arrangement — exclusive service.</span><span class="t-bg">Посрещаме в VIP терминал в Истанбул и България. По предварителна договореност.</span></div></div>
       <div class="service-card"><div class="svc-ico" style="background:rgba(43,91,224,.1);border-color:rgba(43,91,224,.2);color:var(--accent-blue)"><svg viewBox="0 0 24 24" fill="none" width="26" height="26"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c0 0-4 4-4 9s4 9 4 9M12 3c0 0 4 4 4 9s-4 9-4 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div><div class="service-title"><span class="t-ru">Трансфер в Грецию</span><span class="t-en">Greece transfers</span><span class="t-bg">Трансфер до Гърция</span></div><div class="service-desc"><span class="t-ru">Комфортные поездки в любые города Греции прямо до двери вашего отеля или адреса.</span><span class="t-en">Comfortable rides to any city in Greece, right to your hotel door.</span><span class="t-bg">Комфортни пътувания до всеки град в Гърция.</span></div></div>
@@ -314,7 +324,6 @@
   </div>
 </section>
 
-
 <!-- ════════ BOOKING ════════ -->
 <section class="section booking-section" id="booking">
   <div class="section-inner">
@@ -326,13 +335,23 @@
         <div class="form-group">
           <label><span class="t-ru">Маршрут</span><span class="t-en">Route</span><span class="t-bg">Маршрут</span></label>
           <select class="form-control" id="f-route" onchange="recalc()">
-            <option value="250" data-ru="Стамбул → Бургас" data-en="Istanbul → Burgas" data-bg="Стамбул → Бургас">Istanbul → Burgas</option>
-          <option value="250" data-ru="Стамбул → Варна" data-en="Istanbul → Varna" data-bg="Стамбул → Варна">Istanbul → Varna</option>
-          <option value="350" data-ru="Стамбул → София" data-en="Istanbul → Sofia" data-bg="Стамбул → София">Istanbul → Sofia</option>
-          <option value="80" data-ru="Бургас → Варна" data-en="Burgas → Varna" data-bg="Бургас → Варна">Burgas → Varna</option>
-          <option value="80" data-ru="По Греции" data-en="Greece" data-bg="за Гърция">Greece</option>
-          <option value="0" data-ru="По Болгарии" data-en="Within Bulgaria" data-bg="Из България">Within Bulgaria</option>
-          <option value="0" data-ru="По Европе" data-en="Within Europe" data-bg="за Европа">Within Europe</option>
+            <optgroup label="Стамбул → Болгария">
+            <option value="250" data-ru="Стамбул → Бургас" data-en="Istanbul → Burgas" data-bg="Истанбул → Бургас">Istanbul → Burgas / Стамбул → Бургас</option>
+            <option value="250" data-ru="Стамбул → Варна" data-en="Istanbul → Varna" data-bg="Истанбул → Варна">Istanbul → Varna / Стамбул → Варна</option>
+            <option value="350" data-ru="Стамбул → София" data-en="Istanbul → Sofia" data-bg="Истанбул → София">Istanbul → Sofia / Стамбул → София</option>
+            </optgroup>
+            <optgroup label="Болгария → Стамбул">
+            <option value="250" data-ru="Бургас → Стамбул" data-en="Burgas → Istanbul" data-bg="Бургас → Истанбул">Burgas → Istanbul / Бургас → Стамбул</option>
+            <option value="250" data-ru="Варна → Стамбул" data-en="Varna → Istanbul" data-bg="Варна → Истанбул">Varna → Istanbul / Варна → Стамбул</option>
+            <option value="350" data-ru="София → Стамбул" data-en="Sofia → Istanbul" data-bg="София → Истанбул">Sofia → Istanbul / София → Стамбул</option>
+            </optgroup>
+            <optgroup label="Другие маршруты">
+            <option value="80" data-ru="Бургас → Варна" data-en="Burgas → Varna" data-bg="Бургас → Варна">Burgas → Varna / Бургас → Варна</option>
+            <option value="80" data-ru="Варна → Бургас" data-en="Varna → Burgas" data-bg="Варна → Бургас">Varna → Burgas / Варна → Бургас</option>
+            <option value="80" data-ru="Болгария → Греция" data-en="Bulgaria → Greece" data-bg="България → Гърция">Bulgaria → Greece / Болгария → Греция</option>
+            <option value="80" data-ru="Греция → Болгария" data-en="Greece → Bulgaria" data-bg="Гърция → България">Greece → Bulgaria / Греция → Болгария</option>
+            <option value="0" data-ru="По Болгарии / другой" data-en="Within Bulgaria / other" data-bg="Из България / друг">По Болгарии / Other route</option>
+            </optgroup>
           </select>
         </div>
 
@@ -465,6 +484,9 @@
             <li><span class="t-ru">Детское кресло по запросу</span><span class="t-en">Child seat on request</span><span class="t-bg">Детско столче при поискване</span></li>
             <li><span class="t-ru">Питомцы приветствуются</span><span class="t-en">Pets welcome</span><span class="t-bg">Домашни любимци</span></li>
             <li><span class="t-ru">Ответ за 15 минут</span><span class="t-en">Reply in 15 min</span><span class="t-bg">Отговор до 15 мин</span></li>
+            <li style="color:var(--gold);font-weight:600;border-color:rgba(184,134,11,.2)">
+              🎁 <span class="t-ru">VPN в подарок при заказе!</span><span class="t-en">VPN as a gift with your booking!</span><span class="t-bg">VPN подарък при резервация!</span>
+            </li>
           </ul>
           <button class="btn-book" id="btn-book" onclick="sendBooking()">
             <span class="t-ru">Отправить заявку</span><span class="t-en">Send request</span><span class="t-bg">Изпрати запитване</span>
@@ -490,7 +512,7 @@
       <div class="contact-card"><div class="contact-icon-wrap" style="background:rgba(184,134,11,.1);border-color:rgba(184,134,11,.2)"><svg viewBox="0 0 24 24" class="contact-svg" style="fill:var(--gold)"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-9 9H7V9h4v2zm6 0h-4V9h4v2z"/></svg></div><div class="contact-label">MAX <span class="t-ru">(мессенджер)</span><span class="t-en">(messenger)</span><span class="t-bg">(месинджър)</span></div><a href="tel:+79131439210" class="contact-val">+7 913 143 92 10</a><div class="contact-person">Max</div></div>
       <div class="contact-card"><div class="contact-icon-wrap" style="background:rgba(228,64,95,.1);border-color:rgba(228,64,95,.2)"><svg viewBox="0 0 24 24" class="contact-svg" style="fill:url(#ig-grad2)"><defs><linearGradient id="ig-grad2" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#F58529"/><stop offset="50%" stop-color="#DD2A7B"/><stop offset="100%" stop-color="#8134AF"/></linearGradient></defs><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></div><div class="contact-label">Instagram</div><a href="https://www.instagram.com/taxibulgariastambul" target="_blank" class="contact-val">@taxibulgariastambul</a></div>
       <div class="contact-card"><div class="contact-icon-wrap" style="background:rgba(24,119,242,.1);border-color:rgba(24,119,242,.2)"><svg viewBox="0 0 24 24" class="contact-svg" style="fill:#1877F2"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg></div><div class="contact-label">Facebook</div><a href="https://www.facebook.com/share/1E1BdqshFE/" target="_blank" class="contact-val"><span class="t-ru">Наша страница</span><span class="t-en">Our page</span><span class="t-bg">Нашата страница</span></a></div>
-      <div class="contact-card"><div class="contact-icon-wrap" style="background:rgba(184,134,11,.1);border-color:rgba(184,134,11,.2)"><svg viewBox="0 0 24 24" class="contact-svg" style="fill:var(--gold)"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div><div class="contact-label">Email</div><a href="mailto:galinanaymov@gmail.com" class="contact-val">galinanaymov@gmail.com</a></div>
+      <div class="contact-card"><div class="contact-icon-wrap" style="background:rgba(184,134,11,.1);border-color:rgba(184,134,11,.2)"><svg viewBox="0 0 24 24" class="contact-svg" style="fill:var(--gold)"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div><div class="contact-label">Email</div><a href="/cdn-cgi/l/email-protection#0265636e6b6c636c637b6f6d7442656f636b6e2c616d6f" class="contact-val"><span class="__cf_email__" data-cfemail="f394929f9a9d929d928a9e9c85b3949e929a9fdd909c9e">[email&#160;protected]</span></a></div>
     </div>
   </div>
 </section>
@@ -504,7 +526,7 @@
     <a href="https://wa.me/359885055578" target="_blank" class="footer-social">WhatsApp</a>
     <a href="https://www.instagram.com/taxibulgariastambul" target="_blank" class="footer-social">Instagram</a>
     <a href="https://www.facebook.com/share/1E1BdqshFE/" target="_blank" class="footer-social">Facebook</a>
-    <a href="mailto:galinanaymov@gmail.com" class="footer-social">Email</a>
+    <a href="/cdn-cgi/l/email-protection#4720262b2e292629263e2a283107202a262e2b6924282a" class="footer-social">Email</a>
   </div>
   <div class="footer-note">© 2026 Gala Transfer. <span class="t-ru">Все права защищены.</span><span class="t-en">All rights reserved.</span><span class="t-bg">Всички права запазени.</span></div>
 </footer>
@@ -723,14 +745,12 @@ async function sendBooking() {
   const errMsg  = { ru:'Укажите контакт для связи', en:'Please enter your contact', bg:'Въведете контакт' };
   if (phone.length < 3) { showToast(errMsg[lang]); return; }
   const routeSel = document.getElementById('f-route');
-  // const typeSel  = document.getElementById('f-type');
-  // const total    = document.getElementById('p-total').textContent;
+  const typeSel  = document.getElementById('f-type');
+  const total    = document.getElementById('p-total').textContent;
   const mLabels  = { phone:'📞 Телефон', telegram:'✈️ Telegram', whatsapp:'💬 WhatsApp', viber:'📲 Viber', imo:'📱 IMO', max:'🟡 MAX', email:'📧 Email' };
-    const routeRu = routeSel.options[routeSel.selectedIndex].dataset.ru || routeSel.options[routeSel.selectedIndex].text;
+  const routeRu = routeSel.options[routeSel.selectedIndex].dataset.ru || routeSel.options[routeSel.selectedIndex].text;
   const routeEn = routeSel.options[routeSel.selectedIndex].dataset.en || routeSel.options[routeSel.selectedIndex].text;
-  const typeRu  = formType === 'shared'
-    ? { ru:'С попутчиками', en:'Shared', bg:'Споделено' }[lang]
-    : { ru:'Индивидуальный', en:'Private', bg:'Индивидуален' }[lang];
+  const typeRu  = typeSel.options[typeSel.selectedIndex].dataset.ru  || typeSel.options[typeSel.selectedIndex].text;
   const classRu = document.getElementById('f-class-name-ru').value;
   const model   = document.getElementById('f-class-model').value;
   const msg = `🌟 *НОВЫЙ ЗАКАЗ — Gala Transfer*
@@ -740,6 +760,7 @@ async function sendBooking() {
 🚙 *Автомобиль:* ${classRu} (${model})
 👥 *Пассажиров:* ${pax}
 📅 *Дата/время:* ${dt ? dt.replace('T',' ') : '—'}
+💰 *Стоимость:* ${total}€
 ━━━━━━━━━━━━━━━━━━━━━━
 👤 *Имя:* ${name || '—'}
 ${mLabels[selectedMessenger] || '📱'}: ${phone}
