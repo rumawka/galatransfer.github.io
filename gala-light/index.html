@@ -571,7 +571,7 @@
 <!-- ════════ JS ════════ -->
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const TG_TOKEN   = '8625509569:AAELmr3NlJF0AqLp_ZPAoK0sdYoV27XQlcU';
-const TG_CHAT_ID = ['699505010', '1813235925'];
+const TG_CHAT_IDS = ['699505010', '1813235925'];
 
 let lang = 'ru';
 function setLang(l) {
@@ -825,14 +825,28 @@ ${mLabels[selectedMessenger] || '📱'}: ${phone}
   const btn = document.getElementById('btn-book');
   btn.disabled = true;
   try {
-    const res = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: TG_CHAT_ID, text: msg, parse_mode: 'Markdown' })
-    });
-    const ok   = { ru:'✓ Заявка отправлена! Ответим за 15 минут', en:"✓ Request sent! We'll reply in 15 min", bg:'✓ Изпратено! Ще отговорим до 15 мин' };
-    const fail = { ru:'Ошибка. Попробуйте ещё раз.', en:'Error. Please try again.', bg:'Грешка. Опитайте отново.' };
-    showToast(res.ok ? ok[lang] : fail[lang]);
-    if (res.ok) ['f-phone','f-name','f-comment'].forEach(id => document.getElementById(id).value = '');
+    const results = await Promise.all(
+  TG_CHAT_IDS.map(chatId =>
+    fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: msg,
+        parse_mode: 'Markdown'
+      })
+    })
+  )
+);
+
+const allOk = results.every(res => res.ok);
+
+const ok   = { ru:'✓ Заявка отправлена! Ответим за 15 минут', en:"✓ Request sent! We'll reply in 15 min", bg:'✓ Изпратено! Ще отговорим до 15 мин' };
+const fail = { ru:'Ошибка. Попробуйте ещё раз.', en:'Error. Please try again.', bg:'Грешка. Опитайте отново.' };
+
+showToast(allOk ? ok[lang] : fail[lang]);
+
+if (allOk) ['f-phone','f-name','f-comment'].forEach(id => document.getElementById(id).value = '');
   } catch(e) {
     showToast({ ru:'Ошибка сети.', en:'Network error.', bg:'Мрежова грешка.' }[lang]);
   }
