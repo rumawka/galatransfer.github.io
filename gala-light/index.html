@@ -777,21 +777,13 @@ async function sendBooking() {
   const dt      = document.getElementById('f-datetime').value;
   const pax     = document.getElementById('f-pax').value;
   const comment = document.getElementById('f-comment').value.trim();
-  const errMsg  = { ru:'Укажите контакт для связи', en:'Please enter your contact', bg:'Въведете контакт' };
-  const nameVal = document.getElementById('f-name').value.trim();
-  const errName = { ru:'Пожалуйста, укажите ваше имя', en:'Please enter your name', bg:'Моля, въведете вашето име' };
-  if (nameVal.length < 2) {
-    document.getElementById('f-name').classList.add('field-error');
-    showToast(errName[lang]); return;
-  }
-  document.getElementById('f-name').classList.remove('field-error');
-  const errMsg  = { ru:'Укажите контакт для связи', en:'Please enter your contact', bg:'Въведете контакт' };
+
   const errName = { ru:'Укажите ваше имя', en:'Please enter your name', bg:'Въведете вашето ime' };
+  const errMsg  = { ru:'Укажите контакт для связи', en:'Please enter your contact', bg:'Въведете контакт' };
 
   // Проверка имени
-  const nameVal = document.getElementById('f-name').value.trim();
-  const nameEl  = document.getElementById('f-name');
-  if (nameVal.length < 2) {
+  const nameEl = document.getElementById('f-name');
+  if (name.length < 2) {
     nameEl.classList.add('field-error');
     nameEl.scrollIntoView({ behavior:'smooth', block:'center' });
     showToast(errName[lang]); return;
@@ -803,14 +795,13 @@ async function sendBooking() {
   const contactGrp = document.getElementById('contact-group');
   if (phone.length < 3) {
     phoneEl.classList.add('field-error');
-    contactGrp && contactGrp.classList.add('contact-group-error');
+    if (contactGrp) contactGrp.classList.add('contact-group-error');
     phoneEl.scrollIntoView({ behavior:'smooth', block:'center' });
     showToast(errMsg[lang]); return;
   }
   phoneEl.classList.remove('field-error');
-  contactGrp && contactGrp.classList.remove('contact-group-error');
-  }
-  document.getElementById('f-phone').classList.remove('field-error');
+  if (contactGrp) contactGrp.classList.remove('contact-group-error');
+
   const routeSel = document.getElementById('f-route');
   const mLabels  = { phone:'📞 Телефон', telegram:'✈️ Telegram', whatsapp:'💬 WhatsApp', viber:'📲 Viber', imo:'📱 IMO', max:'🟡 MAX', email:'📧 Email' };
   const routeRu = routeSel.options[routeSel.selectedIndex].dataset.ru || routeSel.options[routeSel.selectedIndex].text;
@@ -818,6 +809,7 @@ async function sendBooking() {
   const typeRu  = formType === 'shared' ? 'С попутчиками / Shared' : 'Индивидуальный / Private';
   const classRu = document.getElementById('f-class-name-ru').value;
   const model   = document.getElementById('f-class-model').value;
+
   const msg = `🌟 *НОВЫЙ ЗАКАЗ — Gala Transfer*
 ━━━━━━━━━━━━━━━━━━━━━━
 📍 *Маршрут:* ${routeRu} / ${routeEn}
@@ -829,6 +821,7 @@ async function sendBooking() {
 👤 *Имя:* ${name || '—'}
 ${mLabels[selectedMessenger] || '📱'}: ${phone}
 💬 *Доп. инфо:* ${comment || '—'}`;
+
   const btn = document.getElementById('btn-book');
   btn.disabled = true;
   try {
@@ -845,7 +838,7 @@ ${mLabels[selectedMessenger] || '📱'}: ${phone}
   }
   btn.disabled = false;
 }
-
+  
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
