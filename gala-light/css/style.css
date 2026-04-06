@@ -895,33 +895,40 @@ footer {
 /* ═══ REQUIRED FIELDS ═══ */
 .req-star {
   color: var(--red-accent);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  margin-left: 6px;
-  vertical-align: middle;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  margin-left: 6px; vertical-align: middle;
   background: rgba(192,57,43,.08);
   border: 1px solid rgba(192,57,43,.2);
-  border-radius: 6px;
-  padding: 1px 7px;
+  border-radius: 6px; padding: 1px 7px;
 }
 .form-group--required .form-control,
-.form-group--required input {
+.form-group--required input[type="text"] {
   border-color: rgba(184,134,11,.35);
 }
 .form-group--required .form-control:focus,
-.form-group--required input:focus {
+.form-group--required input[type="text"]:focus {
   border-color: var(--gold);
   box-shadow: 0 0 0 3px rgba(184,134,11,.12);
 }
 .field-error {
   border-color: var(--red-accent) !important;
   box-shadow: 0 0 0 3px rgba(192,57,43,.12) !important;
-  animation: shake .3s ease;
+  animation: shake .35s ease;
 }
 @keyframes shake {
   0%,100% { transform: translateX(0); }
-  25% { transform: translateX(-6px); }
-  75% { transform: translateX(6px); }
+  20%     { transform: translateX(-7px); }
+  60%     { transform: translateX(7px); }
+}
+
+/* подсветка всего блока выбора мессенджера при ошибке */
+.contact-group-error .messenger-tabs {
+  outline: 2px solid var(--red-accent);
+  outline-offset: 4px;
+  border-radius: 10px;
+  animation: shake .35s ease;
+}
+.contact-group-error .messenger-tabs::after {
+  content: '';
 }
