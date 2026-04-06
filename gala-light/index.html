@@ -454,7 +454,11 @@
         </div>
 
         <div class="form-group">
-          <label><span class="t-ru">Как с вами связаться?</span><span class="t-en">How to contact you?</span><span class="t-bg">Как да се свържем с вас?</span></label>
+          <label>
+  <span class="t-ru">Контакт для связи <span class="req-star">★ обязательно</span></span>
+  <span class="t-en">Contact details <span class="req-star">★ required</span></span>
+  <span class="t-bg">Контакт за връзка <span class="req-star">★ задължително</span></span>
+</label>
           <div class="messenger-tabs">
             <button type="button" class="msg-tab active" data-messenger="phone" onclick="selectMsg(this)"><svg viewBox="0 0 24 24" width="13" height="13"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="currentColor"/></svg><span class="t-ru">Телефон</span><span class="t-en">Phone</span><span class="t-bg">Телефон</span></button>
             <button type="button" class="msg-tab" data-messenger="telegram" onclick="selectMsg(this)"><svg viewBox="0 0 24 24" width="13" height="13"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.93 6.77l-1.68 7.92c-.12.56-.45.7-.91.43l-2.52-1.85-1.22 1.17c-.13.14-.25.25-.51.25l.18-2.56 4.65-4.2c.2-.18-.04-.28-.31-.1L7.67 14.5l-2.47-.77c-.54-.17-.55-.54.11-.8l9.64-3.72c.45-.16.84.11.68.56z" fill="currentColor"/></svg>Telegram</button>
@@ -464,13 +468,17 @@
             <button type="button" class="msg-tab" data-messenger="max" onclick="selectMsg(this)">MAX</button>
             <button type="button" class="msg-tab" data-messenger="email" onclick="selectMsg(this)">Email</button>
           </div>
-          <input type="text" class="form-control" id="f-phone" placeholder="+7 / +359 / +90 ..." style="margin-top:10px">
+          <input type="text" class="form-control" id="f-phone" placeholder="+7 / +359 / +90 ..." style="margin-top:10px" required>
         </div>
 
-        <div class="form-group">
-          <label><span class="t-ru">Имя</span><span class="t-en">Your name</span><span class="t-bg">Вашето име</span></label>
-          <input type="text" class="form-control" id="f-name">
-        </div>
+       <div class="form-group form-group--required">
+  <label>
+    <span class="t-ru">Имя <span class="req-star">★ обязательно</span></span>
+    <span class="t-en">Your name <span class="req-star">★ required</span></span>
+    <span class="t-bg">Вашето ime <span class="req-star">★ задължително</span></span>
+  </label>
+  <input type="text" class="form-control" id="f-name" placeholder="Иван / Ivan" required>
+</div>
         <div class="form-group">
           <label><span class="t-ru">Питомец / детское кресло / комментарий</span><span class="t-en">Pet / child seat / comment</span><span class="t-bg">Домашен любимец / столче / коментар</span></label>
           <input type="text" class="form-control" id="f-comment">
@@ -770,7 +778,18 @@ async function sendBooking() {
   const pax     = document.getElementById('f-pax').value;
   const comment = document.getElementById('f-comment').value.trim();
   const errMsg  = { ru:'Укажите контакт для связи', en:'Please enter your contact', bg:'Въведете контакт' };
-  if (phone.length < 3) { showToast(errMsg[lang]); return; }
+  const nameVal = document.getElementById('f-name').value.trim();
+  const errName = { ru:'Пожалуйста, укажите ваше имя', en:'Please enter your name', bg:'Моля, въведете вашето име' };
+  if (nameVal.length < 2) {
+    document.getElementById('f-name').classList.add('field-error');
+    showToast(errName[lang]); return;
+  }
+  document.getElementById('f-name').classList.remove('field-error');
+  if (phone.length < 3) {
+    document.getElementById('f-phone').classList.add('field-error');
+    showToast(errMsg[lang]); return;
+  }
+  document.getElementById('f-phone').classList.remove('field-error');
   const routeSel = document.getElementById('f-route');
   const mLabels  = { phone:'📞 Телефон', telegram:'✈️ Telegram', whatsapp:'💬 WhatsApp', viber:'📲 Viber', imo:'📱 IMO', max:'🟡 MAX', email:'📧 Email' };
   const routeRu = routeSel.options[routeSel.selectedIndex].dataset.ru || routeSel.options[routeSel.selectedIndex].text;
