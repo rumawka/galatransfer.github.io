@@ -453,12 +453,12 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label>
-  <span class="t-ru">Контакт для связи <span class="req-star">★ обязательно</span></span>
-  <span class="t-en">Contact details <span class="req-star">★ required</span></span>
-  <span class="t-bg">Контакт за връзка <span class="req-star">★ задължително</span></span>
-</label>
+       <div class="form-group form-group--required" id="contact-group">
+  <label>
+    <span class="t-ru">Контакт для связи <span class="req-star">★ обязательно</span></span>
+    <span class="t-en">Contact details <span class="req-star">★ required</span></span>
+    <span class="t-bg">Контакт за връзка <span class="req-star">★ задължително</span></span>
+  </label>
           <div class="messenger-tabs">
             <button type="button" class="msg-tab active" data-messenger="phone" onclick="selectMsg(this)"><svg viewBox="0 0 24 24" width="13" height="13"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="currentColor"/></svg><span class="t-ru">Телефон</span><span class="t-en">Phone</span><span class="t-bg">Телефон</span></button>
             <button type="button" class="msg-tab" data-messenger="telegram" onclick="selectMsg(this)"><svg viewBox="0 0 24 24" width="13" height="13"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.93 6.77l-1.68 7.92c-.12.56-.45.7-.91.43l-2.52-1.85-1.22 1.17c-.13.14-.25.25-.51.25l.18-2.56 4.65-4.2c.2-.18-.04-.28-.31-.1L7.67 14.5l-2.47-.77c-.54-.17-.55-.54.11-.8l9.64-3.72c.45-.16.84.11.68.56z" fill="currentColor"/></svg>Telegram</button>
@@ -785,9 +785,30 @@ async function sendBooking() {
     showToast(errName[lang]); return;
   }
   document.getElementById('f-name').classList.remove('field-error');
+  const errMsg  = { ru:'Укажите контакт для связи', en:'Please enter your contact', bg:'Въведете контакт' };
+  const errName = { ru:'Укажите ваше имя', en:'Please enter your name', bg:'Въведете вашето ime' };
+
+  // Проверка имени
+  const nameVal = document.getElementById('f-name').value.trim();
+  const nameEl  = document.getElementById('f-name');
+  if (nameVal.length < 2) {
+    nameEl.classList.add('field-error');
+    nameEl.scrollIntoView({ behavior:'smooth', block:'center' });
+    showToast(errName[lang]); return;
+  }
+  nameEl.classList.remove('field-error');
+
+  // Проверка контакта
+  const phoneEl    = document.getElementById('f-phone');
+  const contactGrp = document.getElementById('contact-group');
   if (phone.length < 3) {
-    document.getElementById('f-phone').classList.add('field-error');
+    phoneEl.classList.add('field-error');
+    contactGrp && contactGrp.classList.add('contact-group-error');
+    phoneEl.scrollIntoView({ behavior:'smooth', block:'center' });
     showToast(errMsg[lang]); return;
+  }
+  phoneEl.classList.remove('field-error');
+  contactGrp && contactGrp.classList.remove('contact-group-error');
   }
   document.getElementById('f-phone').classList.remove('field-error');
   const routeSel = document.getElementById('f-route');
@@ -903,6 +924,17 @@ recalcWidget();
   const wcarGrid = document.getElementById('wcarGrid');
   if (wcarGrid) { wcarGrid.style.opacity = '0.4'; wcarGrid.style.pointerEvents = 'none'; }
 })();
+
+  document.getElementById('f-phone').addEventListener('input', function() {
+  this.classList.remove('field-error');
+  const g = document.getElementById('contact-group');
+  if (g) g.classList.remove('contact-group-error');
+});
+document.getElementById('f-name').addEventListener('input', function() {
+  this.classList.remove('field-error');
+});
+
+  
 </script>
 </body>
 </html>
