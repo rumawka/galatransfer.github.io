@@ -932,13 +932,3 @@ footer {
 .contact-group-error .messenger-tabs::after {
   content: '';
 }
-
-/* ── SVG иконки машин — полностью чёрные ── */
-.wcar-icon svg rect,
-.wcar-icon svg path,
-.wcar-icon svg circle,
-.wcar-icon svg text {
-  fill: #1A1610 !important;
-  stroke: #1A1610 !important;
-  opacity: 1 !important;
-}
