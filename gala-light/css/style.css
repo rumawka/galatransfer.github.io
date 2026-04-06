@@ -932,3 +932,9 @@ footer {
 .contact-group-error .messenger-tabs::after {
   content: '';
 }
+
+.wcar-card .wcar-icon,
+.wcar-card.active .wcar-icon,
+.wcar-card:hover .wcar-icon {
+  color: #1A1610 !important;
+}
