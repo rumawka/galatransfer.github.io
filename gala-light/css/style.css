@@ -933,8 +933,12 @@ footer {
   content: '';
 }
 
-.wcar-card .wcar-icon,
-.wcar-card.active .wcar-icon,
-.wcar-card:hover .wcar-icon {
-  color: #1A1610 !important;
+/* ── SVG иконки машин — полностью чёрные ── */
+.wcar-icon svg rect,
+.wcar-icon svg path,
+.wcar-icon svg circle,
+.wcar-icon svg text {
+  fill: #1A1610 !important;
+  stroke: #1A1610 !important;
+  opacity: 1 !important;
 }
