@@ -592,8 +592,6 @@
 
 <!-- ════════ JS ════════ -->
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const TG_TOKEN   = '8625509569:AAELmr3NlJF0AqLp_ZPAoK0sdYoV27XQlcU';
-const TG_CHAT_IDS = ['699505010', '1813235925'];
 
 let lang = 'ru';
 function setLang(l) {
@@ -788,7 +786,7 @@ function selectMsg(btn) {
   btn.classList.add('active');
   selectedMessenger = btn.dataset.messenger;
   const ph = document.getElementById('f-phone');
-  const p = { phone:'+7 / +359 / +90 ...', telegram:'@username - +7 / +359 / +90 ...', whatsapp:'+7 / +359 / +90 ...', viber:'+7 / +359 / +90 ...', imo:'+7 / +359 / +90 ...', max:'+7 9xx xxx xx xx', email:'your@email.com' };
+  const p = { phone:'+7 / +359 / +90 ...', telegram:'@username или +7 ...', whatsapp:'+7 / +359 / +90 ...', viber:'+7 / +359 / +90 ...', imo:'+7 / +359 / +90 ...', max:'+7 9xx xxx xx xx', email:'your@email.com' };
   ph.placeholder = p[selectedMessenger] || '+7 / +359 / +90 ...';
   ph.type = selectedMessenger === 'email' ? 'email' : 'text';
 }
@@ -800,81 +798,61 @@ async function sendBooking() {
   const pax     = document.getElementById('f-pax').value;
   const comment = document.getElementById('f-comment').value.trim();
 
-  const errName = { ru:'Укажите ваше имя', en:'Please enter your name', bg:'Въведете вашето ime' };
-  const errMsg  = { ru:'Укажите контакт для связи', en:'Please enter your contact', bg:'Въведете контакт' };
+  // validate required fields
+  let hasError = false;
+  const phoneEl = document.getElementById('f-phone');
+  const nameEl  = document.getElementById('f-name');
 
-  // Проверка имени
-  const nameEl = document.getElementById('f-name');
-  if (name.length < 2) {
-    nameEl.classList.add('field-error');
-    nameEl.scrollIntoView({ behavior:'smooth', block:'center' });
-    showToast(errName[lang]); return;
-  }
+  phoneEl.classList.remove('field-error');
   nameEl.classList.remove('field-error');
 
-  // Проверка контакта
-  const phoneEl    = document.getElementById('f-phone');
-  const contactGrp = document.getElementById('contact-group');
-  if (phone.length < 3) {
-    phoneEl.classList.add('field-error');
-    if (contactGrp) contactGrp.classList.add('contact-group-error');
-    phoneEl.scrollIntoView({ behavior:'smooth', block:'center' });
-    showToast(errMsg[lang]); return;
-  }
-  phoneEl.classList.remove('field-error');
-  if (contactGrp) contactGrp.classList.remove('contact-group-error');
+  if (phone.length < 3) { phoneEl.classList.add('field-error'); hasError = true; }
+  if (name.length < 1)  { nameEl.classList.add('field-error');  hasError = true; }
 
+  if (hasError) {
+    const errMsg = { ru:'Укажите имя и контакт для связи', en:'Please enter your name and contact', bg:'Въведете вашето име и контакт' };
+    showToast(errMsg[lang]);
+    // scroll to first error
+    (phoneEl.classList.contains('field-error') ? phoneEl : nameEl).scrollIntoView({ behavior:'smooth', block:'center' });
+    return;
+  }
   const routeSel = document.getElementById('f-route');
+  const typeVal  = document.getElementById('f-type').value; // '0.55' = shared, '1' = private
   const mLabels  = { phone:'📞 Телефон', telegram:'✈️ Telegram', whatsapp:'💬 WhatsApp', viber:'📲 Viber', imo:'📱 IMO', max:'🟡 MAX', email:'📧 Email' };
   const routeRu = routeSel.options[routeSel.selectedIndex].dataset.ru || routeSel.options[routeSel.selectedIndex].text;
   const routeEn = routeSel.options[routeSel.selectedIndex].dataset.en || routeSel.options[routeSel.selectedIndex].text;
   const typeRu  = formType === 'shared' ? 'С попутчиками / Shared' : 'Индивидуальный / Private';
   const classRu = document.getElementById('f-class-name-ru').value;
   const model   = document.getElementById('f-class-model').value;
-
   const msg = `🌟 *НОВЫЙ ЗАКАЗ — Gala Transfer*
-━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━
 📍 *Маршрут:* ${routeRu} / ${routeEn}
 🚗 *Тип:* ${typeRu}
 🚙 *Автомобиль:* ${classRu} (${model})
 👥 *Пассажиров:* ${pax}
 📅 *Дата/время:* ${dt ? dt.replace('T',' ') : '—'}
-━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━
 👤 *Имя:* ${name || '—'}
 ${mLabels[selectedMessenger] || '📱'}: ${phone}
 💬 *Доп. инфо:* ${comment || '—'}`;
-
   const btn = document.getElementById('btn-book');
   btn.disabled = true;
   try {
-    const results = await Promise.all(
-  TG_CHAT_IDS.map(chatId =>
-    fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+    const res = await fetch('/api/send', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: msg,
-        parse_mode: 'Markdown'
-      })
-    })
-  )
-);
-
-const allOk = results.every(res => res.ok);
-
-const ok   = { ru:'✓ Заявка отправлена! Ответим за 15 минут', en:"✓ Request sent! We'll reply in 15 min", bg:'✓ Изпратено! Ще отговорим до 15 мин' };
-const fail = { ru:'Ошибка. Попробуйте ещё раз.', en:'Error. Please try again.', bg:'Грешка. Опитайте отново.' };
-
-showToast(allOk ? ok[lang] : fail[lang]);
-
-if (allOk) ['f-phone','f-name','f-comment'].forEach(id => document.getElementById(id).value = '');
+      body: JSON.stringify({ msg })
+    });
+    const ok   = { ru:'✓ Заявка отправлена! Ответим за 15 минут', en:"✓ Request sent! We'll reply in 15 min", bg:'✓ Изпратено! Ще отговорим до 15 мин' };
+    const fail = { ru:'Ошибка. Попробуйте ещё раз.', en:'Error. Please try again.', bg:'Грешка. Опитайте отново.' };
+    showToast(res.ok ? ok[lang] : fail[lang]);
+    if (res.ok) ['f-phone','f-name','f-comment'].forEach(id => document.getElementById(id).value = '');
   } catch(e) {
     showToast({ ru:'Ошибка сети.', en:'Network error.', bg:'Мрежова грешка.' }[lang]);
   }
   btn.disabled = false;
 }
-  
+
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
@@ -924,26 +902,7 @@ function closeMenu() {
   });
 })();
 
-(async function() {
-  try {
-    const res = await fetch('https://ipapi.co/json/');
-    const data = await res.json();
-    const code = (data.country_code || '').toUpperCase();
-    const ruCountries = ['RU','BY','KZ','UA','UZ','TJ','KG','AM','AZ','GE','MD','TM'];
-    if (code === 'BG') setLang('bg');
-    else if (ruCountries.includes(code)) setLang('ru');
-    else setLang('en');
-  } catch(e) { setLang('ru'); }
-})();
-  
-//   function toggleFleetPhoto(id, btn) {
-//   const block = document.getElementById('photo-' + id);
-//   if (!block) return;
-//   const isOpen = block.style.display !== 'none';
-//   block.style.display = isOpen ? 'none' : 'block';
-//   btn.classList.toggle('fleet-photo-btn--active', !isOpen);
-// }
-  
+setLang('ru');
 recalcWidget();
 
 // init: both car grids start locked (shared mode is default)
@@ -953,17 +912,6 @@ recalcWidget();
   const wcarGrid = document.getElementById('wcarGrid');
   if (wcarGrid) { wcarGrid.style.opacity = '0.4'; wcarGrid.style.pointerEvents = 'none'; }
 })();
-
-  document.getElementById('f-phone').addEventListener('input', function() {
-  this.classList.remove('field-error');
-  const g = document.getElementById('contact-group');
-  if (g) g.classList.remove('contact-group-error');
-});
-document.getElementById('f-name').addEventListener('input', function() {
-  this.classList.remove('field-error');
-});
-
-  
 </script>
 </body>
 </html>
