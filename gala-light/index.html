@@ -903,6 +903,9 @@ ${mLabels[selectedMessenger] || '📱'}: ${phone}
     const ok   = { ru:'✓ Заявка отправлена! Ответим за 15 минут', en:"✓ Request sent! We'll reply in 15 min", bg:'✓ Изпратено! Ще отговорим до 15 мин' };
     const fail = { ru:'Ошибка. Попробуйте ещё раз.', en:'Error. Please try again.', bg:'Грешка. Опитайте отново.' };
     showToast(res.ok ? ok[lang] : fail[lang]);
+    if (typeof ym !== 'undefined') {
+  ym(108438752, 'reachGoal', 'form_submit');
+}
     if (res.ok) ['f-phone','f-name','f-comment'].forEach(id => document.getElementById(id).value = '');
   } catch(e) {
     showToast({ ru:'Ошибка сети.', en:'Network error.', bg:'Мрежова грешка.' }[lang]);
