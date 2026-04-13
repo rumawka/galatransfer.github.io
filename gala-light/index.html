@@ -900,6 +900,7 @@ async function sendBooking() {
   const typeRu  = formType === 'shared' ? 'С попутчиками / Shared' : 'Индивидуальный / Private';
   const classRu = document.getElementById('f-class-name-ru').value;
   const model   = document.getElementById('f-class-model').value;
+  const utm = getUtm();
   const msg = `🌟 *НОВЫЙ ЗАКАЗ — Gala Transfer*
 ━━━━━━━━━━━━━━━━━━━━━━
 📍 *Маршрут:* ${routeRu} / ${routeEn}
@@ -910,7 +911,11 @@ async function sendBooking() {
 ━━━━━━━━━━━━━━━━━━━━━━
 👤 *Имя:* ${name || '—'}
 ${mLabels[selectedMessenger] || '📱'}: ${phone}
-💬 *Доп. инфо:* ${comment || '—'}`;
+💬 *Доп. инфо:* ${comment || '—'}
+━━━━━━━━━━━━━━━━━━━━━━
+📊 *Источник:* ${utm.source} / ${utm.medium}
+🎯 *Кампания:* ${utm.campaign}
+🔑 *Ключ:* ${utm.term}`;
   const btn = document.getElementById('btn-book');
   btn.disabled = true;
   try {
