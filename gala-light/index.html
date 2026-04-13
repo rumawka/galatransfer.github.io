@@ -783,15 +783,20 @@ function recalc() {
 
 function syncWidgetToForm() {
   // 1. Route
-  const wRoute = document.getElementById('w-route');
-  const fRoute = document.getElementById('f-route');
-  const wRouteVal = wRoute.value;
-  // match by value
-  let matchIdx = 0;
-  Array.from(fRoute.options).forEach((opt, i) => {
-    if (opt.value === wRouteVal) matchIdx = i;
-  });
-  fRoute.selectedIndex = matchIdx;
+const wRoute = document.getElementById('w-route');
+const fRoute = document.getElementById('f-route');
+const wRouteOpt = wRoute.options[wRoute.selectedIndex];
+const wRouteRu  = wRouteOpt.getAttribute('data-ru') || wRouteOpt.text;
+const wRouteEn  = wRouteOpt.getAttribute('data-en') || wRouteOpt.text;
+let matchIdx = 0;
+let bestMatch = 0;
+Array.from(fRoute.options).forEach((opt, i) => {
+  const optRu = opt.getAttribute('data-ru') || '';
+  const optEn = opt.getAttribute('data-en') || '';
+  if (optRu && wRouteRu && optRu === wRouteRu) { matchIdx = i; bestMatch = 2; }
+  else if (bestMatch < 2 && optEn && wRouteEn && optEn === wRouteEn) { matchIdx = i; bestMatch = 1; }
+});
+fRoute.selectedIndex = matchIdx;
 
   // 2. Transfer type: sync form tabs
   const targetFormType = widgetType === 'shared' ? 'shared' : 'private';
