@@ -648,8 +648,27 @@
 <div class="toast" id="toast"></div>
 
 <!-- ════════ JS ════════ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 
+  const _utm = (function() {
+  const p = new URLSearchParams(window.location.search);
+  return {
+    source:   p.get('utm_source')   || '—',
+    medium:   p.get('utm_medium')   || '—',
+    campaign: p.get('utm_campaign') || '—',
+    term:     p.get('utm_term')     || '—'
+  };
+})();
+if (_utm.source !== '—') {
+  sessionStorage.setItem('utm_data', JSON.stringify(_utm));
+}
+function getUtm() {
+  try {
+    const saved = sessionStorage.getItem('utm_data');
+    return saved ? JSON.parse(saved) : _utm;
+  } catch(e) { return _utm; }
+}
+  
 let lang = 'ru';
 function setLang(l) {
   lang = l;
@@ -881,6 +900,7 @@ async function sendBooking() {
   const typeRu  = formType === 'shared' ? 'С попутчиками / Shared' : 'Индивидуальный / Private';
   const classRu = document.getElementById('f-class-name-ru').value;
   const model   = document.getElementById('f-class-model').value;
+  const utm = getUtm();
   const msg = `🌟 *НОВЫЙ ЗАКАЗ — Gala Transfer*
 ━━━━━━━━━━━━━━━━━━━━━━
 📍 *Маршрут:* ${routeRu} / ${routeEn}
@@ -891,7 +911,11 @@ async function sendBooking() {
 ━━━━━━━━━━━━━━━━━━━━━━
 👤 *Имя:* ${name || '—'}
 ${mLabels[selectedMessenger] || '📱'}: ${phone}
-💬 *Доп. инфо:* ${comment || '—'}`;
+💬 *Доп. инфо:* ${comment || '—'}
+━━━━━━━━━━━━━━━━━━━━━━
+📊 *Источник:* ${utm.source} / ${utm.medium}
+🎯 *Кампания:* ${utm.campaign}
+🔑 *Ключ:* ${utm.term}`;
   const btn = document.getElementById('btn-book');
   btn.disabled = true;
   try {
@@ -962,7 +986,18 @@ function closeMenu() {
   });
 })();
 
-setLang('ru');
+(async function() {
+  try {
+    const res  = await fetch('https://ipapi.co/json/');
+    const data = await res.json();
+    const code = (data.country_code || '').toUpperCase();
+    const ruCountries = ['RU','BY','KZ','UA','UZ','TJ','KG','AM','AZ','GE','MD','TM'];
+    if (code === 'BG') setLang('bg');
+    else if (ruCountries.includes(code)) setLang('ru');
+    else setLang('en');
+  } catch(e) { setLang('ru'); }
+})();
+  
 recalcWidget();
 
 // init: both car grids start locked (shared mode is default)
