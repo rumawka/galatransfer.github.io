@@ -1052,6 +1052,83 @@ function gtag_report_conversion(url) {
   return false;
 }
 </script>
+<script>
+/* GALA TRANSFER — tracking patch */
+const METRIKA_ID = 108438752;
 
+function trackGoal(goal, params = {}) {
+  try {
+    if (typeof ym === 'function') {
+      ym(METRIKA_ID, 'reachGoal', goal, params);
+    }
+  } catch (e) {}
+}
+
+function trackGoogleConversion(sendTo, url) {
+  if (typeof gtag !== 'function') {
+    if (url) window.location = url;
+    return false;
+  }
+
+  const callback = function () {
+    if (url) window.location = url;
+  };
+
+  gtag('event', 'conversion', {
+    send_to: sendTo,
+    event_callback: callback
+  });
+
+  setTimeout(callback, 700);
+  return false;
+}
+
+function gtag_report_conversion(url) {
+  trackGoal('click_whatsapp');
+  return trackGoogleConversion('AW-18077938386/-ZgxCMqSvqAcENLlnaxD', url);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const bindGoal = (selector, goal) => {
+    document.querySelectorAll(selector).forEach(function (el) {
+      if (el.dataset.goalBound === goal) return;
+      el.dataset.goalBound = goal;
+
+      el.addEventListener('click', function () {
+        trackGoal(goal);
+      });
+    });
+  };
+
+  bindGoal('a[href*="t.me"]', 'click_telegram');
+  bindGoal('a[href*="wa.me"], a[href*="whatsapp"]', 'click_whatsapp');
+  bindGoal('a[href^="tel:"]', 'click_phone');
+  bindGoal('a[href^="mailto:"]', 'click_email');
+  bindGoal('a[href*="instagram.com"]', 'click_instagram');
+  bindGoal('a[href*="facebook.com"]', 'click_facebook');
+  bindGoal('a[href*="viber://"]', 'click_viber');
+  bindGoal('a[href*="max.ru"], a[href*="MAX"]', 'click_max');
+  bindGoal('a[href="#booking"]', 'click_booking_anchor');
+
+  document.querySelectorAll('.route-card').forEach(function (card) {
+    card.addEventListener('click', function () {
+      trackGoal('click_route_card');
+    });
+  });
+
+  document.querySelectorAll('.msg-tab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      trackGoal('select_messenger_' + (tab.dataset.messenger || 'unknown'));
+    });
+  });
+
+  const bookBtn = document.getElementById('btn-book');
+  if (bookBtn) {
+    bookBtn.addEventListener('click', function () {
+      trackGoal('click_send_request');
+    });
+  }
+});
+</script>
 </body>
 </html>
