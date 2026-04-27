@@ -1175,3 +1175,116 @@ footer {
     color: #fff;
   }
 }
+
+/* ═══════════════════════ FAQ — CLEAN READABLE VERSION ═══════════════════════ */
+.faq-section {
+  background: linear-gradient(180deg, var(--bg2) 0%, #F8F6F0 100%);
+}
+
+.faq-section .section-label {
+  margin-bottom: 12px;
+}
+
+.faq-section .section-title {
+  max-width: 940px;
+  margin-bottom: 38px;
+  font-size: clamp(36px, 4.2vw, 58px);
+  line-height: 1.08;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  background: var(--surface);
+  border: 1.5px solid var(--border-light);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 12px 34px rgba(0,0,0,.055);
+}
+
+.faq-item {
+  min-height: 172px;
+  padding: 28px 34px 30px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  transition: background .25s ease;
+}
+
+.faq-item:nth-child(odd) {
+  border-right: 1px solid var(--border-light);
+}
+
+.faq-item:not(:nth-last-child(-n+2)) {
+  border-bottom: 1px solid var(--border-light);
+}
+
+.faq-item:hover {
+  background: rgba(184,134,11,.045);
+  transform: none;
+  box-shadow: none;
+  border-color: var(--border-light);
+}
+
+.faq-item h3 {
+  margin-bottom: 12px;
+  font-size: clamp(17px, 1.05vw, 20px);
+  line-height: 1.35;
+  color: var(--text);
+  font-weight: 800;
+  letter-spacing: .005em;
+  text-transform: none;
+}
+
+.faq-item p {
+  max-width: 96%;
+  font-size: 15.5px;
+  line-height: 1.72;
+  color: rgba(26,22,16,.66);
+}
+
+@media (max-width: 900px) {
+  .faq-grid {
+    grid-template-columns: 1fr;
+    border-radius: 18px;
+  }
+
+  .faq-item {
+    min-height: auto;
+    padding: 24px 24px 26px;
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--border-light) !important;
+  }
+
+  .faq-item:last-child {
+    border-bottom: 0 !important;
+  }
+
+  .faq-item p {
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .faq-section .section-title {
+    font-size: clamp(32px, 10.5vw, 44px);
+    margin-bottom: 28px;
+  }
+
+  .faq-item {
+    padding: 22px 20px 24px;
+  }
+
+  .faq-item h3 {
+    font-size: 17px;
+    margin-bottom: 9px;
+  }
+
+  .faq-item p {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+}
+
