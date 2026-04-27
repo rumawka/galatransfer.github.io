@@ -932,3 +932,79 @@ footer {
 .contact-group-error .messenger-tabs::after {
   content: '';
 }
+
+/* GALA TRANSFER â€” visual / conversion fixes */
+
+/* Make current promo timeless instead of looking expired */
+.promo-tag .t-ru::after,
+.promo-tag .t-en::after,
+.promo-tag .t-bg::after {
+  content: '';
+}
+
+/* More readable hero offer on mobile */
+@media (max-width: 640px) {
+  h1 {
+    font-size: clamp(3.8rem, 18vw, 5.2rem);
+  }
+
+  .hero-tagline {
+    font-size: 15px;
+    line-height: 1.55;
+    margin-bottom: 26px;
+  }
+
+  .hero-widget {
+    box-shadow: 0 14px 45px rgba(0,0,0,.14);
+  }
+
+  .trust-bar {
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+
+  .trust-item {
+    width: 100%;
+    font-size: 13px;
+  }
+}
+
+/* Focus the contacts section on primary channels */
+.contacts-grid .contact-card:nth-child(n+6) {
+  opacity: .82;
+}
+
+.contacts-grid .contact-card:nth-child(1),
+.contacts-grid .contact-card:nth-child(2) {
+  border-color: var(--gold-border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Cleaner footer email when Cloudflare rewrites links */
+.footer-social[href*='email-protection'] {
+  opacity: .6;
+}
+
+/* Better sticky price panel on small laptops */
+@media (min-width: 901px) and (max-width: 1180px) {
+  .booking-grid {
+    grid-template-columns: 1fr 340px;
+    gap: 28px;
+  }
+
+  .price-box {
+    padding: 26px;
+  }
+}
+
+/* Prevent widget from feeling too dense */
+@media (max-width: 640px) {
+  .wcar-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wcar-grid.fcar-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
